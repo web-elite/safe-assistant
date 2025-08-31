@@ -1,0 +1,37 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Safe Assistant\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-30 10:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.1.33\n"
+"X-Domain: safe-assistant"
+
+#. URI of the plugin
+msgid "https://iranqq.com"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://webelitee.ir/"
+msgstr ""
+
+#. Name of the plugin
+msgid "Safe Assistant"
+msgstr ""
+
+#. Description of the plugin
+msgid "Safe Assistant Sales assistant and necessary and efficient tools"
+msgstr ""
+
+#. Author of the plugin
+msgid "𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢"
+msgstr ""

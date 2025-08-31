@@ -1,0 +1,85 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.safe-assistant-free-shipping-progress {
+    direction: rtl;
+    border: 3px dashed #ededed;
+    text-align: right;
+}
+
+.shopping-cart-widget-footer .safe-assistant-free-shipping-progress {
+    margin: 15px;
+    padding: 7px;
+}
+
+.woocommerce-cart .safe-assistant-free-shipping-progress {
+    padding: 10px;
+}
+
+.safe-assistant-free-shipping-progress .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.safe-assistant-free-shipping-progress .progress-box {
+    background: #eee;
+    border-radius: 8px;
+    height: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.safe-assistant-free-shipping-progress .progress-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.6s ease-in-out;
+    position: relative;
+}
+
+.safe-assistant-free-shipping-progress .progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at right,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 70%);
+    animation: shimmer 1s infinite;
+    opacity: 0.4;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.safe-assistant-free-shipping-progress .progress-label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.safe-assistant-free-shipping-progress .progress-message {
+    font-size: 14px;
+    margin-top: 8px;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.safe-assistant-free-shipping-progress.success {
+    border-color: #d1ffdc;
+    background: #f6fff6;
+    color: #005c16;
+}

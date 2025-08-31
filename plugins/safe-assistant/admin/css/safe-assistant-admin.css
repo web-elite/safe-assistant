@@ -1,0 +1,27 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.toplevel_page_safe-assistant-menu img {
+    width: 25px;
+    padding: 0px !important;
+}
+
+.toplevel_page_safe-assistant-menu .wp-menu-image {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.csf-content {
+    margin-left: 0 !important;
+    margin-right: 225px;
+}
+
+.csf--wrap {
+    max-width: 250px !important;
+    width: 100% !important;
+}
+
