@@ -86,6 +86,7 @@ class Safe_Assistant
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->loader->add_action('plugins_loaded', $this, 'init_settings');
 	}
 
 	/**

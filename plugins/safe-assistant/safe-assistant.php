@@ -81,9 +81,7 @@ require SAFE_ASSISTANT_DIR . 'includes/class-safe-assistant.php';
  */
 function run_safe_assistant()
 {
-
 	$plugin = new Safe_Assistant();
 	$plugin->run();
-	$plugin->init_settings();
 }
 run_safe_assistant();
