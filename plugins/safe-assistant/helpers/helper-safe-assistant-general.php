@@ -14,3 +14,90 @@ if (! function_exists('sa_get_option')) {
         return (isset($options[$option])) ? $options[$option] : $default;
     }
 }
+
+if (! function_exists('get_current_url')) {
+    /**
+     * get_current_url
+     *
+     * @return string
+     */
+    function get_current_url(): string
+    {
+        $protocol = 'http';
+        if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+            $protocol = 'https';
+        }
+        $url = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        return $url;
+    }
+}
+
+if (!function_exists('get_log_file_path')) {
+    /**
+     * get_log_file_path
+     *
+     * @param  mixed $type options: main|revert
+     * @return string
+     */
+    function get_log_file_path(string $type): string
+    {
+        $log_file_name = $type == 'main' ? 'import.log' : 'revert.log';
+        $log_file_path = SAFE_ASSISTANT_DIR . "logs/$log_file_name.log";
+        if (!file_exists($log_file_path)) {
+            $log_file = fopen($log_file_path, 'w');
+            fclose($log_file);
+        }
+        return $log_file_path;
+    }
+}
+
+if (!function_exists('normalize_mobile_number')) {
+    /**
+     * Normalize mobile number to Persian format starting with ۰۹
+     *
+     * @param string $mobile
+     * @return string|null Returns normalized number or null if invalid
+     */
+    function normalize_mobile_number(string $mobile): ?string
+    {
+        // Remove spaces, dashes, parentheses, and non-digit chars (but keep +)
+        $mobile = trim($mobile);
+        $mobile = str_replace([' ', '-', '(', ')'], '', $mobile);
+
+        // Convert Arabic digits to English
+        $mobile = preg_replace_callback('/[۰-۹]/u', function ($matches) {
+            return mb_ord($matches[0]) - 1776;
+        }, $mobile);
+
+        // Replace Persian/Arabic "۰" with 0
+        $mobile = str_replace(['۰', '٠'], '0', $mobile);
+
+        // Remove leading "+" or "00"
+        if (str_starts_with($mobile, '+98')) {
+            $mobile = '0' . substr($mobile, 3);
+        } elseif (str_starts_with($mobile, '0098')) {
+            $mobile = '0' . substr($mobile, 4);
+        } elseif (str_starts_with($mobile, '098')) {
+            $mobile = '0' . substr($mobile, 3);
+        } elseif (str_starts_with($mobile, '98')) {
+            $mobile = '0' . substr($mobile, 2);
+        } elseif (str_starts_with($mobile, '9')) {
+            $mobile = '0' . $mobile;
+        }
+        // Validate format
+        if (!preg_match('/^09\d{9}$/', $mobile)) {
+            return $mobile;
+        }
+
+        // Convert English digits to Persian
+        $mobile = preg_replace_callback('/\d/', function ($matches) {
+            return mb_chr($matches[0] + 1776);
+        }, $mobile);
+
+        $mobile = preg_replace_callback('/[۰-۹]/u', function ($matches) {
+            return mb_ord($matches[0]) - 1776;
+        }, $mobile);
+
+        return $mobile;
+    }
+}
