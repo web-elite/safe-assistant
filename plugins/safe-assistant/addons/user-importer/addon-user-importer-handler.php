@@ -26,8 +26,15 @@ function add_to_csv_log(string $message, string $status = 'info')
         'time' => current_time('mysql'),
     ];
 
+    $emoji = match ($status) {
+        'info' => 'ℹ️',
+        'success' => '✅',
+        'warning' => '⚠️',
+        'error' => '❌',
+    };
+
     $log_file = WP_CONTENT_DIR . '/csv_import.log';
-    $log_line = sprintf('[%s] %s: %s', $log_entry['time'], strtoupper($status), $message);
+    $log_line = sprintf('[%s] %s: %s %s', $log_entry['time'], strtoupper($status), $emoji, $message);
 
     // Log to file using WP_Filesystem
     require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -146,7 +153,6 @@ function update_user_wc_address(int $user_id, string $state, string $city): bool
     ];
 
     if ($existing) {
-        // آپدیت رکورد موجود
         $updated = $wpdb->update(
             "{$wpdb->prefix}wc_customer_lookup",
             $data,
@@ -154,7 +160,6 @@ function update_user_wc_address(int $user_id, string $state, string $city): bool
         );
         return $updated !== false;
     } else {
-        // درج رکورد جدید
         $inserted = $wpdb->insert(
             "{$wpdb->prefix}wc_customer_lookup",
             $data
@@ -379,7 +384,7 @@ function my_csv_cron_handler()
         global $wp_filesystem;
 
         if (!$wp_filesystem->exists($file_path) || !$wp_filesystem->is_readable($file_path)) {
-            add_to_csv_log(sprintf(__('❌ Error: CSV file not found or unreadable: %s', 'we-user-importer'), $file_path), 'error');
+            add_to_csv_log(sprintf(__('CSV file not found or unreadable: %s', 'we-user-importer'), $file_path), 'error');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
             return;
@@ -387,7 +392,7 @@ function my_csv_cron_handler()
 
         $handle = fopen($file_path, 'r');
         if (!$handle) {
-            add_to_csv_log(__('❌ Error: Unable to open CSV file.', 'we-user-importer'), 'error');
+            add_to_csv_log(__('Unable to open CSV file.', 'we-user-importer'), 'error');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
             return;
@@ -396,7 +401,7 @@ function my_csv_cron_handler()
         $row_count = 0;
         while ($row_count < $offset && !feof($handle)) {
             if (false === fgetcsv($handle)) {
-                add_to_csv_log(__('⚠️ Warning: Error reading CSV row.', 'we-user-importer'), 'warning');
+                add_to_csv_log(__('Error reading CSV row.', 'we-user-importer'), 'warning');
                 break;
             }
             $row_count++;
@@ -441,7 +446,7 @@ function my_csv_cron_handler()
                     $wallet_timestamp = jmktime(0, 0, 0, $date_parts[1], $date_parts[2], $date_parts[0]);
                     $persian_expire_date = $expire_date_input;
                 } else {
-                    add_to_csv_log(sprintf(__('⚠️ Warning: Invalid expiration date format in row %d.', 'we-user-importer'), $offset + $processed_count), 'warning');
+                    add_to_csv_log(sprintf(__('Invalid expiration date format in row %d.', 'we-user-importer'), $offset + $processed_count), 'warning');
                 }
             } elseif ($expire_days > 0 && function_exists('jdate')) {
                 $wallet_timestamp = time() + ($expire_days * DAY_IN_SECONDS);
@@ -449,33 +454,33 @@ function my_csv_cron_handler()
             }
 
             if ('' === $phone_number) {
-                add_to_csv_log(sprintf(__('⛔ Warning: Phone number empty in row %d.', 'we-user-importer'), $offset + $processed_count), 'warning');
+                add_to_csv_log(sprintf(__('Phone number empty in row %d.', 'we-user-importer'), $offset + $processed_count), 'warning');
                 continue;
             }
 
             if (strlen($phone_number) > 14 || strlen($phone_number) < 10) {
-                add_to_csv_log(sprintf(__('⛔ Warning: Invalid phone number %s in row %d.', 'we-user-importer'), $phone_number, $offset + $processed_count), 'warning');
+                add_to_csv_log(sprintf(__('Invalid phone number %s in row %d.', 'we-user-importer'), $phone_number, $offset + $processed_count), 'warning');
                 continue;
             }
 
             $digits_phone_number = digits_standard_username($phone_number);
-            add_to_csv_log(sprintf(__('ℹ️ Phone Number is %s and digits number is %s', 'we-user-importer'), $phone_number, $digits_phone_number), 'info');
+            add_to_csv_log(sprintf(__('Phone Number is %s and digits number is %s', 'we-user-importer'), $phone_number, $digits_phone_number), 'info');
             $user_id = find_user_by_phone($phone_number);
             $cleaned_number = clean_phone_number($phone_number);
 
             if (!is_null($user_id)) {
-                add_to_csv_log(sprintf(__('🔁 Info: User %s already exists (ID: %d).', 'we-user-importer'), $digits_phone_number, $user_id), 'info');
+                add_to_csv_log(sprintf(__('User %s already exists (ID: %d).', 'we-user-importer'), $digits_phone_number, $user_id), 'info');
             } else {
                 $password = wp_generate_password(12, false);
                 $email = $digits_phone_number . '@' . parse_url(get_site_url(), PHP_URL_HOST);
                 $user_id = wp_create_user($digits_phone_number, $password, $email);
 
                 if (is_wp_error($user_id)) {
-                    add_to_csv_log(sprintf(__('❌ Error: Failed to create user %s: %s', 'we-user-importer'), $digits_phone_number, $user_id->get_error_message()), 'error');
+                    add_to_csv_log(sprintf(__('Failed to create user %s: %s', 'we-user-importer'), $digits_phone_number, $user_id->get_error_message()), 'error');
                     continue;
                 }
                 update_user_meta($user_id, 'billing_email', sanitize_email($email));
-                add_to_csv_log(sprintf(__('✅ Success: User %s created (ID: %d).', 'we-user-importer'), $digits_phone_number, $user_id), 'success');
+                add_to_csv_log(sprintf(__('User %s created (ID: %d).', 'we-user-importer'), $digits_phone_number, $user_id), 'success');
             }
 
             wp_update_user([
@@ -497,38 +502,36 @@ function my_csv_cron_handler()
             update_user_meta($user_id, 'digt_countrycode', '+98');
             update_user_meta($user_id, 'wp_capabilities', serialize(['customer' => true]));
             update_user_meta($user_id, 'nirwallet_referral_code', $ref_code);
-            add_to_csv_log(sprintf(__('✅ Success: User %s details updated.', 'we-user-importer'), $digits_phone_number), 'success');
+            add_to_csv_log(sprintf(__('User %s details updated.', 'we-user-importer'), $digits_phone_number), 'success');
 
             if ((user_has_ever_been_charged($user_id) && $not_only_wallet_first_time) || !user_has_ever_been_charged($user_id)) {
                 if (!$continue_if_exists) {
-                    add_to_csv_log(sprintf(__('⏩ Info: User %s wallet not charged due to settings.', 'we-user-importer'), $digits_phone_number), 'info');
+                    add_to_csv_log(sprintf(
+                        __('Info: User %s wallet not charged due to settings.', 'we-user-importer'),
+                        $digits_phone_number
+                    ), 'info');
                     continue;
                 }
                 if (add_wallet_balance($user_id, $charge, $wallet_timestamp)) {
-                    add_to_csv_log(sprintf(__('✅ Success: Wallet charged for user %s with amount %s.', 'we-user-importer'), $digits_phone_number, $charge), 'success');
+                    add_to_csv_log(sprintf(__('Wallet charged for user %s with amount %s.', 'we-user-importer'), $digits_phone_number, $charge), 'success');
                 } else {
-                    add_to_csv_log(sprintf(__('❌ Error: Failed to charge wallet for user %s.', 'we-user-importer'), $digits_phone_number), 'error');
+                    add_to_csv_log(sprintf(__('Failed to charge wallet for user %s.', 'we-user-importer'), $digits_phone_number), 'error');
                 }
             }
 
             if (filled($state) && filled($city)) {
                 if (update_user_wc_address($user_id, $state, $city)) {
-                    add_to_csv_log(sprintf(__('✅ Success: Address updated for user %s.', 'we-user-importer'), $digits_phone_number), 'success');
+                    add_to_csv_log(sprintf(__('Address updated for user %s.', 'we-user-importer'), $digits_phone_number), 'success');
                 } else {
-                    add_to_csv_log(sprintf(__('❌ Error: Failed to update address for user %s.', 'we-user-importer'), $digits_phone_number), 'error');
+                    add_to_csv_log(sprintf(__('Failed to update address for user %s.', 'we-user-importer'), $digits_phone_number), 'error');
                 }
             } else {
-                add_to_csv_log(sprintf(__('⚠️ Warning: State or city empty for user %s.', 'we-user-importer'), $digits_phone_number), 'warning');
+                add_to_csv_log(sprintf(__('State or city empty for user %s.', 'we-user-importer'), $digits_phone_number), 'warning');
             }
 
-            $setting = new ADDON_USER_IMPORTER_Settings();
-
-            if ($setting->get_setting('sms_status')) {
-                $sms = new We_SMS_Manager();
-                if ($sms->sendPatternSMS(" $buy_date;$charge;$persian_expire_date", $cleaned_number)) {
-                    add_to_csv_log(__("✅ Sms Send to $cleaned_number Success!", 'we-user-importer'), "success");
+                    add_to_csv_log(__('Sms Send to $cleaned_number Success!', 'we-user-importer'), "success");
                 } else {
-                    add_to_csv_log(__("❌ Sms Send to $cleaned_number failed!", 'we-user-importer'), "error");
+                    add_to_csv_log(__('Sms Send to $cleaned_number failed!', 'we-user-importer'), "error");
                 }
             }
         }
@@ -537,7 +540,7 @@ function my_csv_cron_handler()
         fclose($handle);
 
         if ($is_eof) {
-            add_to_csv_log(__('🎉 Success: File processing completed.', 'we-user-importer'), 'success');
+            add_to_csv_log(__('File processing completed.', 'we-user-importer'), 'success');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
             $wp_filesystem->delete($file_path);
@@ -546,10 +549,10 @@ function my_csv_cron_handler()
             $task_data['offset'] = $new_offset;
             set_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task', $task_data, HOUR_IN_SECONDS);
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
-            add_to_csv_log(sprintf(__('🔄 Info: Processed %d rows, new offset: %d.', 'we-user-importer'), $processed_count, $new_offset), 'info');
+            add_to_csv_log(sprintf(__('Processed %d rows, new offset: %d.', 'we-user-importer'), $processed_count, $new_offset), 'info');
         }
     } catch (Throwable $th) {
-        add_to_csv_log(sprintf(__('❌ Error: File processing failed: %s', 'we-user-importer'), $th->getMessage()), 'error');
+        add_to_csv_log(sprintf(__('File processing failed: %s', 'we-user-importer'), $th->getMessage()), 'error');
         if (is_resource($handle)) {
             fclose($handle);
         }
