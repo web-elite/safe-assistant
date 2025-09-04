@@ -1,0 +1,91 @@
+<?php
+
+if (!function_exists('get_sms_url')) {
+    function get_sms_url(string $type): string
+    {
+        $base_url = 'https://rest.payamak-panel.com/api/SendSMS/';
+        return match ($type) {
+            'send' => $base_url . 'SendSMS',
+            'pattern' => $base_url . 'BaseServiceNumber',
+            'pattern2' => 'http://api.payamak-panel.com/post/Send.asmx/SendByBaseNumber2',
+            default => throw new InvalidArgumentException("Unsupported SMS URL type: $type"),
+        };
+    }
+}
+
+if (!function_exists('send_sms')) {
+    /**
+     * Send plain SMS
+     */
+    function send_sms(string|array $to, string $text): bool|string
+    {
+        if (empty($to) || empty($text)) return false;
+
+        $recipients = is_array($to) ? implode(',', $to) : $to;
+
+        $data = [
+            'username' => sa_get_option('sms_username'),
+            'password' => sa_get_option('sms_password'),
+            'to'       => $recipients,
+            'from'     => sa_get_option('sms_from'),
+            'text'     => $text
+        ];
+
+        return sms_make_request(get_sms_url('send'), $data);
+    }
+}
+
+if (!function_exists('send_sms_pattern')) {
+    /**
+     * Send SMS using pattern (base number)
+     */
+    function send_sms_pattern(string|array $textArgs, string $to, ?int $bodyId = null): bool|string
+    {
+        if (empty($to) || empty($textArgs)) return false;
+        $data = [
+            'username' => sa_get_option('sms_username'),
+            'password' => sa_get_option('sms_password'),
+            'text'     => $textArgs,
+            'to'       => normalize_mobile_number($to),
+            'bodyId'   => $pattern ?? $bodyId,
+        ];
+
+        return sms_make_request(get_sms_url('pattern2'), $data, 'GET');
+    }
+}
+
+if (!function_exists('sms_make_request')) {
+    /**
+     * Make cURL POST request
+     */
+    function sms_make_request(string $url, array $data, string $method = 'POST'): bool|string
+    {
+        $curl_options = [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ];
+        switch ($method) {
+            case 'POST':
+                $curl_options[CURLOPT_POST] = true;
+                $curl_options[CURLOPT_POSTFIELDS] = http_build_query($data);
+                break;
+            case 'GET':
+                $url = $url . '?' . http_build_query($data);
+                break;
+            default:
+                return "Method Unsupported!";
+                break;
+        }
+        $handle = curl_init($url);
+        curl_setopt_array($handle, $curl_options);
+        $response = curl_exec($handle);
+
+        if (curl_errno($handle)) {
+            error_log('SMS Error: ' . curl_error($handle));
+            return false;
+        }
+        curl_close($handle);
+        return $response;
+    }
+}
