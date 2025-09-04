@@ -529,6 +529,8 @@ function my_csv_cron_handler()
                 add_to_csv_log(sprintf(__('State or city empty for user %s.', 'we-user-importer'), $digits_phone_number), 'warning');
             }
 
+            if (sa_get_option('sms_status')) {
+                if (send_sms_pattern(" $buy_date;$charge;$persian_expire_date", $cleaned_number)) {
                     add_to_csv_log(__('Sms Send to $cleaned_number Success!', 'we-user-importer'), "success");
                 } else {
                     add_to_csv_log(__('Sms Send to $cleaned_number failed!', 'we-user-importer'), "error");
