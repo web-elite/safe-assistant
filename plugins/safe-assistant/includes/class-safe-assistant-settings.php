@@ -1,16 +1,6 @@
 <?php
 
 /**
- * Fired during plugin activation
- *
- * @link       https://webelitee.ir
- * @since      1.0.0
- *
- * @package    Safe_Assistant
- * @subpackage Safe_Assistant/includes
- */
-
-/**
  * Fired during plugin activation.
  *
  * This class defines all code necessary to run during the plugin's activation.
@@ -22,6 +12,47 @@
  */
 class Safe_Assistant_Settings
 {
+	private static $instance = null;
+
+	/**
+	 * Database table name for settings
+	 *
+	 * @var string
+	 */
+	private $table_name;
+
+	/**
+	 * prefix for setting fields
+	 *
+	 * @var string
+	 */
+	private $prefix = SAFE_ASSISTANT_SLUG . '-settings';
+
+	/**
+	 * __construct
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		global $wpdb;
+		$this->table_name = $wpdb->prefix . str_replace('-', '_', SAFE_ASSISTANT_SLUG) . '_settings';
+	}
+
+	public static function instance()
+	{
+		if (self::$instance === null) {
+			self::$instance = new self;
+		}
+		return self::$instance;
+	}
+
+	public function init()
+	{
+		$this->create_options();
+		$this->handle();
+		$this->create_last_options();
+	}
 
 	/**
 	 * handle_settings
@@ -30,11 +61,12 @@ class Safe_Assistant_Settings
 	 *
 	 * @return void
 	 */
-	public function handle()
+	private function handle()
 	{
 		if (sa_get_option('user_importer_addons')) {
-			require_once SAFE_ASSISTANT_DIR . 'addons/user-importer/addon-user-importer-main.php';
-			new Addon_User_Importer_Main();
+			require_once SAFE_ASSISTANT_DIR . 'addons/user-importer/addon-user-importer.php';
+			$user_importer = new Addon_User_Importer();
+			$user_importer->activator();
 		}
 	}
 
@@ -45,10 +77,9 @@ class Safe_Assistant_Settings
 	 *
 	 * @since    1.0.0
 	 */
-	public function init()
+	private function create_options()
 	{
-		$prefix = SAFE_ASSISTANT_SLUG . '-settings';
-		CSF::createOptions($prefix, array(
+		CSF::createOptions($this->prefix, array(
 			'menu_title' => esc_html__('Safe Assistant', 'safe-assistant'),
 			'menu_slug'  => SAFE_ASSISTANT_SLUG . '-menu',
 			'framework_title'         => esc_html__('Safe Assistant', 'safe-assistant'),
@@ -69,9 +100,10 @@ class Safe_Assistant_Settings
 			'ajax_save'               => true,
 			'admin_bar_menu_priority' => 50,
 			'footer_text' => sprintf(
-				esc_html__('%1$s by <a href="https://webelitee.ir" target="_blank" style="color:#555; text-decoration:unset !important;">𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢</a> with %2$s', 'safe-assistant'),
-				esc_html__('Created', 'safe-assistant'),
-				'<span style="color: #e25555;" title="' . esc_html__('Love', 'safe-assistant') . '">❤</span>'
+				'%1$s <a href="https://webelitee.ir" target="_blank" style="color:#555; text-decoration:unset !important;">𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢</a> %2$s <span style="color: #e25555;" title="%3$s">❤</span>',
+				esc_html__('Created by', 'safe-assistant'),
+				esc_html__('with', 'safe-assistant'),
+				esc_html__('Love', 'safe-assistant')
 			),
 			'footer_text_direction' => is_rtl() ? 'rtl' : 'ltr',
 			'database'                => 'options',
@@ -84,7 +116,7 @@ class Safe_Assistant_Settings
 		$sections = $this->get_sections();
 
 		foreach ($sections as $key => $value) {
-			CSF::createSection($prefix, $value);
+			CSF::createSection($this->prefix, $value);
 		}
 	}
 
@@ -98,29 +130,32 @@ class Safe_Assistant_Settings
 
 		$sections = [
 			[
-				'id'     => 'addons',
-				'title'  => esc_html__('Addons', 'safe-assistant'),
-				'icon'   => 'fas fa-plug',
-				'fields' => [
-					[
-						'id'      => 'user_importer_addons',
-						'type'    => 'switcher',
-						'title'   => esc_html__('Enable User Importer Addon', 'safe-assistant'),
-						'default' => false,
-						'desc'    => esc_html__('Enable or disable User Importer Addon.', 'safe-assistant'),
-					],
-				]
+				'id'     => 'wordpress',
+				'title'  => esc_html__('WordPress', 'safe-assistant'),
+				'icon'   => 'fab fa-wordpress',
 			],
 			[
+				'id'     => 'woocommerce',
+				'title'  => esc_html__('WooCommerce', 'safe-assistant'),
+				'icon'   => 'fas fa-shopping-cart',
+			],
+			[
+				'id'     => 'wallet',
+				'title'  => esc_html__('Wallet', 'safe-assistant'),
+				'icon'   => 'fas fa-wallet',
+			],
+			[
+				'parent' => 'wordpress',
+				'id'     => 'optimization',
 				'title'  => esc_html__('Optimization', 'safe-assistant'),
 				'icon'   => 'fas fa-cogs',
 				'fields' => [
 					[
-						'id' => 'disbale_woodmart_patch_cheker',
-						'type' => 'swticher',
+						'id'      => 'disable_woodmart_patch_checker',
+						'type'    => 'switcher',
 						'title'   => esc_html__('Disable Woodmart Patch Checker', 'safe-assistant'),
 						'default' => false,
-						'desc'    => esc_html__('disbale woodmart patch cheker in all pages exclude woodmart patch page', 'safe-assistant'),
+						'desc'    => esc_html__('Disable Woodmart patch checker on all pages except the Woodmart patch page.', 'safe-assistant'),
 					],
 					[
 						'id'      => 'disable_admin_bar',
@@ -157,6 +192,216 @@ class Safe_Assistant_Settings
 						'default' => false,
 						'desc'    => esc_html__('Disable the Gutenberg block editor and use Classic Editor.', 'safe-assistant'),
 					],
+				],
+			],
+			[
+				'parent' => 'woocommerce',
+				'id'     => 'free_shipping',
+				'title'  => esc_html__('Free Shipping Settings', 'safe-assistant'),
+				'icon'   => 'fas fa-shipping-fast',
+				'fields' => [
+					[
+						'id'      => 'free_shipping_min_mashhad',
+						'type'    => 'number',
+						'attributes' => [
+							'min'  => 0,
+							'step' => 1000,
+						],
+						'unit'    => esc_html__('Toman', 'safe-assistant'),
+						'title'   => esc_html__('Minimum Purchase (Mashhad)', 'safe-assistant'),
+						'default' => 1000000,
+						'desc'    => esc_html__('Minimum order amount for free shipping in Mashhad.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'free_shipping_min_other_cities',
+						'type'    => 'number',
+						'attributes' => [
+							'min'  => 0,
+							'step' => 1000,
+						],
+						'unit'    => esc_html__('Toman', 'safe-assistant'),
+						'title'   => esc_html__('Minimum Purchase (Other Cities)', 'safe-assistant'),
+						'default' => 1500000,
+						'desc'    => esc_html__('Minimum order amount for free shipping in other cities.', 'safe-assistant'),
+					],
+				],
+				[
+					'id'     => 'automatic_membership',
+					'title'  => esc_html__('Automatic Membership Settings', 'safe-assistant'),
+					'icon'   => 'fas fa-user-plus',
+					'fields' => [
+						[
+							'id'      => 'enable_auto_membership',
+							'type'    => 'switcher',
+							'title'   => esc_html__('Enable Automatic Membership', 'safe-assistant'),
+							'default' => false,
+							'desc'    => esc_html__('Enable or disable automatic user membership on checkout.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'hide_membership_option_checkout',
+							'type'    => 'switcher',
+							'title'   => esc_html__('Hide Membership Option on Checkout', 'safe-assistant'),
+							'default' => false,
+							'desc'    => esc_html__('Hide the membership option on the checkout page.', 'safe-assistant'),
+						],
+					],
+				],
+				[
+					'id'     => 'order_management',
+					'title'  => esc_html__('Order Management', 'safe-assistant'),
+					'icon'   => 'fas fa-clipboard-list',
+					'fields' => [
+						[
+							'id'      => 'show_order_notes_in_admin_table',
+							'type'    => 'switcher',
+							'title'   => esc_html__('Display order notes in the orders table', 'safe-assistant'),
+							'default' => false,
+							'desc'    => esc_html__('Enable displaying order notes in the admin orders table.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'order_convertor_status',
+							'type'    => 'switcher',
+							'title'   => esc_html__('Convert Pending Orders to Failed', 'safe-assistant'),
+							'default' => true,
+							'desc'    => esc_html__('Enable automatic conversion of pending orders to failed status.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'order_to_fail_pending_time',
+							'type'    => 'number',
+							'title'   => esc_html__('Time to Mark Order as Failed (Hours)', 'safe-assistant'),
+							'default' => 1,
+							'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as failed.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'order_to_canceled_pending_time',
+							'type'    => 'number',
+							'title'   => esc_html__('Time to Mark Order as Cancelled (Hours)', 'safe-assistant'),
+							'default' => 36,
+							'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as cancelled.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'order_convertor_start_time',
+							'type'    => 'number',
+							'title'   => esc_html__('Start Time for Failed Status Check (Hour)', 'safe-assistant'),
+							'default' => 8,
+							'desc'    => esc_html__('Set the hour (24h format) when the system starts checking for orders to mark as failed.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'order_convertor_end_time',
+							'type'    => 'number',
+							'title'   => esc_html__('End Time for Failed Status Check (Hour)', 'safe-assistant'),
+							'default' => 16,
+							'desc'    => esc_html__('Set the hour (24h format) when the system stops checking for orders to mark as failed.', 'safe-assistant'),
+						],
+					],
+				],
+				[
+					'id'     => 'woocommerce_admin',
+					'title'  => esc_html__('WooCommerce Admin Settings', 'safe-assistant'),
+					'icon'   => 'fas fa-cog',
+					'fields' => [
+						[
+							'id'      => 'disable_wc_admin',
+							'type'    => 'switcher',
+							'title'   => esc_html__('Disable WooCommerce Admin', 'safe-assistant'),
+							'default' => false,
+							'desc'    => esc_html__('Disable the WooCommerce Admin dashboard.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'disable_wc_marketing_hub',
+							'type'    => 'switcher',
+							'title'   => esc_html__('Disable WooCommerce Marketing Hub', 'safe-assistant'),
+							'default' => false,
+							'desc'    => esc_html__('Disable the Marketing Hub in WooCommerce.', 'safe-assistant'),
+						],
+						[
+							'id'      => 'disable_wc_blocks_frontend',
+							'type'    => 'switcher',
+							'title'   => esc_html__('Disable WooCommerce Blocks on Frontend', 'safe-assistant'),
+							'default' => false,
+							'desc'    => esc_html__('Disable WooCommerce Blocks scripts/styles on frontend.', 'safe-assistant'),
+						],
+					],
+				],
+			],
+			[
+				'parent' => 'woocommerce',
+				'id'     => 'automatic_membership',
+				'title'  => esc_html__('Automatic Membership Settings', 'safe-assistant'),
+				'icon'   => 'fas fa-user-plus',
+				'fields' => [
+					[
+						'id'      => 'enable_auto_membership',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Enable Automatic Membership', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Enable or disable automatic user membership on checkout.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'hide_membership_option_checkout',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Hide Membership Option on Checkout', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Hide the membership option on the checkout page.', 'safe-assistant'),
+					],
+				],
+			],
+			[
+				'parent' => 'woocommerce',
+				'id'     => 'order_management',
+				'title'  => esc_html__('Order Management', 'safe-assistant'),
+				'icon'   => 'fas fa-clipboard-list',
+				'fields' => [
+					[
+						'id'      => 'show_order_notes_in_admin_table',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Show Order Notes in Admin Orders Table', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Enable displaying order notes in the admin orders table.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_convertor_status',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Convert Pending Orders to Failed', 'safe-assistant'),
+						'default' => true,
+						'desc'    => esc_html__('Enable automatic conversion of pending orders to failed status.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_to_fail_pending_time',
+						'type'    => 'number',
+						'title'   => esc_html__('Time to Mark Order as Failed (Hours)', 'safe-assistant'),
+						'default' => 1,
+						'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as failed.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_to_canceled_pending_time',
+						'type'    => 'number',
+						'title'   => esc_html__('Time to Mark Order as Cancelled (Hours)', 'safe-assistant'),
+						'default' => 36,
+						'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as cancelled.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_convertor_start_time',
+						'type'    => 'number',
+						'title'   => esc_html__('Start Time for Failed Status Check (Hour)', 'safe-assistant'),
+						'default' => 8,
+						'desc'    => esc_html__('Set the hour (24h format) when the system starts checking for orders to mark as failed.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_convertor_end_time',
+						'type'    => 'number',
+						'title'   => esc_html__('End Time for Failed Status Check (Hour)', 'safe-assistant'),
+						'default' => 16,
+						'desc'    => esc_html__('Set the hour (24h format) when the system stops checking for orders to mark as failed.', 'safe-assistant'),
+					],
+				],
+			],
+			[
+				'parent' => 'woocommerce',
+				'id'     => 'woocommerce_admin',
+				'title'  => esc_html__('WooCommerce Admin Settings', 'safe-assistant'),
+				'icon'   => 'fas fa-cog',
+				'fields' => [
 					[
 						'id'      => 'disable_wc_admin',
 						'type'    => 'switcher',
@@ -178,122 +423,123 @@ class Safe_Assistant_Settings
 						'default' => false,
 						'desc'    => esc_html__('Disable WooCommerce Blocks scripts/styles on frontend.', 'safe-assistant'),
 					],
-				]
+				],
 			],
 			[
-				'title'  => esc_html__('Tools', 'safe-assistant'),
-				'icon'   => 'fas fa-tools',
-				'fields' => []
-			],
-			[
-				'title'  => esc_html__('Free Shipping Settings', 'safe-assistant'),
-				'icon'   => 'fas fa-shipping-fast',
+				'id'     => 'addons',
+				'title'  => esc_html__('Addons', 'safe-assistant'),
+				'icon'   => 'fas fa-plug',
 				'fields' => [
 					[
-						'id'      => 'free_shipping_min_mashhad',
-						'type'    => 'number',
-						'attributes' => [
-							'min'  => 0,
-							'step' => 1000,
-						],
-						'unit'        => esc_html__('Toman', 'safe-assistant'),
-						'title'   => esc_html__('Minimum Purchase', 'safe-assistant'),
-						'default' => 1000000,
-						'desc'    => esc_html__('Minimum order amount for free shipping in Mashhad.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'free_shipping_min_other_cities',
-						'type'    => 'number',
-						'attributes' => [
-							'min'  => 0,
-							'step' => 1000,
-						],
-						'unit'        => esc_html__('Toman', 'safe-assistant'),
-						'title'   => esc_html__('Minimum Purchase', 'safe-assistant'),
-						'default' => 1500000,
-						'desc'    => esc_html__('Minimum order amount for free shipping in other cities.', 'safe-assistant'),
-					],
-				]
-			],
-			[
-				'title'  => esc_html__('Automatic Membership Settings', 'safe-assistant'),
-				'icon'   => 'fas fa-user-plus',
-				'fields' => [
-					[
-						'id'      => 'enable_auto_membership',
+						'id'      => 'user_importer_addons',
 						'type'    => 'switcher',
-						'title'   => esc_html__('Enable Automatic Membership', 'safe-assistant'),
+						'title'   => esc_html__('Enable User Importer Addon', 'safe-assistant'),
 						'default' => false,
-						'desc'    => esc_html__('Enable or disable automatic user membership on checkout.', 'safe-assistant'),
+						'desc'    => esc_html__('Enable or disable User Importer Addon.', 'safe-assistant'),
 					],
-					[
-						'id'      => 'hide_membership_option_checkout',
-						'type'    => 'switcher',
-						'title'   => esc_html__('Hide Membership Option on Checkout Page', 'safe-assistant'),
-						'default' => false,
-						'desc'    => esc_html__('Hide the membership option on the checkout page.', 'safe-assistant'),
-					],
-				]
+				],
 			],
-			[
-				'title'  => esc_html__('Order Management', 'safe-assistant'),
-				'icon'   => 'fas fa-clipboard-list',
-				'fields' => [
-					[
-						'id'      => 'show_order_notes_in_admin_table',
-						'type'    => 'switcher',
-						'title'   => esc_html__('Show Order Notes in Admin Orders Table', 'safe-assistant'),
-						'default' => false,
-						'desc'    => esc_html__('Enable displaying order notes in the admin orders table.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_convertor_status',
-						'type'    => 'switcher',
-						'title'   => esc_html__('Convert pending orders to fail order', 'safe-assistant'),
-						'default' => true,
-						'desc'    => esc_html__('Enable automatic conversion of pending orders to failed status', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_to_fail_pending_time',
-						'type'    => 'number',
-						'title'   => esc_html__('Time to set order as Failed (hours)', 'safe-assistant'),
-						'default' => 1,
-						'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as Failed', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_to_canceled_pending_time',
-						'type'    => 'number',
-						'title'   => esc_html__('Time to set order as Cancelled (hours)', 'safe-assistant'),
-						'default' => 36,
-						'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as Cancelled', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_convertor_start_time',
-						'type'    => 'number',
-						'title'   => esc_html__('Start time for Failed status check (hour)', 'safe-assistant'),
-						'default' => 8,
-						'desc'    => esc_html__('Set the hour (24h format) when the system should start checking for orders to mark as Failed', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_convertor_end_time',
-						'type'    => 'number',
-						'title'   => esc_html__('End time for Failed status check (hour)', 'safe-assistant'),
-						'default' => 16,
-						'desc'    => esc_html__('Set the hour (24h format) when the system should stop checking for orders to mark as Failed', 'safe-assistant'),
-					],
-				]
-			],
-			[
-				'title'  => esc_html__('Backup & Restore', 'safe-assistant'),
-				'icon'   => 'fas fa-save',
-				'fields' => [
-					[
-						'type' => 'backup',
-					]
-				]
-			]
 		];
 
+		if (defined('nirweb_wallet')) {
+			$sections[] = [
+				'parent' => 'wallet',
+				'id'     => 'nir_wallet',
+				'title'  => esc_html__('Nir Wallet', 'safe-assistant'),
+				'icon'   => 'fas fa-wallet',
+				'fields' => [
+					[
+						'id'          => 'opt-select-4',
+						'type'        => 'select',
+						'title'       => esc_html__('Wallet expiration SMS', 'safe-assistant'),
+						'chosen'      => true,
+						'multiple'    => true,
+						'placeholder' => esc_html__('Select an option', 'safe-assistant'),
+						'desc'        => esc_html__("Choose how many days after the user's wallet expiration date the SMS will be sent.", 'safe-assistant'),
+						'options'     => array(
+							'24'   => __('1 Day', 'safe-assistant'),
+							'48'   => __('2 Days', 'safe-assistant'),
+							'72'   => __('3 Days', 'safe-assistant'),
+							'96'   => __('4 Days', 'safe-assistant'),
+							'120'  => __('5 Days', 'safe-assistant'),
+							'144'  => __('6 Days', 'safe-assistant'),
+							'1848' => __('7 Days', 'safe-assistant'),
+						),
+						'default'     => '24'
+					],
+				]
+			];
+		} else {
+			$sections[] = [
+				'parent' => 'wallet',
+				'id'     => 'nir_wallet',
+				'title'  => esc_html__('Nir Wallet', 'safe-assistant'),
+				'icon'   => 'fas fa-danger',
+				'fields' => [
+					[
+						'type'    => 'notice',
+						'style'   => 'warning',
+						'content' => __('Nir Wallet plugin not active or installed', 'safe-assistant'),
+					],
+				]
+			];
+		}
 		return $sections;
+	}
+
+	private function create_last_options()
+	{
+		CSF::createSection($this->prefix, [
+			'title'  => esc_html__('Settings', 'safe-assistant'),
+			'icon'   => 'fas fa-cog',
+			'fields' => [
+				[
+					'type'     => 'subheading',
+					'content'  => __('SMS Panel Settings', 'safe-assistant'),
+				],
+				[
+					'id'       => 'sms_status',
+					'type'     => 'checkbox',
+					'title'    => __('SMS Sending is Active?', 'safe-assistant'),
+				],
+				[
+					'id'       => 'sms_gateway',
+					'type'     => 'select',
+					'title'    => __('SMS Gateway', 'safe-assistant'),
+					'options'  => [
+						'melipayamak' => 'MeliPayamak.Com',
+					],
+					'default'  => 'melipayamak',
+				],
+				[
+					'id'       => 'sms_username',
+					'type'     => 'text',
+					'title'    => __('Username', 'safe-assistant'),
+				],
+				[
+					'id'       => 'sms_password',
+					'type'     => 'text',
+					'title'    => __('Password', 'safe-assistant'),
+					'attributes' => [
+						'type' => 'password',
+					],
+				],
+				[
+					'id'       => 'sms_from_number',
+					'type'     => 'text',
+					'title'    => __('Sms sender number', 'safe-assistant'),
+				]
+			]
+		]);
+
+		CSF::createSection($this->prefix, [
+			'title'  => esc_html__('Backup & Restore', 'safe-assistant'),
+			'icon'   => 'fas fa-save',
+			'fields' => [
+				[
+					'type' => 'backup',
+				]
+			]
+		]);
 	}
 }

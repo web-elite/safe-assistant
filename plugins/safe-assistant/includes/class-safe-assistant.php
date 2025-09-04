@@ -159,9 +159,8 @@ class Safe_Assistant
 
 		if (class_exists('CSF')) {
 			require_once SAFE_ASSISTANT_DIR . 'includes/class-safe-assistant-settings.php';
-			$settings = new Safe_Assistant_Settings();
-			$this->loader->add_action('plugin_loaded', $settings, 'init');
-			$this->loader->add_action('plugin_loaded', $settings, 'handle');
+			$settings = Safe_Assistant_Settings::instance();
+			$settings->init();
 		} else {
 			add_action('admin_notices', function () {
 				echo '<div class="notice notice-error"><p>'
