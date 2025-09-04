@@ -32,8 +32,26 @@ class Safe_Assistant_Activator
 	 */
 	public static function activate()
 	{
-		include_once SAFE_ASSISTANT_DIR . 'addons/user-importer/addon-user-importer-settings.php';
-		$settings = new Addon_User_Importer_Settings();
-		$settings->create_tables();
+		// Activate all addons in the addons directory
+		if (defined('SAFE_ASSISTANT_DIR')) {
+			$addons_dir = SAFE_ASSISTANT_DIR . 'addons/';
+			$addon_folders = glob($addons_dir . '*', GLOB_ONLYDIR);
+
+			foreach ($addon_folders as $folder) {
+				$addon_name = basename($folder);
+				$addon_file = $folder . '/addon-' . $addon_name . '.php';
+
+				if (file_exists($addon_file)) {
+					require_once $addon_file;
+					$class_name = 'Addon_' . str_replace('-', '_', ucwords($addon_name, '-'));
+					if (class_exists($class_name)) {
+						$addon_instance = new $class_name();
+						if (method_exists($addon_instance, 'activator')) {
+							$addon_instance->activator();
+						}
+					}
+				}
+			}
+		}
 	}
 }
