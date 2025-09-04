@@ -1,14 +1,13 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Safe Assistant\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-04 07:27+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"PO-Revision-Date: 2025-09-04 07:31+0000\n"
+"Last-Translator: مجتهدی\n"
+"Language-Team: فارسی\n"
+"Language: fa_IR\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,357 +17,365 @@ msgstr ""
 
 #: includes/class-safe-assistant-settings.php:443
 msgid "1 Day"
-msgstr ""
+msgstr "۱ روز"
 
 #: includes/class-safe-assistant-settings.php:444
 msgid "2 Days"
-msgstr ""
+msgstr "۲ روز"
 
 #: includes/class-safe-assistant-settings.php:445
 msgid "3 Days"
-msgstr ""
+msgstr "۳ روز"
 
 #: includes/class-safe-assistant-settings.php:446
 msgid "4 Days"
-msgstr ""
+msgstr "۴ روز"
 
 #: includes/class-safe-assistant-settings.php:447
 msgid "5 Days"
-msgstr ""
+msgstr "۵ روز"
 
 #: includes/class-safe-assistant-settings.php:448
 msgid "6 Days"
-msgstr ""
+msgstr "۶ روز"
 
 #: includes/class-safe-assistant-settings.php:449
 msgid "7 Days"
-msgstr ""
+msgstr "۷ روز"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:65
 msgid "A process is currently running."
-msgstr ""
+msgstr "در حال حاضر یک فرآیند در حال اجرا است."
 
 #: addons/user-importer/addon-user-importer.php:385
 msgid "A process is currently running. Please wait until it completes."
-msgstr ""
+msgstr "یک فرآیند در حال اجرا است. لطفاً تا اتمام آن صبر کنید."
 
 #: includes/class-safe-assistant-settings.php:413
 msgid "Addons"
-msgstr ""
+msgstr "افزونه‌ها"
 
 #: addons/user-importer/addon-user-importer.php:850
 msgid "All operations reverted successfully."
-msgstr ""
+msgstr "تمام عملیات با موفقیت به حالت اولیه برگشت."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:28
 msgid "Amounts must be in Toman."
-msgstr ""
+msgstr "مبالغ باید به تومان باشد."
 
 #: includes/class-safe-assistant-settings.php:213
 #: includes/class-safe-assistant-settings.php:313
 msgid "Automatic Membership Settings"
-msgstr ""
+msgstr "تنظیمات عضویت خودکار"
 
 #: includes/class-safe-assistant-settings.php:476
 msgid "Backup & Restore"
-msgstr ""
+msgstr "پشتیبان‌گیری و بازیابی"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:45
 msgid "Charge account if user exists?"
-msgstr ""
+msgstr "در صورت وجود کاربر، حساب کاربری شارژ شود؟"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:19
 msgid "Charge Percentage"
-msgstr ""
+msgstr "درصد شارژ"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:49
 msgid "Charge wallet for users with previous charges?"
 msgstr ""
+"آیا از کاربرانی که قبلاً هزینه‌ای پرداخت کرده‌اند، کیف پول شارژ دریافت "
+"می‌شود؟"
 
 #: includes/class-safe-assistant-settings.php:441
 msgid ""
 "Choose how many days after the user's wallet expiration date the SMS will be "
 "sent."
 msgstr ""
+"انتخاب کنید که پیامک چند روز پس از تاریخ انقضای کیف پول کاربر ارسال شود."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:24
 msgid "City"
-msgstr ""
+msgstr "شهر"
 
 #: addons/user-importer/addon-user-importer.php:441
 msgid "Clear Logs"
-msgstr ""
+msgstr "پاک کردن گزارش‌ها"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:26
 msgid "Column 10:"
-msgstr ""
+msgstr "ستون ۱۰:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:17
 msgid "Column 1:"
-msgstr ""
+msgstr "ستون ۱:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:18
 msgid "Column 2:"
-msgstr ""
+msgstr "ستون ۲:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:19
 msgid "Column 3:"
-msgstr ""
+msgstr "ستون ۳:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:20
 msgid "Column 4:"
-msgstr ""
+msgstr "ستون ۴:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:21
 msgid "Column 5:"
-msgstr ""
+msgstr "ستون ۵:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:22
 msgid "Column 6:"
-msgstr ""
+msgstr "ستون ۶:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:23
 msgid "Column 7:"
-msgstr ""
+msgstr "ستون ۷:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:24
 msgid "Column 8:"
-msgstr ""
+msgstr "ستون ۸:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:25
 msgid "Column 9:"
-msgstr ""
+msgstr "ستون ۹:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:15
 msgid "Column Information:"
-msgstr ""
+msgstr "اطلاعات ستون:"
 
 #: includes/class-safe-assistant-settings.php:247
 #: includes/class-safe-assistant-settings.php:348
 msgid "Convert Pending Orders to Failed"
-msgstr ""
+msgstr "تبدیل سفارشات در حال انتظار به ناموفق"
 
 #: includes/class-safe-assistant-settings.php:87
 msgid "Created by"
-msgstr ""
+msgstr "ایجاد شده توسط"
 
 #: handlers/handle-safe-assistant-shop.php:31
 msgid "Customer Note"
-msgstr ""
+msgstr "یادداشت مشتری"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:30
 msgid "Date columns should be in YYYY/MM/DD format, e.g., 1404/05/24."
-msgstr ""
+msgstr "ستون‌های تاریخ باید به فرمت YYYY/MM/DD باشند، مثلاً 1404/05/24."
 
 #: addons/user-importer/addon-user-importer.php:599
 #, php-format
 msgid "Decryption failed: %s"
-msgstr ""
+msgstr "رمزگشایی ناموفق بود: %s"
 
 #: includes/class-safe-assistant-settings.php:146
 msgid "Disable Admin Bar"
-msgstr ""
+msgstr "غیرفعال کردن نوار مدیریت"
 
 #: includes/class-safe-assistant-settings.php:167
 msgid "Disable All WordPress Updates"
-msgstr ""
+msgstr "غیرفعال کردن همه به‌روزرسانی‌های وردپرس"
 
 #: includes/class-safe-assistant-settings.php:169
 msgid "Disable core, plugin, and theme updates."
-msgstr ""
+msgstr "غیرفعال کردن به‌روزرسانی‌های هسته، افزونه و قالب."
 
 #: includes/class-safe-assistant-settings.php:174
 msgid "Disable Gutenberg Editor"
-msgstr ""
+msgstr "غیرفعال کردن ویرایشگر گوتنبرگ"
 
 #: includes/class-safe-assistant-settings.php:176
 msgid "Disable the Gutenberg block editor and use Classic Editor."
 msgstr ""
+"ویرایشگر بلوک گوتنبرگ را غیرفعال کنید و از ویرایشگر کلاسیک استفاده کنید."
 
 #: includes/class-safe-assistant-settings.php:298
 #: includes/class-safe-assistant-settings.php:400
 msgid "Disable the Marketing Hub in WooCommerce."
-msgstr ""
+msgstr "غیرفعال کردن مرکز بازاریابی در ووکامرس"
 
 #: includes/class-safe-assistant-settings.php:291
 #: includes/class-safe-assistant-settings.php:393
 msgid "Disable the WooCommerce Admin dashboard."
-msgstr ""
+msgstr "داشبورد مدیریت ووکامرس را غیرفعال کنید."
 
 #: includes/class-safe-assistant-settings.php:289
 #: includes/class-safe-assistant-settings.php:391
 msgid "Disable WooCommerce Admin"
-msgstr ""
+msgstr "غیرفعال کردن پنل مدیریت ووکامرس"
 
 #: includes/class-safe-assistant-settings.php:303
 #: includes/class-safe-assistant-settings.php:405
 msgid "Disable WooCommerce Blocks on Frontend"
-msgstr ""
+msgstr "غیرفعال کردن بلوک‌های ووکامرس در فرانت‌اند"
 
 #: includes/class-safe-assistant-settings.php:305
 #: includes/class-safe-assistant-settings.php:407
 msgid "Disable WooCommerce Blocks scripts/styles on frontend."
-msgstr ""
+msgstr "غیرفعال کردن اسکریپت‌ها/استایل‌های بلوک‌های ووکامرس در بخش کاربری."
 
 #: includes/class-safe-assistant-settings.php:296
 #: includes/class-safe-assistant-settings.php:398
 msgid "Disable WooCommerce Marketing Hub"
-msgstr ""
+msgstr "غیرفعال کردن مرکز بازاریابی ووکامرس"
 
 #: includes/class-safe-assistant-settings.php:139
 msgid "Disable Woodmart Patch Checker"
-msgstr ""
+msgstr "غیرفعال کردن بررسی وصله‌های وودمارت"
 
 #: includes/class-safe-assistant-settings.php:141
 msgid ""
 "Disable Woodmart patch checker on all pages except the Woodmart patch page."
 msgstr ""
+"بررسی‌کننده‌ی وصله‌ی وودمارت را در تمام صفحات به جز صفحه‌ی وصله‌ی وودمارت "
+"غیرفعال کنید."
 
 #: includes/class-safe-assistant-settings.php:240
 msgid "Display order notes in the orders table"
-msgstr ""
+msgstr "نمایش یادداشت‌های سفارش در جدول سفارش‌ها"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:32
 msgid "Download Sample File"
-msgstr ""
+msgstr "دانلود فایل نمونه"
 
 #: includes/class-safe-assistant-settings.php:249
 #: includes/class-safe-assistant-settings.php:350
 msgid "Enable automatic conversion of pending orders to failed status."
-msgstr ""
+msgstr "تبدیل خودکار سفارش‌های در حال انتظار به وضعیت ناموفق را فعال کنید."
 
 #: includes/class-safe-assistant-settings.php:219
 #: includes/class-safe-assistant-settings.php:319
 msgid "Enable Automatic Membership"
-msgstr ""
+msgstr "فعال کردن عضویت خودکار"
 
 #: includes/class-safe-assistant-settings.php:242
 #: includes/class-safe-assistant-settings.php:343
 msgid "Enable displaying order notes in the admin orders table."
-msgstr ""
+msgstr "نمایش یادداشت‌های سفارش را در جدول سفارشات مدیریت فعال کنید."
 
 #: includes/class-safe-assistant-settings.php:221
 #: includes/class-safe-assistant-settings.php:321
 msgid "Enable or disable automatic user membership on checkout."
-msgstr ""
+msgstr "فعال یا غیرفعال کردن عضویت خودکار کاربر در هنگام پرداخت."
 
 #: includes/class-safe-assistant-settings.php:421
 msgid "Enable or disable User Importer Addon."
-msgstr ""
+msgstr "افزونه‌ی واردکننده‌ی کاربر را فعال یا غیرفعال کنید."
 
 #: includes/class-safe-assistant-settings.php:419
 msgid "Enable User Importer Addon"
-msgstr ""
+msgstr "افزونه واردکننده کاربر را فعال کنید"
 
 #: addons/user-importer/addon-user-importer.php:529
 #, php-format
 msgid "Encryption failed: %s"
-msgstr ""
+msgstr "رمزگذاری ناموفق بود: %s"
 
 #: addons/user-importer/addon-user-importer.php:581
 msgid "Encryption key not defined for password decryption."
-msgstr ""
+msgstr "کلید رمزگذاری برای رمزگشایی رمز عبور تعریف نشده است."
 
 #: addons/user-importer/addon-user-importer.php:517
 msgid "Encryption key not defined for password."
-msgstr ""
+msgstr "کلید رمزگذاری برای رمز عبور تعریف نشده است."
 
 #: includes/class-safe-assistant-settings.php:275
 #: includes/class-safe-assistant-settings.php:376
 msgid "End Time for Failed Status Check (Hour)"
-msgstr ""
+msgstr "زمان پایان بررسی وضعیت ناموفق (ساعت)"
 
 #: addons/user-importer/addon-user-importer.php:373
 #: addons/user-importer/addon-user-importer.php:379
 #: addons/user-importer/addon-user-importer.php:391
 #: addons/user-importer/addon-user-importer.php:428
 msgid "Error:"
-msgstr ""
+msgstr "خطا:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:26
 msgid "Expiration Date"
-msgstr ""
+msgstr "تاریخ انقضا"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:57
 msgid "Expiration Days"
-msgstr ""
+msgstr "روزهای انقضا"
 
 #: addons/user-importer/addon-user-importer.php:813
 msgid "Factory reset completed."
-msgstr ""
+msgstr "تنظیم مجدد کارخانه تکمیل شد."
 
 #: addons/user-importer/addon-user-importer.php:587
 msgid "Failed to decode password."
-msgstr ""
+msgstr "رمزگشایی رمز عبور ناموفق بود."
 
 #: addons/user-importer/addon-user-importer.php:594
 msgid "Failed to decrypt password."
-msgstr ""
+msgstr "رمزگشایی رمز عبور ناموفق بود."
 
 #: addons/user-importer/addon-user-importer.php:788
 #, php-format
 msgid "Failed to delete log file: %s"
-msgstr ""
+msgstr "حذف فایل گزارش ناموفق بود: %s"
 
 #: addons/user-importer/addon-user-importer.php:627
 #, php-format
 msgid "Failed to delete setting %s."
-msgstr ""
+msgstr "حذف تنظیم %s ناموفق بود."
 
 #: addons/user-importer/addon-user-importer.php:524
 msgid "Failed to encrypt password."
-msgstr ""
+msgstr "رمزگذاری رمز عبور ناموفق بود."
 
 #: addons/user-importer/addon-user-importer.php:870
 msgid "Failed to reset actions."
-msgstr ""
+msgstr "تنظیم مجدد اقدامات ناموفق بود."
 
 #: addons/user-importer/addon-user-importer.php:852
 msgid "Failed to revert operations."
-msgstr ""
+msgstr "بازگرداندن عملیات ناموفق بود."
 
 #: addons/user-importer/addon-user-importer.php:544
 #, php-format
 msgid "Failed to save setting %s."
-msgstr ""
+msgstr "ذخیره تنظیمات %s ناموفق بود."
 
 #: addons/user-importer/addon-user-importer.php:426
 msgid "File Path:"
-msgstr ""
+msgstr "مسیر فایل:"
 
 #: addons/user-importer/addon-user-importer.php:426
 msgid "File processing started. Refresh the page to see updated logs."
 msgstr ""
+"پردازش فایل آغاز شد. برای مشاهده گزارش‌های به‌روزرسانی‌شده، صفحه را رفرش "
+"کنید."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:21
 msgid "First Name"
-msgstr ""
+msgstr "نام"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:20
 msgid "Fixed Charge Amount"
-msgstr ""
+msgstr "مبلغ شارژ ثابت"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:114
 msgid "Force Stop Working"
-msgstr ""
+msgstr "توقف اجباری کار"
 
 #: includes/class-safe-assistant-settings.php:183
 msgid "Free Shipping Settings"
-msgstr ""
+msgstr "تنظیمات ارسال رایگان"
 
 #: includes/class-safe-assistant-settings.php:226
 #: includes/class-safe-assistant-settings.php:326
 msgid "Hide Membership Option on Checkout"
-msgstr ""
+msgstr "گزینه عضویت را در هنگام پرداخت مخفی کنید"
 
 #: includes/class-safe-assistant-settings.php:228
 #: includes/class-safe-assistant-settings.php:328
 msgid "Hide the membership option on the checkout page."
-msgstr ""
+msgstr "گزینه عضویت را در صفحه پرداخت مخفی کنید."
 
 #: includes/class-safe-assistant-settings.php:148
 msgid "Hide the WordPress admin bar for all users except administrators."
-msgstr ""
+msgstr "نوار مدیریت وردپرس را برای همه کاربران به جز مدیران پنهان کنید."
 
 #. URI of the plugin
 msgid "https://iranqq.com"
@@ -381,193 +388,193 @@ msgstr ""
 #: addons/user-importer/addon-user-importer.php:131
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:6
 msgid "Import"
-msgstr ""
+msgstr "واردات"
 
 #: addons/user-importer/addon-user-importer.php:768
 msgid "Insufficient permissions to reset plugin settings."
-msgstr ""
+msgstr "مجوزهای کافی برای بازنشانی تنظیمات افزونه وجود ندارد."
 
 #: addons/user-importer/addon-user-importer.php:379
 #: addons/user-importer/addon-user-importer.php:820
 #: addons/user-importer/addon-user-importer.php:841
 #: addons/user-importer/addon-user-importer.php:859
 msgid "Insufficient permissions."
-msgstr ""
+msgstr "مجوزهای ناکافی."
 
 #: addons/user-importer/addon-user-importer.php:774
 msgid "Invalid nonce for reset action."
-msgstr ""
+msgstr "عدم اعتبار برای اقدام بازنشانی."
 
 #: addons/user-importer/addon-user-importer.php:373
 #: addons/user-importer/addon-user-importer.php:824
 #: addons/user-importer/addon-user-importer.php:845
 #: addons/user-importer/addon-user-importer.php:863
 msgid "Invalid nonce."
-msgstr ""
+msgstr "نانس نامعتبر."
 
 #: addons/user-importer/addon-user-importer.php:391
 msgid "Invalid or missing CSV file."
-msgstr ""
+msgstr "فایل CSV نامعتبر است یا وجود ندارد."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:27
 msgid "It can be a mobile number or random English characters."
-msgstr ""
+msgstr "می‌تواند یک شماره موبایل یا کاراکترهای تصادفی انگلیسی باشد."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:22
 msgid "Last Name"
-msgstr ""
+msgstr "نام خانوادگی"
 
 #: addons/user-importer/addon-user-importer.php:791
 msgid "Log file deleted."
-msgstr ""
+msgstr "فایل لاگ حذف شد."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:126
 msgid "Logs"
-msgstr ""
+msgstr "سیاههها"
 
 #: includes/class-safe-assistant-settings.php:89
 msgid "Love"
-msgstr ""
+msgstr "عشق"
 
 #: addons/user-importer/addon-user-importer.php:344
 msgid "main"
-msgstr ""
+msgstr "اصلی"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:53
 msgid "Minimum Charge Amount"
-msgstr ""
+msgstr "حداقل مبلغ شارژ"
 
 #: includes/class-safe-assistant-settings.php:196
 msgid "Minimum order amount for free shipping in Mashhad."
-msgstr ""
+msgstr "حداقل مبلغ سفارش برای ارسال رایگان در مشهد."
 
 #: includes/class-safe-assistant-settings.php:208
 msgid "Minimum order amount for free shipping in other cities."
-msgstr ""
+msgstr "حداقل مبلغ سفارش برای ارسال رایگان در سایر شهرها"
 
 #: includes/class-safe-assistant-settings.php:194
 msgid "Minimum Purchase (Mashhad)"
-msgstr ""
+msgstr "حداقل خرید (مشهد)"
 
 #: includes/class-safe-assistant-settings.php:206
 msgid "Minimum Purchase (Other Cities)"
-msgstr ""
+msgstr "حداقل خرید (سایر شهرها)"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:17
 msgid "Mobile Number"
-msgstr ""
+msgstr "شماره موبایل"
 
 #: includes/class-safe-assistant-settings.php:431
 #: includes/class-safe-assistant-settings.php:459
 msgid "Nir Wallet"
-msgstr ""
+msgstr "کیف پول نیر"
 
 #: includes/class-safe-assistant-settings.php:465
 msgid "Nir Wallet plugin not active or installed"
-msgstr ""
+msgstr "افزونه کیف پول نیر فعال یا نصب نشده است"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:133
 msgid "No logs available."
-msgstr ""
+msgstr "هیچ لاگی موجود نیست."
 
 #: addons/user-importer/addon-user-importer.php:385
 msgid "Notice:"
-msgstr ""
+msgstr "توجه:"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:27
 msgid "Only the first column"
-msgstr ""
+msgstr "فقط ستون اول"
 
 #: includes/class-safe-assistant-settings.php:133
 msgid "Optimization"
-msgstr ""
+msgstr "بهینه‌سازی"
 
 #: includes/class-safe-assistant-settings.php:234
 #: includes/class-safe-assistant-settings.php:335
 msgid "Order Management"
-msgstr ""
+msgstr "مدیریت سفارش"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:96
 msgid "Password"
-msgstr ""
+msgstr "رمز عبور"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:100
 msgid "Pattern Code"
-msgstr ""
+msgstr "کد الگو"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:18
 msgid "Previous Purchase Amount"
-msgstr ""
+msgstr "مبلغ خرید قبلی"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:25
 msgid "Purchase Date"
-msgstr ""
+msgstr "تاریخ خرید"
 
 #: includes/class-safe-assistant-settings.php:160
 msgid "Remove Dashboard Widgets"
-msgstr ""
+msgstr "حذف ابزارک‌های داشبورد"
 
 #: includes/class-safe-assistant-settings.php:162
 msgid "Remove default widgets from the WordPress dashboard."
-msgstr ""
+msgstr "ابزارک‌های پیش‌فرض را از داشبورد وردپرس حذف کنید."
 
 #: includes/class-safe-assistant-settings.php:155
 msgid "Remove the WordPress logo from the top admin bar."
-msgstr ""
+msgstr "لوگوی وردپرس را از نوار مدیریت بالا حذف کنید."
 
 #: includes/class-safe-assistant-settings.php:153
 msgid "Remove WordPress Logo from Admin Bar"
-msgstr ""
+msgstr "حذف لوگوی وردپرس از نوار مدیریت"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:8
 msgid "Reports & Logs"
-msgstr ""
+msgstr "گزارش‌ها و لاگ‌ها"
 
 #: addons/user-importer/addon-user-importer.php:868
 msgid "Reset Actions successfully."
-msgstr ""
+msgstr "اقدامات با موفقیت بازنشانی شدند."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:113
 msgid "Reset Logs and Ongoing Tasks"
-msgstr ""
+msgstr "تنظیم مجدد گزارش‌ها و وظایف جاری"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:111
 msgid "Reset Section"
-msgstr ""
+msgstr "بخش تنظیم مجدد"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:112
 msgid "Revert All Operations"
-msgstr ""
+msgstr "برگرداندن همه عملیات"
 
 #. Name of the plugin
 #: includes/class-safe-assistant-settings.php:66
 #: includes/class-safe-assistant-settings.php:68
 msgid "Safe Assistant"
-msgstr ""
+msgstr "دستیار امن"
 
 #. Description of the plugin
 msgid "Safe Assistant Sales assistant and necessary and efficient tools"
-msgstr ""
+msgstr "دستیار فروش ایمن و ابزارهای لازم و کارآمد"
 
 #: includes/class-safe-assistant.php:166
 msgid "Safe Assistant: Codestar Framework not found."
-msgstr ""
+msgstr "دستیار امن: چارچوب Codestar یافت نشد."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:104
 msgid "Save"
-msgstr ""
+msgstr "ذخیره"
 
 #: addons/user-importer/addon-user-importer.php:810
 msgid "Scheduled cron event cleared."
-msgstr ""
+msgstr "رویداد cron برنامه‌ریزی‌شده پاک شد."
 
 #: includes/class-safe-assistant-settings.php:440
 msgid "Select an option"
-msgstr ""
+msgstr "یک گزینه را انتخاب کنید"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:41
 msgid "Select CSV File"
-msgstr ""
+msgstr "انتخاب فایل CSV"
 
 #: includes/class-safe-assistant-settings.php:263
 #: includes/class-safe-assistant-settings.php:364
@@ -575,12 +582,16 @@ msgid ""
 "Set how many hours after creation a pending order should be marked as "
 "cancelled."
 msgstr ""
+"تنظیم کنید که یک سفارش در حال انتظار چند ساعت پس از ایجاد، به عنوان لغو شده "
+"علامت گذاری شود."
 
 #: includes/class-safe-assistant-settings.php:256
 #: includes/class-safe-assistant-settings.php:357
 msgid ""
 "Set how many hours after creation a pending order should be marked as failed."
 msgstr ""
+"تنظیم کنید که یک سفارش در حال انتظار چند ساعت پس از ایجاد، به عنوان ناموفق "
+"علامت‌گذاری شود."
 
 #: includes/class-safe-assistant-settings.php:270
 #: includes/class-safe-assistant-settings.php:371
@@ -588,6 +599,8 @@ msgid ""
 "Set the hour (24h format) when the system starts checking for orders to mark "
 "as failed."
 msgstr ""
+"ساعت (با فرمت ۲۴ ساعته) را تنظیم کنید تا سیستم شروع به بررسی سفارشات کند و "
+"آنها را به عنوان ناموفق علامت‌گذاری کند."
 
 #: includes/class-safe-assistant-settings.php:277
 #: includes/class-safe-assistant-settings.php:378
@@ -595,119 +608,123 @@ msgid ""
 "Set the hour (24h format) when the system stops checking for orders to mark "
 "as failed."
 msgstr ""
+"ساعت (با فرمت ۲۴ ساعته) را تنظیم کنید تا سیستم بررسی سفارشات را متوقف کند و "
+"آنها را به عنوان ناموفق علامت‌گذاری کند."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:7
 msgid "Settings"
-msgstr ""
+msgstr "تنظیمات"
 
 #: addons/user-importer/addon-user-importer.php:835
 msgid "Settings saved successfully."
-msgstr ""
+msgstr "تنظیمات با موفقیت ذخیره شد."
 
 #: addons/user-importer/addon-user-importer.php:675
 msgid "Settings table dropped."
-msgstr ""
+msgstr "جدول تنظیمات حذف شد."
 
 #: includes/class-safe-assistant-settings.php:341
 msgid "Show Order Notes in Admin Orders Table"
-msgstr ""
+msgstr "نمایش یادداشت‌های سفارش در جدول سفارشات مدیریت"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:84
 msgid "SMS Gateway"
-msgstr ""
+msgstr "درگاه پیامکی"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:77
 msgid "SMS Panel Settings"
-msgstr ""
+msgstr "تنظیمات پنل پیامک"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:80
 msgid "SMS Sending Active?"
-msgstr ""
+msgstr "ارسال پیامک فعاله؟"
 
 #: includes/class-safe-assistant-settings.php:268
 #: includes/class-safe-assistant-settings.php:369
 msgid "Start Time for Failed Status Check (Hour)"
-msgstr ""
+msgstr "زمان شروع بررسی وضعیت ناموفق (ساعت)"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:23
 msgid "State"
-msgstr ""
+msgstr "ایالت"
 
 #: addons/user-importer/addon-user-importer.php:426
 msgid "Success:"
-msgstr ""
+msgstr "موفقیت:"
 
 #: includes/class-safe-assistant-settings.php:261
 #: includes/class-safe-assistant-settings.php:362
 msgid "Time to Mark Order as Cancelled (Hours)"
-msgstr ""
+msgstr "زمان لازم برای لغو سفارش (ساعت)"
 
 #: includes/class-safe-assistant-settings.php:254
 #: includes/class-safe-assistant-settings.php:355
 msgid "Time to Mark Order as Failed (Hours)"
-msgstr ""
+msgstr "زمان لازم برای علامت‌گذاری سفارش به عنوان ناموفق (ساعت)"
 
 #: includes/class-safe-assistant-settings.php:193
 #: includes/class-safe-assistant-settings.php:205
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:54
 msgid "Toman"
-msgstr ""
+msgstr "می‌گیرند."
 
 #: addons/user-importer/addon-user-importer.php:802
 #, php-format
 msgid "Transient %s deleted."
-msgstr ""
+msgstr "%s گذرا حذف شد."
 
 #: addons/user-importer/addon-user-importer.php:428
 msgid "Unable to save file."
-msgstr ""
+msgstr "قادر به ذخیره فایل نیست."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:62
 msgid "Upload File"
-msgstr ""
+msgstr "آپلود فایل"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:29
 msgid ""
 "Use the charge percentage field if you want the wallet charge to be based on "
 "the previous purchase amount."
 msgstr ""
+"اگر می‌خواهید میزان شارژ کیف پول بر اساس مبلغ خرید قبلی باشد، از فیلد درصد "
+"شارژ استفاده کنید."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:2
 msgid "User Importer"
-msgstr ""
+msgstr "واردکننده کاربر"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:92
 msgid "Username"
-msgstr ""
+msgstr "نام کاربری"
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:27
 msgid "username is required"
-msgstr ""
+msgstr "نام کاربری الزامی است"
 
 #: includes/class-safe-assistant-settings.php:127
 msgid "Wallet"
-msgstr ""
+msgstr "کیف پول"
 
 #: includes/class-safe-assistant-settings.php:437
 msgid "Wallet expiration SMS"
-msgstr ""
+msgstr "پیامک انقضای کیف پول"
 
 #: includes/class-safe-assistant-settings.php:88
 msgid "with"
-msgstr ""
+msgstr "با"
 
 #: includes/class-safe-assistant-settings.php:122
 msgid "WooCommerce"
-msgstr ""
+msgstr "ووکامرس"
 
 #: includes/class-safe-assistant-settings.php:283
 #: includes/class-safe-assistant-settings.php:385
 msgid "WooCommerce Admin Settings"
-msgstr ""
+msgstr "تنظیمات مدیریت ووکامرس"
 
 #: includes/class-safe-assistant-settings.php:117
 msgid "WordPress"
-msgstr ""
+msgstr "وردپرس"
 
 #: addons/user-importer/addon-user-importer-handler.php:462
 msgid "ℹ️ info:"
@@ -717,7 +734,7 @@ msgstr ""
 #: addons/user-importer/addon-user-importer-handler.php:444
 #: addons/user-importer/addon-user-importer-handler.php:521
 msgid "⚠️ Warning:"
-msgstr ""
+msgstr "⚠️ هشدار:"
 
 #: addons/user-importer/addon-user-importer-handler.php:452
 #: addons/user-importer/addon-user-importer-handler.php:457
