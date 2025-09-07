@@ -128,7 +128,12 @@ class Addon_User_Importer
             'icon'   => 'fas fa-file-alt',
             'fields' => [
                 [
-                    'id'      => 'opt-text',
+                    'id'      => 'user_importer_sms_status',
+                    'type'    => 'switcher',
+                    'title'   => __('Sms Status', 'safe-assistant'),
+                ],
+                [
+                    'id'      => 'user_importer_sms_pattern',
                     'type'    => 'text',
                     'title'   => __('Sms Pattern', 'safe-assistant'),
                 ],
