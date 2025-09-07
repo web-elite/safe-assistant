@@ -101,3 +101,39 @@ if (!function_exists('normalize_mobile_number')) {
         return $mobile;
     }
 }
+/**
+ * Check if current page is a WooCommerce page
+ */
+function is_woocommerce_page()
+{
+    return function_exists('is_woocommerce') && (
+        is_woocommerce() || is_cart() || is_checkout() || is_account_page()
+    );
+}
+
+/**
+ * Check if current page is a WooCommerce admin page
+ */
+function is_woocommerce_admin_page()
+{
+    if (!is_admin()) {
+        return false;
+    }
+
+    $screen = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+    $post_type = isset($_GET['post_type']) ? sanitize_text_field(wp_unslash($_GET['post_type'])) : get_post_type();
+
+    $allowed_pages = [
+        'wc-admin',
+        'wc-settings',
+        'wc-orders',
+        'wc-reports',
+        'wc-status',
+        'wc-addons',
+        'novin-signature-admin',
+        'novin-advance-shipping'
+    ];
+    $allowed_post_types = ['product', 'shop_order', 'shop_coupon', 'wooi'];
+
+    return in_array($screen, $allowed_pages, true) || in_array($post_type, $allowed_post_types, true);
+}
