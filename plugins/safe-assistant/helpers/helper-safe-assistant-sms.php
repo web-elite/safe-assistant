@@ -47,7 +47,7 @@ if (!function_exists('send_sms_pattern')) {
             'password' => sa_get_option('sms_password'),
             'text'     => $textArgs,
             'to'       => normalize_mobile_number($to),
-            'bodyId'   => $pattern ?? $bodyId,
+            'bodyId'   => $bodyId,
         ];
 
         return sms_make_request(get_sms_url('pattern2'), $data, 'GET');
