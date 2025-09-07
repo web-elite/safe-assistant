@@ -63,6 +63,7 @@ class Safe_Assistant_Settings
 	 */
 	private function handle()
 	{
+		include_once SAFE_ASSISTANT_DIR . 'includes/class-safe-assistant-handler.php';
 		if (sa_get_option('user_importer_addons')) {
 			require_once SAFE_ASSISTANT_DIR . 'addons/user-importer/addon-user-importer.php';
 			$user_importer = new Addon_User_Importer();
@@ -439,51 +440,65 @@ class Safe_Assistant_Settings
 					],
 				],
 			],
-		];
-
-		if (defined('nirweb_wallet')) {
-			$sections[] = [
+			[
 				'parent' => 'wallet',
 				'id'     => 'nir_wallet',
 				'title'  => esc_html__('Nir Wallet', 'safe-assistant'),
 				'icon'   => 'fas fa-wallet',
-				'fields' => [
+				'fields' => defined('nirweb_wallet') ? [
 					[
-						'id'          => 'opt-select-4',
+						'id'          => 'nir_wallet_expire_day_sms',
 						'type'        => 'select',
 						'title'       => esc_html__('Wallet expiration SMS', 'safe-assistant'),
 						'chosen'      => true,
 						'multiple'    => true,
 						'placeholder' => esc_html__('Select an option', 'safe-assistant'),
-						'desc'        => esc_html__("Choose how many days after the user's wallet expiration date the SMS will be sent.", 'safe-assistant'),
-						'options'     => array(
+						'desc'        => esc_html__('Choose how many days before the user\'s wallet expiration date the SMS will be sent.', 'safe-assistant'),
+						'options'     => [
 							'24'   => __('1 Day', 'safe-assistant'),
 							'48'   => __('2 Days', 'safe-assistant'),
 							'72'   => __('3 Days', 'safe-assistant'),
 							'96'   => __('4 Days', 'safe-assistant'),
 							'120'  => __('5 Days', 'safe-assistant'),
 							'144'  => __('6 Days', 'safe-assistant'),
-							'1848' => __('7 Days', 'safe-assistant'),
-						),
-						'default'     => '24'
+							'168'  => __('7 Days', 'safe-assistant'),
+						],
+						'default'     => ['24'],
 					],
-				]
-			];
-		} else {
-			$sections[] = [
-				'parent' => 'wallet',
-				'id'     => 'nir_wallet',
-				'title'  => esc_html__('Nir Wallet', 'safe-assistant'),
-				'icon'   => 'fas fa-danger',
-				'fields' => [
+					[
+						'id'      => 'nir_wallet_expire_pattern_sms',
+						'type'    => 'text',
+						'title'   => esc_html__('SMS Pattern', 'safe-assistant'),
+						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'nir_wallet_expire_send_sms',
+						'type'    => 'text',
+						'title'   => esc_html__('SMS Pattern', 'safe-assistant'),
+						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'nir_wallet_expire_send_time',
+						'type'    => 'number',
+						'title'   => esc_html__('SMS Send Time', 'safe-assistant'),
+						'desc'    => esc_html__('Enter the time (in hours 24h) to send the SMS notification.', 'safe-assistant'),
+						'unit'   => __('Hours', 'safe-assistant'),
+						'default' => 9,
+						'attributes' => [
+							'min' => 0,
+							'max' => 24,
+							'step' => 1,
+						],
+					],
+				] : [
 					[
 						'type'    => 'notice',
 						'style'   => 'warning',
-						'content' => __('Nir Wallet plugin not active or installed', 'safe-assistant'),
+						'content' => esc_html__('Nir Wallet plugin not active or installed', 'safe-assistant'),
 					],
-				]
-			];
-		}
+				],
+			],
+		];
 		return $sections;
 	}
 
