@@ -55,6 +55,9 @@ Yes, `.pot` file is included inside the `languages` directory.
 
 == Upgrade Notice ==
 
+= 1.3.4 =
+* for test update checker
+
 = 1.3.3 =
 * for test update checker
 
