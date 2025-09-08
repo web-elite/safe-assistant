@@ -17,7 +17,7 @@
  * Plugin URI:        https://iranqq.com
  * Description:       Safe Assistant Sales assistant and necessary and efficient tools
  * Version:           1.3.6
- * Author:            𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢
+ * Author:            AlirezaYaghouti
  * Author URI:        https://webelitee.ir/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
