@@ -150,12 +150,21 @@ class Safe_Assistant
 
 	public function init_settings()
 	{
-		$updateChecker = PucFactory::buildUpdateChecker(
-			'https://github.com/web-elite/safe-assistant/',
-			__FILE__,
-			SAFE_ASSISTANT_SLUG
-		);
-		$updateChecker->setBranch('main');
+		if (class_exists('PucFactory')) {
+			$sa_update_checker = PucFactory::buildUpdateChecker(
+				'https://github.com/web-elite/safe-assistant/',
+				__FILE__,
+				SAFE_ASSISTANT_SLUG
+			);
+			$sa_update_checker->setBranch('main');
+		} else {
+			add_action('admin_notices', function () {
+				echo '<div class="notice notice-error"><p>'
+					. esc_html__('Safe Assistant: Plugin Update Checker not found.', 'safe-assistant')
+					. '</p></div>';
+			});
+			error_log('Safe Assistant => Plugin Update Checker not found');
+		}
 
 		if (class_exists('CSF')) {
 			require_once SAFE_ASSISTANT_DIR . 'includes/class-safe-assistant-settings.php';
