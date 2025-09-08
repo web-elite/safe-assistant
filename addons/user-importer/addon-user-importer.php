@@ -38,7 +38,6 @@ class Addon_User_Importer
     private function load_dependencies()
     {
         require_once ADDON_USER_IMPORTER_DIR . 'addon-user-importer-handler.php';
-        require_once ADDON_USER_IMPORTER_DIR . 'addon-user-importer-sms-manager.php';
     }
 
     /**
