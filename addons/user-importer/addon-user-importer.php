@@ -408,6 +408,7 @@ class Addon_User_Importer
         // Delete transients
         $transients = [
             ADDON_USER_IMPORTER_CRON_EVENT . '_task',
+            ADDON_USER_IMPORTER_CRON_EVENT . '_running',
             'addon_user_importer_form_data',
         ];
 
