@@ -354,14 +354,8 @@ if (class_exists('WooCommerce') && sa_get_option('order_convertor_status', false
 		}, 10, 2);
 
 		add_filter('manage_woocommerce_page_wc-orders_columns', function ($columns) {
-			$new_columns = [];
-			foreach ($columns as $key => $column) {
-				$new_columns[$key] = $column;
-				if ($key === 'order_status') {
-					$new_columns['order_notes'] = esc_html__('Customer Note', 'safe-assistant');
-				}
-			}
-			return $new_columns;
+			$columns['order_notes'] = esc_html__('Customer Note', 'safe-assistant');
+			return $columns;
 		}, 20);
 
 		add_action('manage_woocommerce_page_wc-orders_custom_column', function ($column, $order_id) {
