@@ -429,3 +429,10 @@ remove_action('shutdown', 'wp_ob_end_flush_all', 1);
 add_action('shutdown', function () {
 	while (@ob_end_flush());
 });
+
+/**
+ * Replace Custom Maintenance with orginal woprdpress maintenance page
+ */
+if (sa_get_option('wp_custom_maintenance_status')) {
+	sa_create_custom_maintenance_page(sa_get_option('wp_custom_maintenance'));
+}

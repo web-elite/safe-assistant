@@ -289,3 +289,39 @@ if (!function_exists('sa_display_logs')) {
         }
     }
 }
+
+/**
+ * Set a custom WordPress maintenance page using your raw HTML.
+ * Override default WordPress maintenance page with your custom HTML.
+ */
+
+if (!function_exists('sa_create_custom_maintenance_page')) {
+    /**
+     * Write wp-content/maintenance.php with your HTML (served with 503 status).
+     *
+     * @param string $html        Your full HTML markup (head/body…).
+     * @param int    $retry_after Seconds for Retry-After header (SEO-friendly).
+     * @return bool               True on success.
+     */
+    function sa_create_custom_maintenance_page($html)
+    {
+        if (!defined('WP_CONTENT_DIR')) return;
+
+        $target = WP_CONTENT_DIR . '/maintenance.php';
+
+        $php = <<<PHP
+<?php
+if (!headers_sent()) {
+    @header((\$_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1') . ' 503 Service Unavailable', true, 503);
+    @header('Content-Type: text/html; charset=UTF-8');
+    @header('Retry-After: 3600');
+}
+echo <<<'HTML'
+{$html}
+HTML;
+exit;
+PHP;
+
+        file_put_contents($target, $php);
+    }
+}

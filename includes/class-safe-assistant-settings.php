@@ -147,6 +147,32 @@ class Safe_Assistant_Settings
 			],
 			[
 				'parent' => 'wordpress',
+				'id'     => 'feature',
+				'title'  => esc_html__('Features', 'safe-assistant'),
+				'icon'   => 'fas fa-star',
+				'fields' => [
+					[
+						'id'      => 'wp_custom_maintenance_status',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Active custom maintenance', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Enable a custom maintenance mode for your site.', 'safe-assistant'),
+					],
+					[
+						'id'       => 'wp_custom_maintenance',
+						'type'     => 'code_editor',
+						'title'    => 'HTML maintenance content',
+						'settings' => [
+							'theme'  => 'monokai',
+							'mode'   => 'htmlmixed',
+						],
+						'default'  => '<h1>Site Updating ...</h1>',
+						'dependency' => ['wp_custom_maintenance_status', '==', 'true']
+					],
+				]
+			],
+			[
+				'parent' => 'wordpress',
 				'id'     => 'optimization',
 				'title'  => esc_html__('Optimization', 'safe-assistant'),
 				'icon'   => 'fas fa-cogs',
