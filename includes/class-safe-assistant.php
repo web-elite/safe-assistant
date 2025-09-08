@@ -157,6 +157,17 @@ class Safe_Assistant
 				'safe-assistant'
 			);
 			$sa_update_checker->setBranch('main');
+			$sa_update_checker->addResultFilter(function ($info, $response = null) {
+				$info->banners = array(
+					'low' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
+					'high' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
+				);
+				$info->icons = array(
+					'1x' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
+					'2x' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
+				);
+				return $info;
+			});
 		} else {
 			add_action('admin_notices', function () {
 				echo '<div class="notice notice-error"><p>'
