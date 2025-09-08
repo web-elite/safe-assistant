@@ -1,7 +1,7 @@
 <?php
 
-if (!function_exists('get_sms_url')) {
-    function get_sms_url(string $type): string
+if (!function_exists('sa_get_sms_url')) {
+    function sa_get_sms_url(string $type): string
     {
         $base_url = 'https://rest.payamak-panel.com/api/SendSMS/';
         return match ($type) {
@@ -13,11 +13,11 @@ if (!function_exists('get_sms_url')) {
     }
 }
 
-if (!function_exists('send_sms')) {
+if (!function_exists('sa_send_sms')) {
     /**
      * Send plain SMS
      */
-    function send_sms(string|array $to, string $text): bool|string
+    function sa_send_sms(string|array $to, string $text): bool|string
     {
         if (empty($to) || empty($text)) return false;
 
@@ -31,15 +31,15 @@ if (!function_exists('send_sms')) {
             'text'     => $text
         ];
 
-        return sms_make_request(get_sms_url('send'), $data);
+        return sa_sms_make_request(sa_get_sms_url('send'), $data);
     }
 }
 
-if (!function_exists('send_sms_pattern')) {
+if (!function_exists('sa_send_sms_pattern')) {
     /**
      * Send SMS using pattern (base number)
      */
-    function send_sms_pattern(string|array $textArgs, string $to, ?int $bodyId = null): bool|string
+    function sa_send_sms_pattern(string|array $textArgs, string $to, ?int $bodyId = null): bool|string
     {
         if (empty($to) || empty($textArgs)) return false;
         $data = [
@@ -50,15 +50,15 @@ if (!function_exists('send_sms_pattern')) {
             'bodyId'   => $bodyId,
         ];
 
-        return sms_make_request(get_sms_url('pattern2'), $data, 'GET');
+        return sa_sms_make_request(sa_get_sms_url('pattern2'), $data, 'GET');
     }
 }
 
-if (!function_exists('sms_make_request')) {
+if (!function_exists('sa_sms_make_request')) {
     /**
      * Make cURL POST request
      */
-    function sms_make_request(string $url, array $data, string $method = 'POST'): bool|string
+    function sa_sms_make_request(string $url, array $data, string $method = 'POST'): bool|string
     {
         $curl_options = [
             CURLOPT_RETURNTRANSFER => true,

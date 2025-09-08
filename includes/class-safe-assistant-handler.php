@@ -400,7 +400,7 @@ if (defined('nirweb_wallet')) {
 
 			foreach ($users as $user) {
 				$user_wallet_expire_balance = $user->amount;
-				send_sms_pattern($user_wallet_expire_balance, get_user_meta($user->user_id, 'billing_phone', true), $pattern);
+				sa_send_sms_pattern($user_wallet_expire_balance, get_user_meta($user->user_id, 'billing_phone', true), $pattern);
 			}
 		}
 	});
