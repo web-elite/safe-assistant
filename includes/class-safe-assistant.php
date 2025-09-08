@@ -108,6 +108,16 @@ class Safe_Assistant
 	private function load_dependencies()
 	{
 		/**
+		 * The file responsible for providing date and time jalali functions.
+		 */
+		require_once SAFE_ASSISTANT_DIR . 'lib/jdf.php';
+
+		/**
+		 * The file responsible for providing sms functions.
+		 */
+		require_once SAFE_ASSISTANT_DIR . 'helpers/helper-safe-assistant-sms.php';
+
+		/**
 		 * The file responsible for providing general helper functions.
 		 */
 		require_once SAFE_ASSISTANT_DIR . 'helpers/helper-safe-assistant-general.php';
