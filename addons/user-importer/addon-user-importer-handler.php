@@ -105,7 +105,7 @@ function add_wallet_balance(int $user_id, float $add_balance, ?int $expire_times
         'user_id'      => $user_id,
         'user_created' => 0,
         'amount'       => $add_balance,
-        'description'  => __('Wallet charge for in-person buyers', 'we-user-importer'),
+        'description'  => __('Wallet charge for in-person buyers', 'safe-assistant'),
         'type_op'      => 'credit',
         'type_v'       => 'register',
         'created'      => current_time('mysql'),
@@ -280,7 +280,7 @@ function my_csv_cron_handler()
 
     try {
         set_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running', true);
-        add_to_csv_log(__('🚀 Starting cron job.', 'we-user-importer') . ' ' . current_time('mysql'), 'info');
+        sa_add_log(__('🚀 Starting cron job.', 'safe-assistant') . ' ' . current_time('mysql'), 'info', ADDON_USER_IMPORTER_SLUG);
 
         $task_data = get_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
         $file_path = $task_data['file_path'];
@@ -298,7 +298,7 @@ function my_csv_cron_handler()
         global $wp_filesystem;
 
         if (!$wp_filesystem->exists($file_path) || !$wp_filesystem->is_readable($file_path)) {
-            add_to_csv_log(sprintf(__('CSV file not found or unreadable: %s', 'we-user-importer'), $file_path), 'error');
+            sa_add_log(sprintf(__('CSV file not found or unreadable: %s', 'safe-assistant'), $file_path), 'error', ADDON_USER_IMPORTER_SLUG);
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
             return;
@@ -306,7 +306,7 @@ function my_csv_cron_handler()
 
         $handle = fopen($file_path, 'r');
         if (!$handle) {
-            add_to_csv_log(__('Unable to open CSV file.', 'we-user-importer'), 'error');
+            sa_add_log(__('Unable to open CSV file.', 'safe-assistant'), 'error', ADDON_USER_IMPORTER_SLUG);
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
             return;
@@ -315,7 +315,7 @@ function my_csv_cron_handler()
         $row_count = 0;
         while ($row_count < $offset && !feof($handle)) {
             if (false === fgetcsv($handle)) {
-                add_to_csv_log(__('Error reading CSV row.', 'we-user-importer'), 'warning');
+                sa_add_log(__('Error reading CSV row.', 'safe-assistant'), 'warning', ADDON_USER_IMPORTER_SLUG);
                 break;
             }
             $row_count++;
@@ -360,7 +360,7 @@ function my_csv_cron_handler()
                     $wallet_timestamp = jmktime(0, 0, 0, $date_parts[1], $date_parts[2], $date_parts[0]);
                     $persian_expire_date = $expire_date_input;
                 } else {
-                    add_to_csv_log(sprintf(__('Invalid expiration date format in row %d.', 'we-user-importer'), $offset + $processed_count), 'warning');
+                    sa_add_log(sprintf(__('Invalid expiration date format in row %d.', 'safe-assistant'), $offset + $processed_count), 'warning', ADDON_USER_IMPORTER_SLUG);
                 }
             } elseif ($expire_days > 0 && function_exists('jdate')) {
                 $wallet_timestamp = time() + ($expire_days * DAY_IN_SECONDS);
@@ -368,33 +368,33 @@ function my_csv_cron_handler()
             }
 
             if ('' === $phone_number) {
-                add_to_csv_log(sprintf(__('Phone number empty in row %d.', 'we-user-importer'), $offset + $processed_count), 'warning');
+                sa_add_log(sprintf(__('Phone number empty in row %d.', 'safe-assistant'), $offset + $processed_count), 'warning', ADDON_USER_IMPORTER_SLUG);
                 continue;
             }
 
             if (strlen($phone_number) > 14 || strlen($phone_number) < 10) {
-                add_to_csv_log(sprintf(__('Invalid phone number %s in row %d.', 'we-user-importer'), $phone_number, $offset + $processed_count), 'warning');
+                sa_add_log(sprintf(__('Invalid phone number %s in row %d.', 'safe-assistant'), $phone_number, $offset + $processed_count), 'warning', ADDON_USER_IMPORTER_SLUG);
                 continue;
             }
 
             $digits_phone_number = digits_standard_username($phone_number);
-            add_to_csv_log(sprintf(__('Phone Number is %s and digits number is %s', 'we-user-importer'), $phone_number, $digits_phone_number), 'info');
+            sa_add_log(sprintf(__('Phone Number is %s and digits number is %s', 'safe-assistant'), $phone_number, $digits_phone_number), 'info', ADDON_USER_IMPORTER_SLUG);
             $user_id = find_user_by_phone($phone_number);
             $cleaned_number = clean_phone_number($phone_number);
 
             if (!is_null($user_id)) {
-                add_to_csv_log(sprintf(__('User %s already exists (ID: %d).', 'we-user-importer'), $digits_phone_number, $user_id), 'info');
+                sa_add_log(sprintf(__('User %s already exists (ID: %d).', 'safe-assistant'), $digits_phone_number, $user_id), 'info', ADDON_USER_IMPORTER_SLUG);
             } else {
                 $password = wp_generate_password(12, false);
                 $email = $digits_phone_number . '@' . parse_url(get_site_url(), PHP_URL_HOST);
                 $user_id = wp_create_user($digits_phone_number, $password, $email);
 
                 if (is_wp_error($user_id)) {
-                    add_to_csv_log(sprintf(__('Failed to create user %s: %s', 'we-user-importer'), $digits_phone_number, $user_id->get_error_message()), 'error');
+                    sa_add_log(sprintf(__('Failed to create user %s: %s', 'safe-assistant'), $digits_phone_number, $user_id->get_error_message()), 'error', ADDON_USER_IMPORTER_SLUG);
                     continue;
                 }
                 update_user_meta($user_id, 'billing_email', sanitize_email($email));
-                add_to_csv_log(sprintf(__('User %s created (ID: %d).', 'we-user-importer'), $digits_phone_number, $user_id), 'success');
+                sa_add_log(sprintf(__('User %s created (ID: %d).', 'safe-assistant'), $digits_phone_number, $user_id), 'success', ADDON_USER_IMPORTER_SLUG);
             }
 
             wp_update_user([
@@ -416,38 +416,35 @@ function my_csv_cron_handler()
             update_user_meta($user_id, 'digt_countrycode', '+98');
             update_user_meta($user_id, 'wp_capabilities', serialize(['customer' => true]));
             update_user_meta($user_id, 'nirwallet_referral_code', $ref_code);
-            add_to_csv_log(sprintf(__('User %s details updated.', 'we-user-importer'), $digits_phone_number), 'success');
+            sa_add_log(sprintf(__('User %s details updated.', 'safe-assistant'), $digits_phone_number), 'success', ADDON_USER_IMPORTER_SLUG);
 
             if ((user_has_ever_been_charged($user_id) && $not_only_wallet_first_time) || !user_has_ever_been_charged($user_id)) {
                 if (!$continue_if_exists) {
-                    add_to_csv_log(sprintf(
-                        __('Info: User %s wallet not charged due to settings.', 'we-user-importer'),
-                        $digits_phone_number
-                    ), 'info');
+                    sa_add_log(sprintf(__('Info: User %s wallet not charged due to settings.', 'safe-assistant'), $digits_phone_number), 'info', ADDON_USER_IMPORTER_SLUG);
                     continue;
                 }
                 if (add_wallet_balance($user_id, $charge, $wallet_timestamp)) {
-                    add_to_csv_log(sprintf(__('Wallet charged for user %s with amount %s.', 'we-user-importer'), $digits_phone_number, $charge), 'success');
+                    sa_add_log(sprintf(__('Wallet charged for user %s with amount %s.', 'safe-assistant'), $digits_phone_number, $charge), 'success', ADDON_USER_IMPORTER_SLUG);
                 } else {
-                    add_to_csv_log(sprintf(__('Failed to charge wallet for user %s.', 'we-user-importer'), $digits_phone_number), 'error');
+                    sa_add_log(sprintf(__('Failed to charge wallet for user %s.', 'safe-assistant'), $digits_phone_number), 'error', ADDON_USER_IMPORTER_SLUG);
                 }
             }
 
-            if (filled($state) && filled($city)) {
+            if (sa_filled($state) && sa_filled($city)) {
                 if (update_user_wc_address($user_id, $state, $city)) {
-                    add_to_csv_log(sprintf(__('Address updated for user %s.', 'we-user-importer'), $digits_phone_number), 'success');
+                    sa_add_log(sprintf(__('Address updated for user %s.', 'safe-assistant'), $digits_phone_number), 'success', ADDON_USER_IMPORTER_SLUG);
                 } else {
-                    add_to_csv_log(sprintf(__('Failed to update address for user %s.', 'we-user-importer'), $digits_phone_number), 'error');
+                    sa_add_log(sprintf(__('Failed to update address for user %s.', 'safe-assistant'), $digits_phone_number), 'error', ADDON_USER_IMPORTER_SLUG);
                 }
             } else {
-                add_to_csv_log(sprintf(__('State or city empty for user %s.', 'we-user-importer'), $digits_phone_number), 'warning');
+                sa_add_log(sprintf(__('State or city empty for user %s.', 'safe-assistant'), $digits_phone_number), 'warning', ADDON_USER_IMPORTER_SLUG);
             }
 
             if (sa_get_option('user_importer_sms_status')) {
-                if (send_sms_pattern(" $buy_date;$charge;$persian_expire_date", $cleaned_number, sa_get_option('user_importer_sms_pattern'))) {
-                    add_to_csv_log(__('Sms Send to $cleaned_number Success!', 'we-user-importer'), "success");
+                if (sa_send_sms_pattern(" $buy_date;$charge;$persian_expire_date", $cleaned_number, sa_get_option('user_importer_sms_pattern'))) {
+                    sa_add_log(__('Sms Send to $cleaned_number Success!', 'safe-assistant'), "success", ADDON_USER_IMPORTER_SLUG);
                 } else {
-                    add_to_csv_log(__('Sms Send to $cleaned_number failed!', 'we-user-importer'), "error");
+                    sa_add_log(__('Sms Send to $cleaned_number failed!', 'safe-assistant'), "error", ADDON_USER_IMPORTER_SLUG);
                 }
             }
         }
@@ -456,7 +453,7 @@ function my_csv_cron_handler()
         fclose($handle);
 
         if ($is_eof) {
-            add_to_csv_log(__('File processing completed.', 'we-user-importer'), 'success');
+            sa_add_log(__('File processing completed.', 'safe-assistant'), 'success', ADDON_USER_IMPORTER_SLUG);
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
             $wp_filesystem->delete($file_path);
@@ -465,10 +462,10 @@ function my_csv_cron_handler()
             $task_data['offset'] = $new_offset;
             set_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task', $task_data, HOUR_IN_SECONDS);
             delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
-            add_to_csv_log(sprintf(__('Processed %d rows, new offset: %d.', 'we-user-importer'), $processed_count, $new_offset), 'info');
+            sa_add_log(sprintf(__('Processed %d rows, new offset: %d.', 'safe-assistant'), $processed_count, $new_offset), 'info', ADDON_USER_IMPORTER_SLUG);
         }
     } catch (Throwable $th) {
-        add_to_csv_log(sprintf(__('File processing failed: %s', 'we-user-importer'), $th->getMessage()), 'error');
+        sa_add_log(sprintf(__('File processing failed: %s', 'safe-assistant'), $th->getMessage()), 'error', ADDON_USER_IMPORTER_SLUG);
         if (is_resource($handle)) {
             fclose($handle);
         }
@@ -480,7 +477,7 @@ function my_csv_cron_handler()
 add_filter('cron_schedules', function ($schedules) {
     $schedules['every_minute'] = array(
         'interval' => 60,
-        'display'  => __('Every Minute (60s)', 'we-user-importer')
+        'display'  => __('Every Minute (60s)', 'safe-assistant')
     );
     return $schedules;
 });
