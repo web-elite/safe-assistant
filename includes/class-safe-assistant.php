@@ -150,7 +150,7 @@ class Safe_Assistant
 
 	public function init_settings()
 	{
-		if (class_exists('PucFactory')) {
+		if (class_exists(PucFactory::class, false)) {
 			$sa_update_checker = PucFactory::buildUpdateChecker(
 				'https://github.com/web-elite/safe-assistant/',
 				SAFE_ASSISTANT_DIR . 'safe-assistant.php',
