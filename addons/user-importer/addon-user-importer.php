@@ -124,7 +124,7 @@ class Addon_User_Importer
         CSF::createSection($prefix, [
             'parent' => 'user_importer_addon',
             'title'  => __('Settings', 'safe-assistant'),
-            'icon'   => 'fas fa-file-alt',
+            'icon'   => 'fas fa-cog',
             'fields' => [
                 [
                     'id'      => 'user_importer_sms_status',
@@ -190,28 +190,28 @@ class Addon_User_Importer
         </div>
         <script>
             jQuery(document).ready(function($) {
-            $('.addon-user-importer-action-form').on('submit', function(e) {
-                e.preventDefault();
+                $('.addon-user-importer-action-form').on('submit', function(e) {
+                    e.preventDefault();
 
-                var form = $(this);
-                var submitButton = form.find('input[type="submit"]');
-                var spinner = form.find('.spinner');
+                    var form = $(this);
+                    var submitButton = form.find('input[type="submit"]');
+                    var spinner = form.find('.spinner');
 
-                submitButton.prop('disabled', true);
-                spinner.addClass('is-active'); 
+                    submitButton.prop('disabled', true);
+                    spinner.addClass('is-active'); 
 
-                $.post(ajaxurl, form.serialize(), function(response) {
-                if (response.success) {
-                    alert(response.data.message);
-                    location.reload();
-                } else {
-                    alert(response.data.message);
-                }
-                }).always(function() {
-                submitButton.prop('disabled', false);
-                spinner.removeClass('is-active');
+                    $.post(ajaxurl, form.serialize(), function(response) {
+                    if (response.success) {
+                        alert(response.data.message);
+                        location.reload();
+                    } else {
+                        alert(response.data.message);
+                    }
+                    }).always(function() {
+                    submitButton.prop('disabled', false);
+                    spinner.removeClass('is-active');
+                    });
                 });
-            });
             });
         </script>
         HTML;
