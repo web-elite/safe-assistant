@@ -502,8 +502,23 @@ class Safe_Assistant_Settings
 		return $sections;
 	}
 
+	public function render_logs()
+	{
+		sa_display_logs('general');
+	}
+
 	private function create_last_options()
 	{
+		CSF::createSection($this->prefix, [
+			'title'  => esc_html__('Logs', 'safe-assistant'),
+			'icon'   => 'fas fa-file-alt',
+			'fields' => [
+				[
+					'type'     => 'fallback',
+					'function'  => [$this, 'render_logs'],
+				],
+			]
+		]);
 		CSF::createSection($this->prefix, [
 			'title'  => esc_html__('Settings', 'safe-assistant'),
 			'icon'   => 'fas fa-cog',

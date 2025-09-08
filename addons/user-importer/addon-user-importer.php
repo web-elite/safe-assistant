@@ -110,7 +110,7 @@ class Addon_User_Importer
         // Log Section
         CSF::createSection($prefix, [
             'parent' => 'user_importer_addon',
-            'title'  => __('Log', 'safe-assistant'),
+            'title'  => __('Logs', 'safe-assistant'),
             'icon'   => 'fas fa-file-alt',
             'fields' => [
                 [
@@ -142,6 +142,11 @@ class Addon_User_Importer
                 ],
             ],
         ]);
+    }
+
+    public function display_logs()
+    {
+        sa_display_logs(ADDON_USER_IMPORTER_SLUG);
     }
 
     public function settings_section_handler()
@@ -293,25 +298,6 @@ class Addon_User_Importer
         include_once 'partials/addon-user-importer-main-section.php';
     }
 
-    public function display_logs()
-    {
-        $file_logs = get_csv_logs();
-        if (!empty($file_logs)) {
-            $current_url = get_current_url();
-            $text = esc_html_e('Clear Logs', 'safe-assistant');
-            echo "<div class='mb-2'>
-                <a href='{$current_url}&clear_log=1' class='bg-red-500 text-white px-3 py-1 rounded'>{$text}</a>
-            </div>";
-            $output = '<h3>📝 ' . esc_html__('Logs:', 'safe-assistant') . '</h3><ul>';
-            foreach ($file_logs as $log_line) {
-                $output .= '<li>' . esc_html($log_line) . '</li>';
-            }
-            $output .= '</ul>';
-            echo $output;
-        }
-        echo '';
-    }
-
     /**
      * Reverse all plugin actions
      *
@@ -402,31 +388,23 @@ class Addon_User_Importer
     {
         // Check user permissions
         if (!current_user_can('manage_options')) {
-            add_to_csv_log(__('Insufficient permissions to reset plugin settings.', 'safe-assistant'), 'error');
+            sa_add_log(__('Insufficient permissions to reset plugin settings.', 'safe-assistant'), 'error', 'system');
             return false;
         }
 
         // Verify nonce if called via AJAX
         if (isset($_POST['nonce']) && !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'addon_user_importer_reset')) {
-            add_to_csv_log(__('Invalid nonce for reset action.', 'safe-assistant'), 'error');
+            sa_add_log(__('Invalid nonce for reset action.', 'safe-assistant'), 'error', 'system');
             return false;
         }
 
         // Initialize WP_Filesystem
-
         require_once ABSPATH . 'wp-admin/includes/file.php';
         WP_Filesystem();
         global $wp_filesystem;
 
         // Delete log file
-        $log_file = WP_CONTENT_DIR . '/csv_import.log';
-        if ($wp_filesystem->exists($log_file)) {
-            if (!$wp_filesystem->delete($log_file)) {
-                add_to_csv_log(sprintf(__('Failed to delete log file: %s', 'safe-assistant'), $log_file), 'error');
-                return false;
-            }
-            add_to_csv_log(__('Log file deleted.', 'safe-assistant'), 'success');
-        }
+        sa_clear_log(ADDON_USER_IMPORTER_SLUG);
 
         // Delete transients
         $transients = [
@@ -436,7 +414,7 @@ class Addon_User_Importer
 
         foreach ($transients as $transient) {
             if (delete_transient($transient)) {
-                add_to_csv_log(sprintf(__('Transient %s deleted.', 'safe-assistant'), $transient), 'success');
+                sa_add_log(sprintf(__('Transient %s deleted.', 'safe-assistant'), $transient), 'success', 'system');
             }
         }
 
@@ -444,10 +422,10 @@ class Addon_User_Importer
         $timestamp = wp_next_scheduled(ADDON_USER_IMPORTER_CRON_EVENT);
         if ($timestamp) {
             wp_unschedule_event($timestamp, ADDON_USER_IMPORTER_CRON_EVENT);
-            add_to_csv_log(__('Scheduled cron event cleared.', 'safe-assistant'), 'success');
+            sa_add_log(__('Scheduled cron event cleared.', 'safe-assistant'), 'success', 'system');
         }
 
-        add_to_csv_log(__('Factory reset completed.', 'safe-assistant'), 'success');
+        sa_add_log(__('Factory reset completed.', 'safe-assistant'), 'success', 'system');
         return true;
     }
 
