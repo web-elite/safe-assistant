@@ -155,7 +155,7 @@ class Safe_Assistant
 			__FILE__,
 			SAFE_ASSISTANT_SLUG
 		);
-		$updateChecker->setBranch('master');
+		$updateChecker->setBranch('main');
 
 		if (class_exists('CSF')) {
 			require_once SAFE_ASSISTANT_DIR . 'includes/class-safe-assistant-settings.php';
