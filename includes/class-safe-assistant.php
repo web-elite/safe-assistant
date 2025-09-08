@@ -154,7 +154,7 @@ class Safe_Assistant
 			$sa_update_checker = PucFactory::buildUpdateChecker(
 				'https://github.com/web-elite/safe-assistant/',
 				__FILE__,
-				SAFE_ASSISTANT_SLUG
+				'safe-assistant'
 			);
 			$sa_update_checker->setBranch('main');
 		} else {
