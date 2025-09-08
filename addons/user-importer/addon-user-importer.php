@@ -224,7 +224,6 @@ class Addon_User_Importer
         $min_charge_value                 = isset(get_transient('addon_user_importer_form_data')['min_charge']) ? intval(get_transient('addon_user_importer_form_data')['min_charge']) : 0;
         $expire_date_value                = isset(get_transient('addon_user_importer_form_data')['expire_date']) ? intval(get_transient('addon_user_importer_form_data')['expire_date']) : 0;
         $sms_gateway                      = sa_get_option('sms_gateway', 'melipayamak');
-        $sms_status                       = sa_get_option('sms_status', 0);
         $sms_username                     = sa_get_option('sms_username', '');
         $sms_password                     = sa_get_option('sms_password', '');
         $sms_pattern                      = sa_get_option('sms_pattern', '');

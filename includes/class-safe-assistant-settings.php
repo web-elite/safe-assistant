@@ -528,11 +528,6 @@ class Safe_Assistant_Settings
 					'content'  => __('SMS Panel Settings', 'safe-assistant'),
 				],
 				[
-					'id'       => 'sms_status',
-					'type'     => 'checkbox',
-					'title'    => __('SMS Sending is Active?', 'safe-assistant'),
-				],
-				[
 					'id'       => 'sms_gateway',
 					'type'     => 'select',
 					'title'    => __('SMS Gateway', 'safe-assistant'),
