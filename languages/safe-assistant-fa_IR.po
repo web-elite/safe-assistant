@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Safe Assistant\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-04 07:27+0000\n"
-"PO-Revision-Date: 2025-09-07 10:00+0000\n"
+"PO-Revision-Date: 2025-09-08 08:18+0000\n"
 "Last-Translator: مجتهدی\n"
 "Language-Team: فارسی\n"
 "Language: fa_IR\n"
@@ -612,7 +612,7 @@ msgstr "برگرداندن همه عملیات"
 #: includes/class-safe-assistant-settings.php:84
 #: includes/class-safe-assistant-settings.php:86
 msgid "Safe Assistant"
-msgstr "دستیار امن"
+msgstr "دستیار سیف"
 
 #. Description of the plugin
 msgid "Safe Assistant Sales assistant and necessary and efficient tools"
@@ -620,7 +620,7 @@ msgstr "دستیار فروش ایمن و ابزارهای لازم و کارآ�
 
 #: includes/class-safe-assistant.php:167
 msgid "Safe Assistant: Codestar Framework not found."
-msgstr "دستیار امن: چارچوب Codestar یافت نشد."
+msgstr "دستیار سیف: Codestar Framework یافت نشد."
 
 #: addons/user-importer/partials/addon-user-importer-setting-content.php:104
 msgid "Save"
