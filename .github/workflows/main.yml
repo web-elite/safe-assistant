@@ -22,7 +22,7 @@ jobs:
       - name: Sync constants and readme
         run: |
           # Update SAFE_ASSISTANT_VERSION constant
-          sed -i "s/define('SAFE_ASSISTANT_VERSION'.*/define('SAFE_ASSISTANT_VERSION', '${VERSION}');/g" safe-assistant.php
+          sed -i "s/define('SAFE_ASSISTANT_VERSION',[[:space:]]*'[^']*');/define('SAFE_ASSISTANT_VERSION', '${VERSION}');/" safe-assistant.php
           
           # Update Stable tag in readme.txt
           sed -i "s/^Stable tag: .*/Stable tag: ${VERSION}/" readme.txt
