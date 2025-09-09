@@ -16,7 +16,9 @@
  * Plugin Name:       Safe Assistant
  * Plugin URI:        https://iranqq.com
  * Description:       Safe Assistant Sales assistant and necessary and efficient tools
- * Version:           1.1.1
+ * Version:           1.1.2
+ * Requires at least: 5.2
+ * Requires PHP:	  7.4
  * Author:            AlirezaYaghouti
  * Author URI:        https://webelitee.ir/
  * License:           GPL-2.0+
