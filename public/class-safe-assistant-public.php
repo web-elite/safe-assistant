@@ -97,7 +97,9 @@ class Safe_Assistant_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/safe-assistant-public.js', array( 'jquery' ), $this->version, false );
-
+		wp_localize_script( $this->plugin_name, 'ssa_vpn_data', [
+			'enabled' => sa_get_option('vpn_notice', false)
+		] );
 	}
 
 }
