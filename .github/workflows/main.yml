@@ -1,4 +1,4 @@
-name: Sync Version & Release
+name: Sync Version & Release Wordpress Plugin
 
 on:
     push:
