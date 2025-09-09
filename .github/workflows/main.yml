@@ -1,47 +1,47 @@
 name: Sync Version & Release
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+    release:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
-      - name: Get plugin version from header
-        id: get_version
-        run: |
-          VERSION=$(grep -Po 'Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' safe-assistant.php | head -1)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+            - name: Get plugin version from header
+              id: get_version
+              run: |
+                  VERSION=$(grep -Po 'Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' safe-assistant.php | head -1)
+                  echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Sync constants and readme
-        run: |
-          # Update SAFE_ASSISTANT_VERSION constant
-          sed -i "s/define('SAFE_ASSISTANT_VERSION',[[:space:]]*'[^']*');/define('SAFE_ASSISTANT_VERSION', '${VERSION}');/" safe-assistant.php
-          
-          # Update Stable tag in readme.txt
-          sed -i "s/^Stable tag: .*/Stable tag: ${VERSION}/" readme.txt
+            - name: Sync constants and README
+              run: |
+                  # Update SAFE_ASSISTANT_VERSION constant
+                  sed -i "s/define('SAFE_ASSISTANT_VERSION',[[:space:]]*'[^']*');/define('SAFE_ASSISTANT_VERSION', '${VERSION}');/" safe-assistant.php
 
-      - name: Commit changes if needed
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add safe-assistant.php readme.txt
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: sync version ${VERSION}"
-            git push
-          fi
+                  # Update Stable tag in README.txt
+                  sed -i "s/^Stable tag: .*/Stable tag: ${VERSION}/" README.txt
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ env.VERSION }}
-          name: "Release ${{ env.VERSION }}"
-          body: "Automatic release for version ${{ env.VERSION }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Commit changes if needed
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git add safe-assistant.php README.txt
+                  if ! git diff --cached --quiet; then
+                    git commit -m "chore: sync version ${VERSION}"
+                    git push
+                  fi
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ env.VERSION }}
+                  name: "Release ${{ env.VERSION }}"
+                  body: "Automatic release for version ${{ env.VERSION }}"
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
