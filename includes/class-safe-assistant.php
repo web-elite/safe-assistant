@@ -166,7 +166,7 @@ class Safe_Assistant
 				SAFE_ASSISTANT_DIR . 'safe-assistant.php',
 				'safe-assistant'
 			);
-			$sa_update_checker->setBranch('main');
+			$sa_update_checker->setBranch('master');
 			$sa_update_checker->addResultFilter(function ($info, $response = null) {
 				$info->banners = array(
 					'low' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
