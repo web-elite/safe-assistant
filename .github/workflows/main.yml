@@ -3,7 +3,7 @@ name: Sync Version & Release Wordpress Plugin
 on:
     push:
         branches:
-            - main
+            - master
 
 jobs:
     release:
