@@ -294,7 +294,7 @@ class Safe_Assistant_Settings
 						'text_on'    => esc_html__('Check All IPs Not in Iran', 'safe-assistant'),
 						'text_off'   => esc_html__('Check Only VPN service', 'safe-assistant'),
 						'text_width' => 250,
-						'desc'       => esc_html__('Switch on to check only VPN service or switch to off to check all IPs not in Iran', 'safe-assistant'),
+						'desc'       => esc_html__('Switch on to check only VPN service or switch to off to check all IPs not in Iran', 'safe-assistant') . '<br>' . esc_html__('Note: if you select to check all IPs not in Iran, users from other countries will be affected.', 'safe-assistant'),
 					],
 					[
 						'id'      => 'vpn_checker_title',
