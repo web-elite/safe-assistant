@@ -100,12 +100,11 @@ class Safe_Assistant_Public
 
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/safe-assistant-public.js', array('jquery'), $this->version, false);
 		$only_checkout = sa_get_option('vpn_checker_only_in_checkout', true);
-		$vpn_checker_status = sa_get_option('enable_vpn_checker', false);
+		$vpn_checker_status = sa_get_option('vpn_checker_status', false);
 		if ($only_checkout && !is_checkout()) {
 			$vpn_checker_status = false;
 		}
 
-		$vpn_checker_status = sa_get_option('enable_vpn_checker', false);
 		wp_localize_script($this->plugin_name, 'sa_vars', [
 			'enable_auto_membership'            => sa_get_option('enable_auto_membership'),
 			'hide_membership_option_checkout'   => sa_get_option('hide_membership_option_checkout', false),
