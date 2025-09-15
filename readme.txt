@@ -46,26 +46,11 @@ Yes, `.pot` file is included inside the `languages` directory.
 2. Maintenance page preview.
 
 == Changelog ==
-
-= 1.0.0 =
-* Initial release.
-* Added maintenance mode customization.
-* Added security & admin tools.
-* Included Codestar Framework integration.
-
-== Upgrade Notice ==
-
-= 1.3.4 =
-* for test update checker
-
-= 1.3.3 =
-* for test update checker
-
-= 1.3.2 =
-* move order note to last column in orders admin table
-
-= 1.3.1 =
-* add custom maintenance
+= 1.1.5 =
+add vpn checker features
+add auto membership in checkout page
 
 = 1.0.0 =
 First stable release of Safe Assistant.
+
+== Upgrade Notice ==
