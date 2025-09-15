@@ -5,7 +5,7 @@ Tags: security, optimization, admin, assistant
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ Yes, `.pot` file is included inside the `languages` directory.
 2. Maintenance page preview.
 
 == Changelog ==
+= 1.1.6 =
+add expire notif (sms) to nirwallet users
+
 = 1.1.5 =
 add vpn checker features
 add auto membership in checkout page
