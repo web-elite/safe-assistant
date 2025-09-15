@@ -106,13 +106,14 @@ class Safe_Assistant_Public
 		}
 
 		wp_localize_script($this->plugin_name, 'sa_vars', [
-			'enable_auto_membership'            => sa_get_option('enable_auto_membership'),
-			'hide_membership_option_checkout'   => sa_get_option('hide_membership_option_checkout', false),
-			'vpn_checker_url'                   => 'https://ipinfo.io/json?token=' . sa_get_option('vpn_checker_token'),
-			'vpn_checker_status'                => (bool) $vpn_checker_status,
-			'vpn_checker_type'                  => (bool) sa_get_option('vpn_checker_type', false),
-			'vpn_checker_message'               => sa_get_option('vpn_checker_message'),
-			'vpn_checker_title'                 => sa_get_option('vpn_checker_title'),
+			'enable_auto_membership'          => sa_get_option('enable_auto_membership'),
+			'hide_membership_option_checkout' => sa_get_option('hide_membership_option_checkout', false),
+			'enable_auto_membership'          => sa_get_option('enable_auto_membership', false),
+			'vpn_checker_url'                 => 'https://ipinfo.io/json?token=' . sa_get_option('vpn_checker_token'),
+			'vpn_checker_status'              => (bool) $vpn_checker_status,
+			'vpn_checker_type'                => (bool) sa_get_option('vpn_checker_type', false),
+			'vpn_checker_message'             => sa_get_option('vpn_checker_message'),
+			'vpn_checker_title'               => sa_get_option('vpn_checker_title'),
 		]);
 	}
 }

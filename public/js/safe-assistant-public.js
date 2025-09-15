@@ -2,32 +2,42 @@
     'use strict';
 
     document.addEventListener("DOMContentLoaded", function () {
-        if (!sa_vars.vpn_checker_status) return;
 
-        fetch(sa_vars.vpn_checker_url)
-            .then(response => response.json())
-            .then(data => {
-                let isVpn = false;
+        if (sa_vars.enable_auto_membership) {
+            var checkbox = document.getElementById('createaccount');
+            if (checkbox && !checkbox.checked) {
+                checkbox.checked = true;
+            }
 
-                if (sa_vars.vpn_checker_type) {
-                    if (data.country && data.country !== "IR") {
-                        isVpn = true;
+            var createAccountSection = document.getElementsByClassName('woocommerce-account-fields')[0];
+            if (sa_vars.hide_membership_option_checkout && createAccountSection) {
+                createAccountSection.style.display = 'none';
+            }
+        }
+
+        if (sa_vars.vpn_checker_status) {
+            fetch(sa_vars.vpn_checker_url)
+                .then(response => response.json())
+                .then(data => {
+                    let isVpn = false;
+                    if (sa_vars.vpn_checker_type) {
+                        if (data.country && data.country !== "IR") {
+                            isVpn = true;
+                        }
+                    } else {
+                        if (data.privacy && (data.privacy.vpn || data.privacy.proxy || data.privacy.tor)) {
+                            isVpn = true;
+                        }
                     }
-                } else {
-                    if (data.privacy && (data.privacy.vpn || data.privacy.proxy || data.privacy.tor)) {
-                        isVpn = true;
+
+                    if (isVpn) {
+                        showVpnPopup(sa_vars.vpn_checker_title, sa_vars.vpn_checker_message);
                     }
-                }
-
-                if (isVpn) {
-                    showVpnPopup(sa_vars.vpn_checker_title, sa_vars.vpn_checker_message);
-                }
-            })
-            .catch(error => console.error("VPN check failed", error));
-
-        function showVpnPopup(title, message) {
-            let popup = document.createElement("div");
-            popup.innerHTML = `
+                })
+                .catch(error => console.error("VPN check failed", error));
+            function showVpnPopup(title, message) {
+                let popup = document.createElement("div");
+                popup.innerHTML = `
                 <div class="vpn-popup-overlay">
   <div class="vpn-popup">
     <div class="vpn-popup-header">
@@ -42,8 +52,10 @@
   </div>
 </div>
 `;
-            document.body.appendChild(popup);
+                document.body.appendChild(popup);
+            }
         }
 
     });
+
 })(jQuery);
