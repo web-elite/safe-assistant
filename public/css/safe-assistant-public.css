@@ -133,16 +133,22 @@
 }
 
 .vpn-popup-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.2s;
+    background: #ffe6e6 !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    transition: 0.3s !important;
+    padding: 5px 10px !important;
+    min-height: initial !important;
+    border-radius: 7px !important;
+    color: red !important;
+    -webkit-transition: 0.3s !important;
+    -moz-transition: 0.3s !important;
+    -ms-transition: 0.3s !important;
+    -o-transition: 0.3s !important;
 }
 
 .vpn-popup-close:hover {
-    color: #000;
+    background: #ff00002e !important;
 }
 
 .vpn-popup-body {
