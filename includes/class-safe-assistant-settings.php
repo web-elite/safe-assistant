@@ -382,7 +382,7 @@ class Safe_Assistant_Settings
 					[
 						'id'      => 'show_order_notes_in_admin_table',
 						'type'    => 'switcher',
-						'title'   => esc_html__('Show Order Notes in Admin Orders Table', 'safe-assistant'),
+						'title'   => esc_html__('Display order notes in the orders table', 'safe-assistant'),
 						'default' => false,
 						'desc'    => esc_html__('Enable displaying order notes in the admin orders table.', 'safe-assistant'),
 					],
