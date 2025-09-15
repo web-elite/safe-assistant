@@ -228,6 +228,13 @@ class Safe_Assistant_Settings
 				'icon'   => 'fas fa-shipping-fast',
 				'fields' => [
 					[
+						'id'      => 'free_shipping_status',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Enable Free Shipping', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Enable or disable free shipping for your store.', 'safe-assistant'),
+					],
+					[
 						'id'      => 'free_shipping_min_mashhad',
 						'type'    => 'number',
 						'attributes' => [

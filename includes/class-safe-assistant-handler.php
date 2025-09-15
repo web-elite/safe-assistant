@@ -118,7 +118,7 @@ if (class_exists('WooCommerce')) {
 	$free_shipping_min_mashhad = (int) sa_get_option('free_shipping_min_mashhad', 0);
 	$free_shipping_min_other_cities = (int) sa_get_option('free_shipping_min_other_cities', 0);
 
-	if ($free_shipping_min_mashhad > 0 || $free_shipping_min_other_cities > 0) {
+	if (sa_get_option('free_shipping_status', false) && ($free_shipping_min_mashhad > 0 || $free_shipping_min_other_cities > 0)) {
 		add_action('woocommerce_cart_totals_after_order_total', 'render_free_shipping_progress');
 		add_action('woocommerce_checkout_before_order_review', 'render_free_shipping_progress');
 		add_action('woocommerce_widget_shopping_cart_after_buttons', 'render_free_shipping_progress');
