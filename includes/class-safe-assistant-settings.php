@@ -459,6 +459,12 @@ class Safe_Assistant_Settings
 						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications.', 'safe-assistant'),
 					],
 					[
+						'id'      => 'nir_wallet_expire_last_pattern_sms',
+						'type'    => 'text',
+						'title'   => esc_html__('SMS Pattern (for last 24h)', 'safe-assistant'),
+						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications less than 24 hours.', 'safe-assistant'),
+					],
+					[
 						'id'      => 'nir_wallet_expire_send_sms',
 						'type'    => 'text',
 						'title'   => esc_html__('SMS Pattern', 'safe-assistant'),

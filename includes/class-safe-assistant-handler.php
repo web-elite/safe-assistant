@@ -375,26 +375,56 @@ if (class_exists('WooCommerce') && sa_get_option('order_convertor_status', false
 if (defined('nirweb_wallet')) {
 	// Handle wallet expiration SMS (implementation depends on SMS gateway)
 	add_action('sa_nir_wallet_expiration_check', function () {
-		$expire_days = sa_get_option('nir_wallet_expire_day_sms', ['24']);
-		$pattern = sa_get_option('nir_wallet_expire_pattern_sms', '');
+		$expire_days   = (array) sa_get_option('nir_wallet_expire_day_sms', [24]);
+		$pattern       = sa_get_option('nir_wallet_expire_pattern_sms', '');
+		$pattern_last  = sa_get_option('nir_wallet_expire_last_pattern_sms', '');
 
-		if (empty($expire_days) || empty($pattern)) {
+		if (!$expire_days || (!$pattern && !$pattern_last)) {
 			return;
 		}
 
 		global $wpdb;
-		$expire_timestamp = current_time('timestamp');
+		$current_time = current_time('timestamp');
+
 		foreach ($expire_days as $days) {
-			$time = $expire_timestamp + (int)$days * HOUR_IN_SECONDS;
-			$users = $wpdb->get_results($wpdb->prepare(
-				"SELECT user_id,amount FROM {$wpdb->prefix}nirweb_wallet_cashback WHERE expire_time <= %d AND expire_time > %d",
-				$time + HOUR_IN_SECONDS,
-				$time - HOUR_IN_SECONDS
-			));
+			$days = (int) $days;
+			if ($days <= 0) {
+				continue;
+			}
+
+			$time = $current_time + $days * HOUR_IN_SECONDS;
+
+			$users = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT user_id, amount 
+             FROM {$wpdb->prefix}nirweb_wallet_cashback
+             WHERE expire_time BETWEEN %d AND %d",
+					$time - HOUR_IN_SECONDS,
+					$time + HOUR_IN_SECONDS
+				)
+			);
+
+			if (!$users) {
+				continue;
+			}
 
 			foreach ($users as $user) {
-				$user_wallet_expire_balance = $user->amount;
-				sa_send_sms_pattern($user_wallet_expire_balance, get_user_meta($user->user_id, 'billing_phone', true), $pattern);
+				$phone     = get_user_meta($user->user_id, 'billing_phone', true);
+				if (!$phone) {
+					continue;
+				}
+
+				$user_info = get_userdata($user->user_id);
+				$name      = $user_info && $user_info->first_name ? $user_info->first_name : $user_info->display_name;
+
+				$selected_pattern = ($days === 24 && $pattern_last) ? $pattern_last : $pattern;
+				$pattern_vars = ($days === 24 && $pattern_last) ? "$name" : "$name;$days";
+
+				sa_send_sms_pattern(
+					$pattern_vars,
+					$phone,
+					$selected_pattern
+				);
 			}
 		}
 	});
