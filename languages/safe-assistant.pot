@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Safe Assistant\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-08 10:31+0000\n"
+"POT-Creation-Date: 2025-09-15 11:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -26,31 +26,31 @@ msgstr ""
 msgid "%s Toman left for free shipping nationwide."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:484
+#: includes/class-safe-assistant-settings.php:445
 msgid "1 Day"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:485
+#: includes/class-safe-assistant-settings.php:446
 msgid "2 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:486
+#: includes/class-safe-assistant-settings.php:447
 msgid "3 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:487
+#: includes/class-safe-assistant-settings.php:448
 msgid "4 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:488
+#: includes/class-safe-assistant-settings.php:449
 msgid "5 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:489
+#: includes/class-safe-assistant-settings.php:450
 msgid "6 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:490
+#: includes/class-safe-assistant-settings.php:451
 msgid "7 Days"
 msgstr ""
 
@@ -66,13 +66,17 @@ msgstr ""
 msgid "Active custom maintenance"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:457
+#: includes/class-safe-assistant-settings.php:418
 msgid "Addons"
 msgstr ""
 
 #: addons/user-importer/addon-user-importer-handler.php:435
 #, php-format
 msgid "Address updated for user %s."
+msgstr ""
+
+#. Author of the plugin
+msgid "AlirezaYaghouti"
 msgstr ""
 
 #: addons/user-importer/addon-user-importer.php:444
@@ -83,12 +87,11 @@ msgstr ""
 msgid "Amounts must be in Toman."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:257
-#: includes/class-safe-assistant-settings.php:357
+#: includes/class-safe-assistant-settings.php:318
 msgid "Automatic Membership Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:587
+#: includes/class-safe-assistant-settings.php:554
 msgid "Backup & Restore"
 msgstr ""
 
@@ -104,7 +107,15 @@ msgstr ""
 msgid "Charge wallet for users with previous charges?"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:482
+#: includes/class-safe-assistant-settings.php:294
+msgid "Check All IPs Not in Iran"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:295
+msgid "Check Only VPN service"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:443
 msgid ""
 "Choose how many days before the user's wallet expiration date the SMS will "
 "be sent."
@@ -158,8 +169,7 @@ msgstr ""
 msgid "Column Information:"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:291
-#: includes/class-safe-assistant-settings.php:392
+#: includes/class-safe-assistant-settings.php:353
 msgid "Convert Pending Orders to Failed"
 msgstr ""
 
@@ -173,7 +183,7 @@ msgid "CSV file not found or unreadable: %s"
 msgstr ""
 
 #: includes/class-safe-assistant-handler.php:341
-#: includes/class-safe-assistant-handler.php:361
+#: includes/class-safe-assistant-handler.php:357
 msgid "Customer Note"
 msgstr ""
 
@@ -201,33 +211,27 @@ msgstr ""
 msgid "Disable the Gutenberg block editor and use Classic Editor."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:342
-#: includes/class-safe-assistant-settings.php:444
+#: includes/class-safe-assistant-settings.php:405
 msgid "Disable the Marketing Hub in WooCommerce."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:335
-#: includes/class-safe-assistant-settings.php:437
+#: includes/class-safe-assistant-settings.php:398
 msgid "Disable the WooCommerce Admin dashboard."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:333
-#: includes/class-safe-assistant-settings.php:435
+#: includes/class-safe-assistant-settings.php:396
 msgid "Disable WooCommerce Admin"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:347
-#: includes/class-safe-assistant-settings.php:449
+#: includes/class-safe-assistant-settings.php:410
 msgid "Disable WooCommerce Blocks on Frontend"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:349
-#: includes/class-safe-assistant-settings.php:451
+#: includes/class-safe-assistant-settings.php:412
 msgid "Disable WooCommerce Blocks scripts/styles on frontend."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:340
-#: includes/class-safe-assistant-settings.php:442
+#: includes/class-safe-assistant-settings.php:403
 msgid "Disable WooCommerce Marketing Hub"
 msgstr ""
 
@@ -240,7 +244,7 @@ msgid ""
 "Disable Woodmart patch checker on all pages except the Woodmart patch page."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:284
+#: includes/class-safe-assistant-settings.php:346
 msgid "Display order notes in the orders table"
 msgstr ""
 
@@ -252,46 +256,74 @@ msgstr ""
 msgid "Enable a custom maintenance mode for your site."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:293
-#: includes/class-safe-assistant-settings.php:394
+#: includes/class-safe-assistant-settings.php:355
 msgid "Enable automatic conversion of pending orders to failed status."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:263
-#: includes/class-safe-assistant-settings.php:363
+#: includes/class-safe-assistant-settings.php:324
 msgid "Enable Automatic Membership"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:286
-#: includes/class-safe-assistant-settings.php:387
+#: includes/class-safe-assistant-settings.php:348
 msgid "Enable displaying order notes in the admin orders table."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:265
-#: includes/class-safe-assistant-settings.php:365
+#: includes/class-safe-assistant-settings.php:233
+msgid "Enable Free Shipping"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:326
 msgid "Enable or disable automatic user membership on checkout."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:465
+#: includes/class-safe-assistant-settings.php:235
+msgid "Enable or disable free shipping for your store."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:426
 msgid "Enable or disable User Importer Addon."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:463
+#: includes/class-safe-assistant-settings.php:274
+msgid "Enable or disable VPN checking for users in checkout page."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:281
+msgid "Enable or disable VPN checking for users only in the checkout page."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:424
 msgid "Enable User Importer Addon"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:319
-#: includes/class-safe-assistant-settings.php:420
+#: includes/class-safe-assistant-settings.php:272
+msgid "Enable VPN Checker"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:279
+msgid "Enable VPN Checker Only in Checkout"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:381
 msgid "End Time for Failed Status Check (Hour)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:498
-#: includes/class-safe-assistant-settings.php:504
+#: includes/class-safe-assistant-settings.php:465
+msgid ""
+"Enter the SMS pattern for wallet expiration notifications less than 24 hours."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:459
+#: includes/class-safe-assistant-settings.php:471
 msgid "Enter the SMS pattern for wallet expiration notifications."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:510
+#: includes/class-safe-assistant-settings.php:477
 msgid "Enter the time (in hours 24h) to send the SMS notification."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:287
+msgid "Enter your VPN Checker API token. get it from"
 msgstr ""
 
 #: addons/user-importer/addon-user-importer-handler.php:318
@@ -398,13 +430,11 @@ msgstr ""
 msgid "Guest order auto-failed after timeout."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:270
-#: includes/class-safe-assistant-settings.php:370
+#: includes/class-safe-assistant-settings.php:331
 msgid "Hide Membership Option on Checkout"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:272
-#: includes/class-safe-assistant-settings.php:372
+#: includes/class-safe-assistant-settings.php:333
 msgid "Hide the membership option on the checkout page."
 msgstr ""
 
@@ -412,7 +442,7 @@ msgstr ""
 msgid "Hide the WordPress admin bar for all users except administrators."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:511
+#: includes/class-safe-assistant-settings.php:478
 msgid "Hours"
 msgstr ""
 
@@ -475,7 +505,7 @@ msgid "Last Name"
 msgstr ""
 
 #: helpers/helper-safe-assistant-general.php:263
-#: includes/class-safe-assistant-settings.php:539
+#: includes/class-safe-assistant-settings.php:506
 #: addons/user-importer/addon-user-importer.php:113
 msgid "Logs"
 msgstr ""
@@ -484,23 +514,27 @@ msgstr ""
 msgid "Love"
 msgstr ""
 
+#: includes/class-safe-assistant-settings.php:311
+msgid "Message to display when VPN is detected."
+msgstr ""
+
 #: addons/user-importer/partials/addon-user-importer-main-section.php:46
 msgid "Minimum Charge Amount"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:240
+#: includes/class-safe-assistant-settings.php:247
 msgid "Minimum order amount for free shipping in Mashhad."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:252
+#: includes/class-safe-assistant-settings.php:259
 msgid "Minimum order amount for free shipping in other cities."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:238
+#: includes/class-safe-assistant-settings.php:245
 msgid "Minimum Purchase (Mashhad)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:250
+#: includes/class-safe-assistant-settings.php:257
 msgid "Minimum Purchase (Other Cities)"
 msgstr ""
 
@@ -518,12 +552,18 @@ msgstr ""
 msgid "Mobile Number"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:472
+#: includes/class-safe-assistant-settings.php:433
 msgid "Nir Wallet"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:523
+#: includes/class-safe-assistant-settings.php:490
 msgid "Nir Wallet plugin not active or installed"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:297
+msgid ""
+"Note: if you select to check all IPs not in Iran, users from other countries "
+"will be affected."
 msgstr ""
 
 #: addons/user-importer/addon-user-importer.php:249
@@ -550,12 +590,11 @@ msgstr ""
 msgid "Order cancelled due to newer similar order."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:278
-#: includes/class-safe-assistant-settings.php:379
+#: includes/class-safe-assistant-settings.php:340
 msgid "Order Management"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:573
+#: includes/class-safe-assistant-settings.php:540
 msgid "Password"
 msgstr ""
 
@@ -634,7 +673,7 @@ msgstr ""
 msgid "Scheduled cron event cleared."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:481
+#: includes/class-safe-assistant-settings.php:442
 msgid "Select an option"
 msgstr ""
 
@@ -642,52 +681,44 @@ msgstr ""
 msgid "Select CSV File"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:307
-#: includes/class-safe-assistant-settings.php:408
+#: includes/class-safe-assistant-settings.php:369
 msgid ""
 "Set how many hours after creation a pending order should be marked as "
 "cancelled."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:300
-#: includes/class-safe-assistant-settings.php:401
+#: includes/class-safe-assistant-settings.php:362
 msgid ""
 "Set how many hours after creation a pending order should be marked as failed."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:314
-#: includes/class-safe-assistant-settings.php:415
+#: includes/class-safe-assistant-settings.php:376
 msgid ""
 "Set the hour (24h format) when the system starts checking for orders to mark "
 "as failed."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:321
-#: includes/class-safe-assistant-settings.php:422
+#: includes/class-safe-assistant-settings.php:383
 msgid ""
 "Set the hour (24h format) when the system stops checking for orders to mark "
 "as failed."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:549
+#: includes/class-safe-assistant-settings.php:516
 #: addons/user-importer/addon-user-importer.php:126
 msgid "Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:385
-msgid "Show Order Notes in Admin Orders Table"
-msgstr ""
-
-#: includes/class-safe-assistant-settings.php:559
+#: includes/class-safe-assistant-settings.php:526
 msgid "SMS Gateway"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:554
+#: includes/class-safe-assistant-settings.php:521
 msgid "SMS Panel Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:497
-#: includes/class-safe-assistant-settings.php:503
+#: includes/class-safe-assistant-settings.php:458
+#: includes/class-safe-assistant-settings.php:470
 msgid "SMS Pattern"
 msgstr ""
 
@@ -695,7 +726,11 @@ msgstr ""
 msgid "Sms Pattern"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:509
+#: includes/class-safe-assistant-settings.php:464
+msgid "SMS Pattern (for last 24h)"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:476
 msgid "SMS Send Time"
 msgstr ""
 
@@ -707,7 +742,7 @@ msgstr ""
 msgid "Sms Send to $cleaned_number Success!"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:581
+#: includes/class-safe-assistant-settings.php:548
 msgid "Sms sender number"
 msgstr ""
 
@@ -715,8 +750,7 @@ msgstr ""
 msgid "Sms Status"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:312
-#: includes/class-safe-assistant-settings.php:413
+#: includes/class-safe-assistant-settings.php:374
 msgid "Start Time for Failed Status Check (Hour)"
 msgstr ""
 
@@ -733,18 +767,26 @@ msgstr ""
 msgid "Success:"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:305
-#: includes/class-safe-assistant-settings.php:406
+#: includes/class-safe-assistant-settings.php:297
+msgid ""
+"Switch on to check only VPN service or switch to off to check all IPs not in "
+"Iran"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:367
 msgid "Time to Mark Order as Cancelled (Hours)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:298
-#: includes/class-safe-assistant-settings.php:399
+#: includes/class-safe-assistant-settings.php:360
 msgid "Time to Mark Order as Failed (Hours)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:237
-#: includes/class-safe-assistant-settings.php:249
+#: includes/class-safe-assistant-settings.php:304
+msgid "Title to display when VPN is detected."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:244
+#: includes/class-safe-assistant-settings.php:256
 #: addons/user-importer/partials/addon-user-importer-main-section.php:47
 msgid "Toman"
 msgstr ""
@@ -792,12 +834,36 @@ msgstr ""
 msgid "User Importer"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:568
+#: includes/class-safe-assistant-settings.php:535
 msgid "Username"
 msgstr ""
 
 #: addons/user-importer/partials/addon-user-importer-main-section.php:20
 msgid "username is required"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:309
+msgid "VPN Checker Message"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:266
+msgid "VPN Checker Settings"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:302
+msgid "VPN Checker Title"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:286
+msgid "VPN Checker Token"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:292
+msgid "VPN Checker Type"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:303
+msgid "VPN Detected"
 msgstr ""
 
 #: includes/class-safe-assistant-settings.php:145
@@ -813,7 +879,7 @@ msgstr ""
 msgid "Wallet charged for user %s with amount %s."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:478
+#: includes/class-safe-assistant-settings.php:439
 msgid "Wallet expiration SMS"
 msgstr ""
 
@@ -825,8 +891,7 @@ msgstr ""
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:327
-#: includes/class-safe-assistant-settings.php:429
+#: includes/class-safe-assistant-settings.php:390
 msgid "WooCommerce Admin Settings"
 msgstr ""
 
@@ -834,8 +899,8 @@ msgstr ""
 msgid "WordPress"
 msgstr ""
 
-#. Author of the plugin
-msgid "𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢"
+#: includes/class-safe-assistant-settings.php:310
+msgid "You are using a VPN. Please disable it to payment success."
 msgstr ""
 
 #: addons/user-importer/addon-user-importer-handler.php:283
