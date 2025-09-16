@@ -36,7 +36,7 @@ if (! defined('WPINC')) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define('SAFE_ASSISTANT_VERSION', '1.1.7');
+define('SAFE_ASSISTANT_VERSION', '1.1.8');
 define('SAFE_ASSISTANT_NAME', 'Safe Assistant');
 define('SAFE_ASSISTANT_SLUG', 'safe-assistant');
 define('SAFE_ASSISTANT_DIR', plugin_dir_path(__FILE__));
