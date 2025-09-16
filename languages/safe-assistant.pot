@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Safe Assistant\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-15 11:17+0000\n"
+"POT-Creation-Date: 2025-09-16 07:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -91,7 +91,13 @@ msgstr ""
 msgid "Automatic Membership Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:554
+#: includes/class-safe-assistant-settings.php:469
+#: includes/class-safe-assistant-settings.php:476
+#: includes/class-safe-assistant-settings.php:483
+msgid "Available placeholders:"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:566
 msgid "Backup & Restore"
 msgstr ""
 
@@ -115,10 +121,18 @@ msgstr ""
 msgid "Check Only VPN service"
 msgstr ""
 
+#: includes/class-safe-assistant-settings.php:458
+msgid "Check Wallet Expiration By"
+msgstr ""
+
 #: includes/class-safe-assistant-settings.php:443
 msgid ""
 "Choose how many days before the user's wallet expiration date the SMS will "
 "be sent."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:460
+msgid "Choose whether to check wallet expiration by days or hours."
 msgstr ""
 
 #: addons/user-importer/partials/addon-user-importer-main-section.php:17
@@ -189,6 +203,10 @@ msgstr ""
 
 #: addons/user-importer/partials/addon-user-importer-main-section.php:23
 msgid "Date columns should be in YYYY/MM/DD format, e.g., 1404/05/24."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:461
+msgid "Days"
 msgstr ""
 
 #: includes/class-safe-assistant-settings.php:190
@@ -308,18 +326,22 @@ msgstr ""
 msgid "End Time for Failed Status Check (Hour)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:465
+#: includes/class-safe-assistant-settings.php:489
+msgid ""
+"Enter the expiration date check time and the time of day the SMS is sent."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:476
+msgid "Enter the SMS pattern for wallet expiration notifications by days."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:469
+msgid "Enter the SMS pattern for wallet expiration notifications by hour."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:483
 msgid ""
 "Enter the SMS pattern for wallet expiration notifications less than 24 hours."
-msgstr ""
-
-#: includes/class-safe-assistant-settings.php:459
-#: includes/class-safe-assistant-settings.php:471
-msgid "Enter the SMS pattern for wallet expiration notifications."
-msgstr ""
-
-#: includes/class-safe-assistant-settings.php:477
-msgid "Enter the time (in hours 24h) to send the SMS notification."
 msgstr ""
 
 #: includes/class-safe-assistant-settings.php:287
@@ -442,7 +464,7 @@ msgstr ""
 msgid "Hide the WordPress admin bar for all users except administrators."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:478
+#: includes/class-safe-assistant-settings.php:462
 msgid "Hours"
 msgstr ""
 
@@ -456,6 +478,10 @@ msgstr ""
 
 #: addons/user-importer/addon-user-importer.php:100
 msgid "Import"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:490
+msgid "In 24-hour format. for example: 9 or 17"
 msgstr ""
 
 #: addons/user-importer/addon-user-importer-handler.php:423
@@ -505,7 +531,7 @@ msgid "Last Name"
 msgstr ""
 
 #: helpers/helper-safe-assistant-general.php:263
-#: includes/class-safe-assistant-settings.php:506
+#: includes/class-safe-assistant-settings.php:518
 #: addons/user-importer/addon-user-importer.php:113
 msgid "Logs"
 msgstr ""
@@ -556,7 +582,7 @@ msgstr ""
 msgid "Nir Wallet"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:490
+#: includes/class-safe-assistant-settings.php:502
 msgid "Nir Wallet plugin not active or installed"
 msgstr ""
 
@@ -594,7 +620,7 @@ msgstr ""
 msgid "Order Management"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:540
+#: includes/class-safe-assistant-settings.php:552
 msgid "Password"
 msgstr ""
 
@@ -661,11 +687,11 @@ msgstr ""
 msgid "Safe Assistant Sales assistant and necessary and efficient tools"
 msgstr ""
 
-#: includes/class-safe-assistant.php:197
+#: includes/class-safe-assistant.php:198
 msgid "Safe Assistant: Codestar Framework not found."
 msgstr ""
 
-#: includes/class-safe-assistant.php:184
+#: includes/class-safe-assistant.php:185
 msgid "Safe Assistant: Plugin Update Checker not found."
 msgstr ""
 
@@ -704,21 +730,21 @@ msgid ""
 "as failed."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:516
+#: includes/class-safe-assistant-settings.php:528
 #: addons/user-importer/addon-user-importer.php:126
 msgid "Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:526
+#: includes/class-safe-assistant-settings.php:538
 msgid "SMS Gateway"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:521
+#: includes/class-safe-assistant-settings.php:533
 msgid "SMS Panel Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:458
-#: includes/class-safe-assistant-settings.php:470
+#: includes/class-safe-assistant-settings.php:468
+#: includes/class-safe-assistant-settings.php:475
 msgid "SMS Pattern"
 msgstr ""
 
@@ -726,12 +752,8 @@ msgstr ""
 msgid "Sms Pattern"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:464
+#: includes/class-safe-assistant-settings.php:482
 msgid "SMS Pattern (for last 24h)"
-msgstr ""
-
-#: includes/class-safe-assistant-settings.php:476
-msgid "SMS Send Time"
 msgstr ""
 
 #: addons/user-importer/addon-user-importer-handler.php:447
@@ -742,7 +764,7 @@ msgstr ""
 msgid "Sms Send to $cleaned_number Success!"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:548
+#: includes/class-safe-assistant-settings.php:560
 msgid "Sms sender number"
 msgstr ""
 
@@ -834,7 +856,7 @@ msgstr ""
 msgid "User Importer"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:535
+#: includes/class-safe-assistant-settings.php:547
 msgid "Username"
 msgstr ""
 

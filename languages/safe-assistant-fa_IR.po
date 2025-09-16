@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Safe Assistant\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-04 07:27+0000\n"
-"PO-Revision-Date: 2025-09-15 11:18+0000\n"
+"PO-Revision-Date: 2025-09-16 07:55+0000\n"
 "Last-Translator: مجتهدی\n"
 "Language-Team: فارسی\n"
 "Language: fa_IR\n"
@@ -90,7 +90,13 @@ msgstr "مبالغ باید به تومان باشد."
 msgid "Automatic Membership Settings"
 msgstr "تنظیمات عضویت خودکار"
 
-#: includes/class-safe-assistant-settings.php:554
+#: includes/class-safe-assistant-settings.php:469
+#: includes/class-safe-assistant-settings.php:476
+#: includes/class-safe-assistant-settings.php:483
+msgid "Available placeholders:"
+msgstr "متغیرهای موجود:"
+
+#: includes/class-safe-assistant-settings.php:566
 msgid "Backup & Restore"
 msgstr "پشتیبان‌گیری و بازیابی"
 
@@ -116,6 +122,10 @@ msgstr "تمام آی‌پی‌های خارج از ایران را بررسی �
 msgid "Check Only VPN service"
 msgstr "فقط سرویس VPN را بررسی کنید"
 
+#: includes/class-safe-assistant-settings.php:458
+msgid "Check Wallet Expiration By"
+msgstr "تاریخ انقضای کیف پول چک"
+
 #: includes/class-safe-assistant-settings.php:443
 #| msgid ""
 #| "Choose how many days after the user's wallet expiration date the SMS will "
@@ -125,6 +135,10 @@ msgid ""
 "be sent."
 msgstr ""
 "انتخاب کنید که پیامک چند روز قبل از تاریخ انقضای کیف پول کاربر ارسال شود."
+
+#: includes/class-safe-assistant-settings.php:460
+msgid "Choose whether to check wallet expiration by days or hours."
+msgstr "انتخاب کنید که آیا انقضای کیف پول را بر اساس روز یا ساعت بررسی کنید."
 
 #: addons/user-importer/partials/addon-user-importer-main-section.php:17
 msgid "City"
@@ -195,6 +209,10 @@ msgstr "یادداشت مشتری"
 #: addons/user-importer/partials/addon-user-importer-main-section.php:23
 msgid "Date columns should be in YYYY/MM/DD format, e.g., 1404/05/24."
 msgstr "ستون‌های تاریخ باید به فرمت YYYY/MM/DD باشند، مثلاً 1404/05/24."
+
+#: includes/class-safe-assistant-settings.php:461
+msgid "Days"
+msgstr "روز"
 
 #: includes/class-safe-assistant-settings.php:190
 msgid "Disable Admin Bar"
@@ -316,20 +334,26 @@ msgstr "فعال کردن بررسی VPN فقط در پرداخت"
 msgid "End Time for Failed Status Check (Hour)"
 msgstr "زمان پایان بررسی وضعیت ناموفق (ساعت)"
 
-#: includes/class-safe-assistant-settings.php:465
+#: includes/class-safe-assistant-settings.php:489
+msgid ""
+"Enter the expiration date check time and the time of day the SMS is sent."
+msgstr "زمان بررسی تاریخ انقضا و زمان ارسال پیامک را وارد کنید."
+
+#: includes/class-safe-assistant-settings.php:476
+#, fuzzy
+#| msgid "Enter the SMS pattern for wallet expiration notifications."
+msgid "Enter the SMS pattern for wallet expiration notifications by days."
+msgstr "الگوی پیامکی برای اعلان‌های انقضای کیف پول را وارد کنید."
+
+#: includes/class-safe-assistant-settings.php:469
+msgid "Enter the SMS pattern for wallet expiration notifications by hour."
+msgstr "الگوی پیامکی اعلان‌های انقضای کیف پول را بر اساس ساعت وارد کنید."
+
+#: includes/class-safe-assistant-settings.php:483
 msgid ""
 "Enter the SMS pattern for wallet expiration notifications less than 24 hours."
 msgstr ""
 "الگوی پیامکی برای اعلان‌های انقضای کیف پول کمتر از ۲۴ ساعت را وارد کنید."
-
-#: includes/class-safe-assistant-settings.php:459
-#: includes/class-safe-assistant-settings.php:471
-msgid "Enter the SMS pattern for wallet expiration notifications."
-msgstr "الگوی پیامکی برای اعلان‌های انقضای کیف پول را وارد کنید."
-
-#: includes/class-safe-assistant-settings.php:477
-msgid "Enter the time (in hours 24h) to send the SMS notification."
-msgstr "زمان (به ساعت ۲۴ ساعته) را برای ارسال اعلان پیامکی وارد کنید."
 
 #: includes/class-safe-assistant-settings.php:287
 msgid "Enter your VPN Checker API token. get it from"
@@ -453,7 +477,7 @@ msgstr "گزینه عضویت را در صفحه پرداخت مخفی کنید.
 msgid "Hide the WordPress admin bar for all users except administrators."
 msgstr "نوار مدیریت وردپرس را برای همه کاربران به جز مدیران پنهان کنید."
 
-#: includes/class-safe-assistant-settings.php:478
+#: includes/class-safe-assistant-settings.php:462
 msgid "Hours"
 msgstr "ساعت"
 
@@ -468,6 +492,10 @@ msgstr "https://webelitee.ir/"
 #: addons/user-importer/addon-user-importer.php:100
 msgid "Import"
 msgstr "درون ریزی"
+
+#: includes/class-safe-assistant-settings.php:490
+msgid "In 24-hour format. for example: 9 or 17"
+msgstr "در قالب ۲۴ ساعته. مثلاً: ۹ یا ۱۷"
 
 #: addons/user-importer/addon-user-importer-handler.php:423
 #, php-format
@@ -516,7 +544,7 @@ msgid "Last Name"
 msgstr "نام خانوادگی"
 
 #: helpers/helper-safe-assistant-general.php:263
-#: includes/class-safe-assistant-settings.php:506
+#: includes/class-safe-assistant-settings.php:518
 #: addons/user-importer/addon-user-importer.php:113
 msgid "Logs"
 msgstr "گزارشات"
@@ -567,7 +595,7 @@ msgstr "شماره موبایل"
 msgid "Nir Wallet"
 msgstr "کیف پول نیر"
 
-#: includes/class-safe-assistant-settings.php:490
+#: includes/class-safe-assistant-settings.php:502
 msgid "Nir Wallet plugin not active or installed"
 msgstr "افزونه کیف پول نیر فعال یا نصب نشده است"
 
@@ -610,7 +638,7 @@ msgstr "سفارش به دلیل سفارش مشابه جدید لغو شد."
 msgid "Order Management"
 msgstr "مدیریت سفارش"
 
-#: includes/class-safe-assistant-settings.php:540
+#: includes/class-safe-assistant-settings.php:552
 msgid "Password"
 msgstr "رمز عبور"
 
@@ -677,11 +705,11 @@ msgstr "دستیار سیف"
 msgid "Safe Assistant Sales assistant and necessary and efficient tools"
 msgstr "دستیار فروش ایمن و ابزارهای لازم و کارآمد"
 
-#: includes/class-safe-assistant.php:197
+#: includes/class-safe-assistant.php:198
 msgid "Safe Assistant: Codestar Framework not found."
 msgstr "دستیار سیف: Codestar Framework یافت نشد."
 
-#: includes/class-safe-assistant.php:184
+#: includes/class-safe-assistant.php:185
 msgid "Safe Assistant: Plugin Update Checker not found."
 msgstr "دستیار امن: بررسی‌کننده‌ی به‌روزرسانی افزونه یافت نشد."
 
@@ -728,21 +756,21 @@ msgstr ""
 "ساعت (با فرمت ۲۴ ساعته) را تنظیم کنید تا سیستم بررسی سفارشات را متوقف کند و "
 "آنها را به عنوان ناموفق علامت‌گذاری کند."
 
-#: includes/class-safe-assistant-settings.php:516
+#: includes/class-safe-assistant-settings.php:528
 #: addons/user-importer/addon-user-importer.php:126
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/class-safe-assistant-settings.php:526
+#: includes/class-safe-assistant-settings.php:538
 msgid "SMS Gateway"
 msgstr "درگاه پیامکی"
 
-#: includes/class-safe-assistant-settings.php:521
+#: includes/class-safe-assistant-settings.php:533
 msgid "SMS Panel Settings"
 msgstr "تنظیمات پنل پیامک"
 
-#: includes/class-safe-assistant-settings.php:458
-#: includes/class-safe-assistant-settings.php:470
+#: includes/class-safe-assistant-settings.php:468
+#: includes/class-safe-assistant-settings.php:475
 msgid "SMS Pattern"
 msgstr "پترن پیامک"
 
@@ -750,13 +778,9 @@ msgstr "پترن پیامک"
 msgid "Sms Pattern"
 msgstr "پترن پیامک"
 
-#: includes/class-safe-assistant-settings.php:464
+#: includes/class-safe-assistant-settings.php:482
 msgid "SMS Pattern (for last 24h)"
 msgstr "پترن پیامک (برای 24 ساعت باقی مانده)"
-
-#: includes/class-safe-assistant-settings.php:476
-msgid "SMS Send Time"
-msgstr "زمان ارسال پیامک"
 
 #: addons/user-importer/addon-user-importer-handler.php:447
 msgid "Sms Send to $cleaned_number failed!"
@@ -766,7 +790,7 @@ msgstr "ارسال پیامک به $cleaned_number ناموفق بود!"
 msgid "Sms Send to $cleaned_number Success!"
 msgstr "ارسال پیامک به $cleaned_number موفقیت آمیز بود!"
 
-#: includes/class-safe-assistant-settings.php:548
+#: includes/class-safe-assistant-settings.php:560
 msgid "Sms sender number"
 msgstr "شماره ارسال کننده پیامک"
 
@@ -862,7 +886,7 @@ msgstr "جزئیات کاربر %s به‌روزرسانی شد."
 msgid "User Importer"
 msgstr "واردکننده کاربر"
 
-#: includes/class-safe-assistant-settings.php:535
+#: includes/class-safe-assistant-settings.php:547
 msgid "Username"
 msgstr "نام کاربری"
 
