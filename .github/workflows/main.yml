@@ -40,7 +40,7 @@ jobs:
       - name: Build plugin ZIP
         run: |
           mkdir build
-          rsync -av --exclude='.git' --exclude='.github' ./ build/safe-assistant
+          rsync -av --exclude='.git' --exclude='.github' ./ build
           cd build
           zip -r ../safe-assistant.zip safe-assistant
           cd ..
