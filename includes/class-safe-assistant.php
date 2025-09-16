@@ -167,19 +167,16 @@ class Safe_Assistant
 				'safe-assistant'
 			);
 			$sa_update_checker->setBranch('master');
-			$sa_update_checker->addQueryArgFilter(function ($queryArgs) {
-				$queryArgs['asset'] = 'safe-assistant.zip';
-				return $queryArgs;
-			});
 			$sa_update_checker->addResultFilter(function ($info, $response = null) {
-				$info->banners = array(
-					'low' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
+				$info->download_url = 'https://github.com/web-elite/safe-assistant/releases/latest/download/safe-assistant.zip';
+				$info->banners = [
+					'low'  => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
 					'high' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
-				);
-				$info->icons = array(
+				];
+				$info->icons = [
 					'1x' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
 					'2x' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
-				);
+				];
 				return $info;
 			});
 		} else {
