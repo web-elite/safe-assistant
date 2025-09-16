@@ -373,8 +373,55 @@ if (class_exists('WooCommerce') && sa_get_option('order_convertor_status', false
  * Wallet Settings
  */
 if (defined('nirweb_wallet')) {
-	// Handle wallet expiration SMS (implementation depends on SMS gateway)
-	add_action('sa_nir_wallet_expiration_check', function () {
+	function nirweb_wallet_expiration_check_by_hour()
+	{
+		$pattern = sa_get_option('nir_wallet_expire_pattern_sms_hour', '');
+		if (!$pattern) {
+			return;
+		}
+
+		global $wpdb;
+		$current_time = current_time('timestamp');
+
+		$users = $wpdb->get_results(
+			"SELECT user_id, amount, expire_time 
+         FROM {$wpdb->prefix}nirweb_wallet_cashback
+         WHERE expire_time > {$current_time}"
+		);
+
+		if (!$users) {
+			return;
+		}
+
+		foreach ($users as $user) {
+			$phone = get_user_meta($user->user_id, 'billing_phone', true);
+			if (!$phone) {
+				continue;
+			}
+
+			$user_info = get_userdata($user->user_id);
+			$name      = $user_info && $user_info->first_name ? $user_info->first_name : $user_info->display_name;
+
+			$diff_hours = floor(($user->expire_time - $current_time) / HOUR_IN_SECONDS);
+
+			if (function_exists('jdate')) {
+				$expire_date = jdate('Y/m/d H:i', $user->expire_time);
+			} else {
+				$expire_date = date_i18n('Y/m/d H:i', $user->expire_time);
+			}
+
+			$pattern_vars = "$name;$diff_hours";
+
+			sa_send_sms_pattern(
+				$pattern_vars,
+				$phone,
+				$pattern
+			);
+		}
+	}
+
+	function nirweb_wallet_expiration_check_by_days()
+	{
 		$expire_days   = (array) sa_get_option('nir_wallet_expire_day_sms', [24]);
 		$pattern       = sa_get_option('nir_wallet_expire_pattern_sms', '');
 		$pattern_last  = sa_get_option('nir_wallet_expire_last_pattern_sms', '');
@@ -427,7 +474,13 @@ if (defined('nirweb_wallet')) {
 				);
 			}
 		}
-	});
+	}
+
+	$handler_function = sa_get_option('nir_wallet_expire_check_by', 'days') === 'hours'
+		? 'nirweb_wallet_expiration_check_by_hour'
+		: 'nirweb_wallet_expiration_check_by_days';
+	// Handle wallet expiration SMS (implementation depends on SMS gateway)
+	add_action('sa_nir_wallet_expiration_check', $handler_function);
 
 	add_action('wp', function () {
 		$send_time = sa_get_option('nir_wallet_expire_send_time', '9');
