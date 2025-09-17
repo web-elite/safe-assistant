@@ -148,7 +148,7 @@ class Safe_Assistant
 		/**
 		 * The class responsible for checking for plugin updates.
 		 */
-		require_once SAFE_ASSISTANT_DIR . 'lib/plugin-update-checker-5.6/plugin-update-checker.php';
+		require_once SAFE_ASSISTANT_DIR . 'lib/we-update-checker/we-update-checker.php';
 
 		/**
 		 * The class responsible for managing plugin setting.
@@ -160,32 +160,20 @@ class Safe_Assistant
 
 	public function init_settings()
 	{
-		if (class_exists(PucFactory::class, false)) {
-			$sa_update_checker = PucFactory::buildUpdateChecker(
-				'https://github.com/web-elite/safe-assistant/',
-				SAFE_ASSISTANT_DIR . 'safe-assistant.php',
-				'safe-assistant'
-			);
-			$sa_update_checker->setBranch('master');
-			$sa_update_checker->addResultFilter(function ($info, $response = null) {
-				$info->download_url = 'https://github.com/web-elite/safe-assistant/releases/latest/download/safe-assistant.zip';
-				$info->banners = [
-					'low'  => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
-					'high' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
-				];
-				$info->icons = [
-					'1x' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
-					'2x' => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
-				];
-				return $info;
-			});
+		if (class_exists(WE_Updater::class, false)) {
+			$updater = new WE_Updater(__FILE__, [
+				'slug'     => SAFE_ASSISTANT_SLUG,
+				'source'   => 'json',
+				'json_url' => 'https://raw.githubusercontent.com/web-elite/safe-assistant/master/info.json',
+			]);
+			$updater->init();
 		} else {
 			add_action('admin_notices', function () {
 				echo '<div class="notice notice-error"><p>'
-					. esc_html__('Safe Assistant: Plugin Update Checker not found.', 'safe-assistant')
+					. esc_html__('Safe Assistant: Update Checker not found.', SAFE_ASSISTANT_SLUG)
 					. '</p></div>';
 			});
-			error_log('Safe Assistant => Plugin Update Checker not found');
+			error_log('Safe Assistant => Update Checker not found');
 		}
 
 		if (class_exists('CSF')) {
