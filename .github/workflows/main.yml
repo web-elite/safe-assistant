@@ -27,6 +27,11 @@ jobs:
           # Update Stable tag in readme.txt
           sed -i "s/^Stable tag: .*/Stable tag: ${VERSION}/" readme.txt
 
+      - name: Update info.json version
+        run: |
+          jq --arg v "${VERSION}" '.version = $v' info.json > info.tmp.json
+          mv info.tmp.json info.json
+
       - name: Commit changes if needed
         run: |
           git config --global user.name "github-actions[bot]"
