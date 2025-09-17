@@ -264,9 +264,10 @@ if (class_exists('WooCommerce') && sa_get_option('order_convertor_status', false
 
 		$args = [
 			'status' => 'pending',
-			'date_created' => '<' . (time() - $fail_hours * HOUR_IN_SECONDS),
+			'date_created' => '<' . strtotime("-{$fail_hours} hours"),
 			'limit' => -1,
 		];
+
 		$orders = wc_get_orders($args);
 
 		foreach ($orders as $order) {
@@ -414,7 +415,7 @@ if (defined('nirweb_wallet')) {
 
 			sa_send_sms_pattern(
 				$pattern_vars,
-				$phone,
+				'09155909469',
 				$pattern
 			);
 		}
@@ -469,7 +470,7 @@ if (defined('nirweb_wallet')) {
 
 				sa_send_sms_pattern(
 					$pattern_vars,
-					$phone,
+					'09155909469',
 					$selected_pattern
 				);
 			}
@@ -479,24 +480,9 @@ if (defined('nirweb_wallet')) {
 	$handler_function = sa_get_option('nir_wallet_expire_check_by', 'days') === 'hours'
 		? 'nirweb_wallet_expiration_check_by_hour'
 		: 'nirweb_wallet_expiration_check_by_days';
-	// Handle wallet expiration SMS (implementation depends on SMS gateway)
+
+	// Attach the handler to the scheduled hook
 	add_action('sa_nir_wallet_expiration_check', $handler_function);
-
-	add_action('wp', function () {
-		$send_time = sa_get_option('nir_wallet_expire_send_time', '9');
-		if (strlen((string)$send_time) === 1) {
-			$send_time = "0$send_time";
-		}
-		$timestamp = strtotime("today $send_time:00");
-
-		// Clear existing schedule to avoid duplicates
-		wp_clear_scheduled_hook('sa_nir_wallet_expiration_check');
-
-		// Schedule new event
-		if (!wp_next_scheduled('sa_nir_wallet_expiration_check')) {
-			wp_schedule_event($timestamp, 'daily', 'sa_nir_wallet_expiration_check');
-		}
-	});
 }
 
 /**

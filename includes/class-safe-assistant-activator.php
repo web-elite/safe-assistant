@@ -53,5 +53,21 @@ class Safe_Assistant_Activator
 				}
 			}
 		}
+
+		if (defined('nirweb_wallet')) {
+			$send_time = isset(get_option(SAFE_ASSISTANT_SLUG . '-settings')['nir_wallet_expire_send_time']) ? get_option(SAFE_ASSISTANT_SLUG . '-settings')['nir_wallet_expire_send_time'] : '09';
+			if (strlen((string)$send_time) === 1) {
+				$send_time = "0$send_time";
+			}
+
+			$timestamp = strtotime("today $send_time:00");
+			if ($timestamp <= time()) {
+				$timestamp += DAY_IN_SECONDS;
+			}
+
+			if (!wp_next_scheduled('sa_nir_wallet_expiration_check')) {
+				wp_schedule_event($timestamp, 'daily', 'sa_nir_wallet_expiration_check');
+			}
+		}
 	}
 }

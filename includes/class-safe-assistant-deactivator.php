@@ -53,5 +53,6 @@ class Safe_Assistant_Deactivator
 				}
 			}
 		}
+		wp_clear_scheduled_hook('sa_nir_wallet_expiration_check');
 	}
 }
