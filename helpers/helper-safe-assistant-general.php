@@ -185,7 +185,7 @@ if (!function_exists('sa_add_log')) {
         file_put_contents($log_file, $log_line . PHP_EOL, FILE_APPEND | LOCK_EX);
 
         // WP debug.log
-        error_log($log_line);
+        //error_log($log_line);
 
         // Store in transient
         $transient_key = 'sa_log_' . $channel;
