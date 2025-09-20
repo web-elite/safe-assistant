@@ -70,14 +70,25 @@ class JsonUpdater {
     public function plugin_info($result, $action, $args) {
         if ($args->slug !== $this->config['slug']) return $result;
 
-        $remote = $this->get_remote_info();
-        if (!$remote) return $result;
-
+            $info = (object)[
+                'name'          => ucfirst($this->config['slug']),
+                'slug'          => $this->config['slug'],
+                'version'       => $remote['version'],
+                'author'        => "<a href='" . $remote['author_url'] . "'>" . $remote['author'] . "</a>",
+                'homepage'      => $remote['homepage'],
+                'sections'      => [
+                    'description' => $remote['desc'] ?? $remote['description'] ?? '',
+                    'changelog'   => nl2br($remote['changelog']),
+                ],
+                'banners'       => [
+                    'low'  => $remote['icon'] ?? '',
+                    'high' => $remote['icon'] ?? '',
+                ],
                 'icons' => [
                     '1x' => $remote['icon'],
                     '2x' => $remote['icon'],
                 ],
-    }
-}
-
+                'download_link' => $remote['zip_url'],
+                'last_updated'  => current_time('mysql'),
+            ];
 }
