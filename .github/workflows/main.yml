@@ -44,11 +44,11 @@ jobs:
 
             - name: Build plugin ZIP
               run: |
-                  mkdir build
+                  mkdir -p build/safe-assistant
                   rsync -av --exclude='.git' --exclude='.github' --exclude='.vscode' --exclude='build' --exclude='vendor' --exclude='composer.json' --exclude='info.json' ./ build/safe-assistant/
-                  cd build/safe-assistant
-                  zip -r ../safe-assistant.zip ./*
-                  cd ../..
+                  cd build
+                  zip -r ../safe-assistant.zip safe-assistant
+                  cd ..
 
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
