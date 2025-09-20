@@ -481,8 +481,38 @@ if (defined('nirweb_wallet')) {
 		? 'nirweb_wallet_expiration_check_by_hour'
 		: 'nirweb_wallet_expiration_check_by_days';
 
-	// Attach the handler to the scheduled hook
 	add_action('sa_nir_wallet_expiration_check', $handler_function);
+
+	add_action('csf_options_save', function ($options, $option_name) {
+
+		if ($option_name !== SAFE_ASSISTANT_SLUG . '-settings') {
+			return;
+		}
+
+		$old_options = get_option($option_name, []);
+
+		$old_time = $old_options['nir_wallet_expire_send_time'] ?? '09';
+		$new_time = $options['nir_wallet_expire_send_time'] ?? '09';
+
+		$old_check_by = $old_options['nir_wallet_expire_check_by'] ?? 'days';
+		$new_check_by = $options['nir_wallet_expire_check_by'] ?? 'days';
+
+		if ($old_time !== $new_time || $old_check_by !== $new_check_by) {
+
+			wp_clear_scheduled_hook('sa_nir_wallet_expiration_check');
+
+			if (strlen((string)$new_time) === 1) {
+				$new_time = "0$new_time";
+			}
+
+			$timestamp = strtotime("today $new_time:00");
+			if ($timestamp <= time()) {
+				$timestamp += DAY_IN_SECONDS;
+			}
+
+			wp_schedule_event($timestamp, 'daily', 'sa_nir_wallet_expiration_check');
+		}
+	}, 10, 2);
 }
 
 /**

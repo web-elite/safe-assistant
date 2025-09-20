@@ -161,7 +161,7 @@ class Safe_Assistant
 	public function init_settings()
 	{
 		if (class_exists(WE_Updater::class, false)) {
-			$updater = new WE_Updater(__FILE__, [
+			$updater = new WE_Updater(SAFE_ASSISTANT_DIR . 'safe-assistant.php', [
 				'slug'     => SAFE_ASSISTANT_SLUG,
 				'source'   => 'json',
 				'json_url' => 'https://raw.githubusercontent.com/web-elite/safe-assistant/master/info.json',
