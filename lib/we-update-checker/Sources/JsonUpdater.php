@@ -23,9 +23,15 @@ if (!class_exists('JsonUpdater')) {
             return $version;
         }
 
-        protected function get_remote_info()
+        protected function get_remote_info($force_refresh = false)
         {
             $transient_key = $this->config['slug'] . '_json_release';
+
+            if ($force_refresh) {
+                delete_transient($transient_key);
+                WE_Update_Checker_Logger::log("Force refresh transient for {$this->config['slug']}");
+            }
+
             $cached = get_transient($transient_key);
             if ($cached) {
                 WE_Update_Checker_Logger::log("Using cached remote info", $cached);
@@ -34,23 +40,22 @@ if (!class_exists('JsonUpdater')) {
 
             $url = $this->config['json_url'];
             if (!$url) {
-                WE_Update_Checker_Logger::log("No JSON URL provided");
+                WE_Update_Checker_Logger::log("No JSON URL configured for {$this->config['slug']}");
                 return null;
             }
 
-            WE_Update_Checker_Logger::log("Fetching remote JSON", ['url' => $url]);
             $response = wp_remote_get($url, [
                 'headers' => ['User-Agent' => 'WordPress-Json-Updater']
             ]);
 
             if (is_wp_error($response)) {
-                WE_Update_Checker_Logger::log("Remote fetch error", ['error' => $response->get_error_message()]);
+                WE_Update_Checker_Logger::log("WP_Error fetching JSON", ['error' => $response->get_error_message()]);
                 return null;
             }
 
             $body = json_decode(wp_remote_retrieve_body($response), true);
             if (!$body || empty($body['version']) || empty($body['zip_url'])) {
-                WE_Update_Checker_Logger::log("Invalid remote JSON body", ['body' => $body]);
+                WE_Update_Checker_Logger::log("Invalid JSON structure", $body);
                 return null;
             }
 
@@ -63,22 +68,25 @@ if (!class_exists('JsonUpdater')) {
             ];
 
             set_transient($transient_key, $remote_info, 12 * HOUR_IN_SECONDS);
-            WE_Update_Checker_Logger::log("Fetched remote info", $remote_info);
+            WE_Update_Checker_Logger::log("Fetched and cached remote info", $remote_info);
 
             return $remote_info;
         }
 
         public function check_for_update($transient, $plugin_basename)
         {
-            if (empty($transient->checked)) {
-                WE_Update_Checker_Logger::log("check_for_update skipped: no plugins checked");
-                return $transient;
-            }
+            WE_Update_Checker_Logger::log("check_for_update triggered", ['slug' => $this->config['slug']]);
+
+            if (empty($transient->checked)) return $transient;
+
+            $force = is_admin() && isset($_SERVER['PHP_SELF']) && strpos($_SERVER['PHP_SELF'], 'update-core.php') !== false;
 
             $local_version = $this->get_local_version();
-            $remote = $this->get_remote_info();
+            WE_Update_Checker_Logger::log("Local version detected", ['version' => $local_version]);
+
+            $remote = $this->get_remote_info($force);
             if (!$remote) {
-                WE_Update_Checker_Logger::log("No remote info available");
+                WE_Update_Checker_Logger::log("No remote info available, skipping update check");
                 return $transient;
             }
 
@@ -91,13 +99,13 @@ if (!class_exists('JsonUpdater')) {
                 $transient->response[$plugin_basename] = $obj;
 
                 WE_Update_Checker_Logger::log("Update available", [
-                    'local'  => $local_version,
+                    'local' => $local_version,
                     'remote' => $remote['version'],
-                    'url'    => $remote['zip_url']
+                    'url'   => $remote['zip_url']
                 ]);
             } else {
                 WE_Update_Checker_Logger::log("No update available", [
-                    'local'  => $local_version,
+                    'local' => $local_version,
                     'remote' => $remote['version']
                 ]);
             }
