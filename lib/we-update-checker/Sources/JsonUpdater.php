@@ -73,23 +73,10 @@ class JsonUpdater {
         $remote = $this->get_remote_info();
         if (!$remote) return $result;
 
-        return (object)[
-            'name'          => ucfirst($this->config['slug']),
-            'slug'          => $this->config['slug'],
-            'version'       => $remote['version'],
-            'author'        => '<a href="https://webelitee.ir">AlirezaYaghouti</a>',
-            'homepage'      => $remote['homepage'],
-            'sections'      => [
-                'description' => "Auto-updated plugin from custom JSON.",
-                'changelog'   => nl2br($remote['changelog']),
-            ],
-            'banners'       => [
-                'low'  => $remote['icon'] ?? '',
-                'high' => $remote['icon'] ?? '',
-            ],
-            'download_link' => $remote['zip_url'],
-            'last_updated'  => current_time('mysql'),
-        ];
+                'icons' => [
+                    '1x' => $remote['icon'],
+                    '2x' => $remote['icon'],
+                ],
     }
 }
 
