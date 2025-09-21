@@ -55,13 +55,17 @@ class Safe_Assistant_Activator
 		}
 
 		if (defined('nirweb_wallet')) {
-			$send_time = get_option(SAFE_ASSISTANT_SLUG . '-settings')['nir_wallet_expire_send_time'] ?? '09';
-			if (strlen((string)$send_time) === 1) {
-				$send_time = "0$send_time";
-			}
+			$settings = get_option(SAFE_ASSISTANT_SLUG . '-settings', []);
+			$send_hour = isset($settings['nir_wallet_expire_send_time']) ? (int)$settings['nir_wallet_expire_send_time'] : 9;
 
-			$timestamp = strtotime("today $send_time:00");
-			if ($timestamp <= time()) {
+			$year  = gmdate('Y');
+			$month = gmdate('n');
+			$day   = gmdate('j');
+
+			$timestamp = mktime($send_hour, 0, 0, $month, $day, $year);
+			$timestamp = $timestamp - (get_option('gmt_offset') * HOUR_IN_SECONDS);
+
+			if ($timestamp <= current_time('timestamp')) {
 				$timestamp += DAY_IN_SECONDS;
 			}
 
@@ -69,5 +73,23 @@ class Safe_Assistant_Activator
 				wp_schedule_event($timestamp, 'daily', 'sa_nir_wallet_expiration_check');
 			}
 		}
+
+		// create sms log table 
+		global $wpdb;
+		$table = $wpdb->prefix . 'sa_sms_log';
+		$charset = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE IF NOT EXISTS $table (
+        id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        recipient VARCHAR(50) NOT NULL,
+        message TEXT NOT NULL,
+        response TEXT NULL,
+        status VARCHAR(20) NOT NULL,
+        created_at DATETIME NOT NULL,
+        PRIMARY KEY (id)
+    ) $charset;";
+
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
 	}
 }
