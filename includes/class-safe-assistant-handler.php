@@ -8,7 +8,7 @@
  * @since      1.0.0
  * @package    Safe_Assistant
  * @subpackage Safe_Assistant/includes
- * @author     𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢 <webelitee@gmail.com>
+ * @author     AlirezaYaghouti <webelitee@gmail.com>
  */
 
 /**

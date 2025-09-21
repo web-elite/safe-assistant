@@ -8,7 +8,7 @@
  * @since      1.0.0
  * @package    Safe_Assistant
  * @subpackage Safe_Assistant/includes
- * @author     𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢 <webelitee@gmail.com>
+ * @author     AlirezaYaghouti <webelitee@gmail.com>
  */
 class Safe_Assistant_Settings
 {
@@ -81,8 +81,8 @@ class Safe_Assistant_Settings
 	private function create_options()
 	{
 		CSF::createOptions($this->prefix, array(
-			'menu_title' => esc_html__('Safe Assistant', 'safe-assistant'),
-			'menu_slug'  => SAFE_ASSISTANT_SLUG . '-menu',
+			'menu_title'              => esc_html__('Safe Assistant', 'safe-assistant'),
+			'menu_slug'               => SAFE_ASSISTANT_SLUG . '-menu',
 			'framework_title'         => esc_html__('Safe Assistant', 'safe-assistant'),
 			'framework_class'         => '',
 			'menu_icon'               => SAFE_ASSISTANT_URL . 'admin/img/menu-icon.webp',
@@ -100,13 +100,8 @@ class Safe_Assistant_Settings
 			'save_defaults'           => true,
 			'ajax_save'               => true,
 			'admin_bar_menu_priority' => 50,
-			'footer_text' => sprintf(
-				'%1$s <a href="https://webelitee.ir" target="_blank" style="color:#555; text-decoration:unset !important;">𝐀𝐥𝐢𝐫𝐞𝐳𝐚𝐘𝐚𝐠𝐡𝐨𝐮𝐭𝐢</a> %2$s <span style="color: #e25555;" title="%3$s">❤</span>',
-				esc_html__('Created by', 'safe-assistant'),
-				esc_html__('with', 'safe-assistant'),
-				esc_html__('Love', 'safe-assistant')
-			),
-			'footer_text_direction' => is_rtl() ? 'rtl' : 'ltr',
+			'footer_text'             => '',
+			'footer_text_direction'   => is_rtl() ? 'rtl' : 'ltr',
 			'database'                => 'options',
 			'contextual_help_sidebar' => '',
 			'enqueue_webfont'         => false,
