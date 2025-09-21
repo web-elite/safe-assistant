@@ -30,8 +30,9 @@ if (!function_exists('sa_send_sms')) {
             'from'     => sa_get_option('sms_from'),
             'text'     => $text
         ];
-
-        return sa_sms_make_request(sa_get_sms_url('send'), $data);
+        $response = sa_sms_make_request(sa_get_sms_url('send'), $data);
+        sa_log_sms($recipients, $text, $response ? 'success' : 'failed', (string)$response);
+        return $response;
     }
 }
 
@@ -49,8 +50,9 @@ if (!function_exists('sa_send_sms_pattern')) {
             'to'       => normalize_mobile_number($to),
             'bodyId'   => $bodyId,
         ];
-
-        return sa_sms_make_request(sa_get_sms_url('pattern2'), $data, 'GET');
+        $response = sa_sms_make_request(sa_get_sms_url('pattern2'), $data, 'GET');
+        sa_log_sms($to, $textArgs, $response ? 'success' : 'failed', (string)$response);
+        return $response;
     }
 }
 
@@ -87,5 +89,61 @@ if (!function_exists('sa_sms_make_request')) {
         }
         curl_close($handle);
         return $response;
+    }
+}
+
+if (!function_exists('sa_log_sms')) {
+    function sa_log_sms(string $recipient, string $message, string $status, string $response = '')
+    {
+        global $wpdb;
+        $wpdb->insert(
+            $wpdb->prefix . 'sa_sms_log',
+            [
+                'recipient'  => $recipient,
+                'message'    => $message,
+                'status'     => $status,
+                'response'   => $response,
+                'created_at' => current_time('mysql')
+            ],
+            ['%s', '%s', '%s', '%s', '%s']
+        );
+    }
+}
+
+if (!function_exists('sa_render_sms_logs')) {
+    function sa_render_sms_logs(int $limit = 50)
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'sa_sms_log';
+        $rows = $wpdb->get_results("SELECT * FROM $table ORDER BY created_at DESC LIMIT $limit");
+
+        if (!$rows) {
+            return '<p>No SMS logs found.</p>';
+        }
+
+        $html = '<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">';
+        $html .= '<thead><tr>
+                    <th>ID</th>
+                    <th>Recipient</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Response</th>
+                    <th>Created At</th>
+                  </tr></thead><tbody>';
+
+        foreach ($rows as $row) {
+            $html .= '<tr>
+                        <td>' . esc_html($row->id) . '</td>
+                        <td>' . esc_html($row->recipient) . '</td>
+                        <td>' . esc_html($row->message) . '</td>
+                        <td>' . esc_html($row->status) . '</td>
+                        <td><pre style="white-space:pre-wrap;">' . esc_html($row->response) . '</pre></td>
+                        <td>' . esc_html($row->created_at) . '</td>
+                      </tr>';
+        }
+
+        $html .= '</tbody></table>';
+
+        return $html;
     }
 }
