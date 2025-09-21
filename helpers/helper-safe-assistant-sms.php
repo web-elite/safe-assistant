@@ -147,3 +147,12 @@ if (!function_exists('sa_render_sms_logs')) {
         return $html;
     }
 }
+
+if (!function_exists('sa_truncate_sms_log_table')) {
+    function sa_truncate_sms_log_table()
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . 'sa_sms_log';
+        $wpdb->query("TRUNCATE TABLE $table");
+    }
+}
