@@ -93,6 +93,7 @@ if (!class_exists('JsonUpdater')) {
             if (version_compare($remote['version'], $local_version, '>')) {
                 $obj = new stdClass();
                 $obj->slug        = $this->config['slug'];
+                $obj->plugin      = $plugin_basename;
                 $obj->new_version = $remote['version'];
                 $obj->url         = $remote['homepage'];
                 $obj->package     = $remote['zip_url'];
