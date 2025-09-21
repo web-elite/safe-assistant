@@ -26,7 +26,7 @@ if (!function_exists('sa_send_sms')) {
         $data = [
             'username' => sa_get_option('sms_username'),
             'password' => sa_get_option('sms_password'),
-            'to'       => $recipients,
+            'to'       => normalize_mobile_number($recipients),
             'from'     => sa_get_option('sms_from'),
             'text'     => $text
         ];

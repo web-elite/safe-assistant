@@ -443,18 +443,18 @@ if (defined('nirweb_wallet')) {
 				if ($diff_hours <= 24 && $pattern_last) {
 					$pattern_vars_day = "$name";
 					error_log("Using last day pattern: $pattern_last, vars: $pattern_vars_day");
-					sa_send_sms_pattern($pattern_vars_day, normalize_mobile_number($phone), $pattern_last);
+					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_last);
 				} elseif ($diff_hours > 24 && $pattern_day) {
 					$days_remaining   = ceil($diff_hours / 24);
 					$pattern_vars_day = "$name;$days_remaining";
 					error_log("Using day pattern: $pattern_day, vars: $pattern_vars_day");
-					sa_send_sms_pattern($pattern_vars_day, normalize_mobile_number($phone), $pattern_day);
+					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_day);
 				}
 			} else {
 				if ($pattern_hour) {
 					$pattern_vars_hour = "$name;$diff_hours";
 					error_log("Using hour pattern: $pattern_hour, vars: $pattern_vars_hour");
-					sa_send_sms_pattern($pattern_vars_hour, normalize_mobile_number($phone), $pattern_hour);
+					sa_send_sms_pattern($pattern_vars_hour, ($phone), $pattern_hour);
 				}
 			}
 		}
