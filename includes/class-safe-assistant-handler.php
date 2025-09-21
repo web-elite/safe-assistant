@@ -374,15 +374,35 @@ if (class_exists('WooCommerce') && sa_get_option('order_convertor_status', false
  * Wallet Settings
  */
 if (defined('nirweb_wallet')) {
-	function nirweb_wallet_expiration_check_by_hour()
+	/**
+	 * nirweb_wallet_expiration_check
+	 *
+	 * @return void
+	 */
+	function nirweb_wallet_expiration_check()
 	{
-		$pattern = sa_get_option('nir_wallet_expire_pattern_sms_hour', '');
-		if (!$pattern) {
+		error_log("=== Wallet expiration check started ===");
+
+		$check_by_day  = sa_get_option('nir_wallet_expire_check_by', false);
+		$expire_hours  = (array) sa_get_option('nir_wallet_expire_day_sms', []);
+		$pattern_hour  = sa_get_option('nir_wallet_expire_pattern_sms_hour', '');
+		$pattern_day   = sa_get_option('nir_wallet_expire_pattern_sms', '');
+		$pattern_last  = sa_get_option('nir_wallet_expire_last_pattern_sms', '');
+
+		error_log("check_by_day: " . ($check_by_day ? 'true' : 'false'));
+		error_log("expire_hours: " . implode(',', $expire_hours));
+		error_log("pattern_hour: $pattern_hour");
+		error_log("pattern_day: $pattern_day");
+		error_log("pattern_last: $pattern_last");
+
+		if (!$expire_hours || (!$pattern_hour && !$pattern_day && !$pattern_last)) {
+			error_log("No patterns or expire_hours set. Exiting.");
 			return;
 		}
 
 		global $wpdb;
 		$current_time = current_time('timestamp');
+		error_log("current_time: $current_time (" . date('Y-m-d H:i:s', $current_time) . ")");
 
 		$users = $wpdb->get_results(
 			"SELECT user_id, amount, expire_time 
@@ -391,10 +411,25 @@ if (defined('nirweb_wallet')) {
 		);
 
 		if (!$users) {
+			error_log("No users found with remaining expire_time.");
 			return;
 		}
 
 		foreach ($users as $user) {
+			$diff_hours = floor(($user->expire_time - $current_time) / HOUR_IN_SECONDS);
+
+			$include_user = false;
+			sort($expire_hours);
+			foreach ($expire_hours as $hour) {
+				$min = max(1, $hour - 23);
+				$max = $hour;
+				if ($diff_hours >= $min && $diff_hours <= $max) {
+					$include_user = true;
+					break;
+				}
+			}
+			if (!$include_user) continue;
+
 			$phone = get_user_meta($user->user_id, 'billing_phone', true);
 			if (!$phone) {
 				continue;
@@ -402,117 +437,31 @@ if (defined('nirweb_wallet')) {
 
 			$user_info = get_userdata($user->user_id);
 			$name      = $user_info && $user_info->first_name ? $user_info->first_name : $user_info->display_name;
+			error_log("Sending SMS to $name, phone: $phone, diff_hours: $diff_hours");
 
-			$diff_hours = floor(($user->expire_time - $current_time) / HOUR_IN_SECONDS);
-
-			if (function_exists('jdate')) {
-				$expire_date = jdate('Y/m/d H:i', $user->expire_time);
-			} else {
-				$expire_date = date_i18n('Y/m/d H:i', $user->expire_time);
-			}
-
-			$pattern_vars = "$name;$diff_hours";
-
-			sa_send_sms_pattern(
-				$pattern_vars,
-				'09155909469',
-				$pattern
-			);
-		}
-	}
-
-	function nirweb_wallet_expiration_check_by_days()
-	{
-		$expire_days   = (array) sa_get_option('nir_wallet_expire_day_sms', [24]);
-		$pattern       = sa_get_option('nir_wallet_expire_pattern_sms', '');
-		$pattern_last  = sa_get_option('nir_wallet_expire_last_pattern_sms', '');
-
-		if (!$expire_days || (!$pattern && !$pattern_last)) {
-			return;
-		}
-
-		global $wpdb;
-		$current_time = current_time('timestamp');
-
-		foreach ($expire_days as $days) {
-			$days = (int) $days;
-			if ($days <= 0) {
-				continue;
-			}
-
-			$time = $current_time + $days * HOUR_IN_SECONDS;
-
-			$users = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT user_id, amount 
-             FROM {$wpdb->prefix}nirweb_wallet_cashback
-             WHERE expire_time BETWEEN %d AND %d",
-					$time - HOUR_IN_SECONDS,
-					$time + HOUR_IN_SECONDS
-				)
-			);
-
-			if (!$users) {
-				continue;
-			}
-
-			foreach ($users as $user) {
-				$phone     = get_user_meta($user->user_id, 'billing_phone', true);
-				if (!$phone) {
-					continue;
+			if ($check_by_day) {
+				if ($diff_hours <= 24 && $pattern_last) {
+					$pattern_vars_day = "$name";
+					error_log("Using last day pattern: $pattern_last, vars: $pattern_vars_day");
+					sa_send_sms_pattern($pattern_vars_day, normalize_mobile_number($phone), $pattern_last);
+				} elseif ($diff_hours > 24 && $pattern_day) {
+					$days_remaining   = ceil($diff_hours / 24);
+					$pattern_vars_day = "$name;$days_remaining";
+					error_log("Using day pattern: $pattern_day, vars: $pattern_vars_day");
+					sa_send_sms_pattern($pattern_vars_day, normalize_mobile_number($phone), $pattern_day);
 				}
-
-				$user_info = get_userdata($user->user_id);
-				$name      = $user_info && $user_info->first_name ? $user_info->first_name : $user_info->display_name;
-
-				$selected_pattern = ($days === 24 && $pattern_last) ? $pattern_last : $pattern;
-				$pattern_vars = ($days === 24 && $pattern_last) ? "$name" : "$name;$days";
-
-				sa_send_sms_pattern(
-					$pattern_vars,
-					'09155909469',
-					$selected_pattern
-				);
+			} else {
+				if ($pattern_hour) {
+					$pattern_vars_hour = "$name;$diff_hours";
+					error_log("Using hour pattern: $pattern_hour, vars: $pattern_vars_hour");
+					sa_send_sms_pattern($pattern_vars_hour, normalize_mobile_number($phone), $pattern_hour);
+				}
 			}
 		}
+
+		error_log("=== Wallet expiration check finished ===");
 	}
-
-	$handler_function = sa_get_option('nir_wallet_expire_check_by', 'days') === 'hours'
-		? 'nirweb_wallet_expiration_check_by_hour'
-		: 'nirweb_wallet_expiration_check_by_days';
-
-	add_action('sa_nir_wallet_expiration_check', $handler_function);
-
-	add_action('csf_options_save', function ($options, $option_name) {
-
-		if ($option_name !== SAFE_ASSISTANT_SLUG . '-settings') {
-			return;
-		}
-
-		$old_options = get_option($option_name, []);
-
-		$old_time = $old_options['nir_wallet_expire_send_time'] ?? '09';
-		$new_time = $options['nir_wallet_expire_send_time'] ?? '09';
-
-		$old_check_by = $old_options['nir_wallet_expire_check_by'] ?? 'days';
-		$new_check_by = $options['nir_wallet_expire_check_by'] ?? 'days';
-
-		if ($old_time !== $new_time || $old_check_by !== $new_check_by) {
-
-			wp_clear_scheduled_hook('sa_nir_wallet_expiration_check');
-
-			if (strlen((string)$new_time) === 1) {
-				$new_time = "0$new_time";
-			}
-
-			$timestamp = strtotime("today $new_time:00");
-			if ($timestamp <= time()) {
-				$timestamp += DAY_IN_SECONDS;
-			}
-
-			wp_schedule_event($timestamp, 'daily', 'sa_nir_wallet_expiration_check');
-		}
-	}, 10, 2);
+	add_action('sa_nir_wallet_expiration_check', 'nirweb_wallet_expiration_check');
 }
 
 /**
