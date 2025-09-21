@@ -138,90 +138,6 @@ function is_woocommerce_admin_page()
     return in_array($screen, $allowed_pages, true) || in_array($post_type, $allowed_post_types, true);
 }
 
-if (!function_exists('sa_add_log')) {
-    /**
-     * Add message to Safe Assistant logs
-     *
-     * @param string $message Log message
-     * @param string $status Log status (info, success, warning, error)
-     * @param string $channel Log channel (import, error, security, etc.)
-     * @since 1.0.0
-     */
-    function sa_add_log(string $message, string $status = 'info', string $channel = 'general')
-    {
-        // Validate status
-        $valid_statuses = ['info', 'success', 'warning', 'error'];
-        if (!in_array($status, $valid_statuses, true)) {
-            $status = 'info';
-        }
-
-        $log_entry = [
-            'message' => $message,
-            'status'  => $status,
-            'channel' => $channel,
-            'time'    => current_time('mysql'),
-        ];
-
-        // Emoji mapping
-        $emojis = [
-            'info'    => 'ℹ️',
-            'success' => '✅',
-            'warning' => '⚠️',
-            'error'   => '❌',
-        ];
-        $emoji = $emojis[$status] ?? 'ℹ️';
-
-        // Ensure log dir exists
-        $upload_dir = wp_upload_dir();
-        $log_dir    = $upload_dir['basedir'] . '/safe_assistant/logs';
-        if (!file_exists($log_dir)) {
-            wp_mkdir_p($log_dir);
-        }
-
-        $log_file = $log_dir . '/' . sanitize_file_name($channel) . '.log';
-        $log_line = sprintf('[%s] [%s] %s: %s %s', $log_entry['time'], strtoupper($channel), strtoupper($status), $emoji, $message);
-
-        // Write to log file
-        file_put_contents($log_file, $log_line . PHP_EOL, FILE_APPEND | LOCK_EX);
-
-        // WP debug.log
-        //error_log($log_line);
-
-        // Store in transient
-        $transient_key = 'sa_log_' . $channel;
-        $logs = get_transient($transient_key);
-        if (!is_array($logs)) {
-            $logs = [];
-        }
-        $logs[] = $log_entry;
-        set_transient($transient_key, $logs, HOUR_IN_SECONDS);
-    }
-}
-
-if (!function_exists('sa_get_logs')) {
-    /**
-     * Retrieve Safe Assistant logs
-     *
-     * @param string $channel Log channel (import, error, etc.)
-     * @return array List of log lines
-     * @since 1.0.0
-     */
-    function sa_get_logs(string $channel = 'general'): array
-    {
-        $upload_dir = wp_upload_dir();
-        $log_file   = $upload_dir['basedir'] . '/safe_assistant/logs/' . sanitize_file_name($channel) . '.log';
-
-        require_once ABSPATH . 'wp-admin/includes/file.php';
-        WP_Filesystem();
-        global $wp_filesystem;
-
-        if ($wp_filesystem && $wp_filesystem->exists($log_file)) {
-            return array_reverse(array_filter(explode("\n", $wp_filesystem->get_contents($log_file)), 'strlen'));
-        }
-        return [];
-    }
-}
-
 if (!function_exists('sa_filled')) {
     /**
      * Check if a value is not empty
@@ -245,48 +161,6 @@ if (!function_exists('sa_filled')) {
         }
 
         return !empty($input);
-    }
-}
-
-if (!function_exists('sa_display_logs')) {
-    /**
-     * sa_display_logs
-     *
-     * Display the logs for the Safe Assistant
-     *
-     * @return void
-     */
-    function sa_display_logs($channel = 'general')
-    {
-        $file_logs = sa_get_logs($channel);
-        if (!empty($file_logs)) {
-            $output = '<h3>📝 ' . esc_html__('Logs', 'safe-assistant') . ':</h3><ul>';
-            foreach ($file_logs as $log_line) {
-                $output .= '<li>' . esc_html($log_line) . '</li>';
-            }
-            $output .= '</ul>';
-            echo $output;
-        }
-        echo '';
-    }
-}
-
-if (!function_exists('sa_display_logs')) {
-    /**
-     * sa_display_logs
-     *
-     * Display the logs for the Safe Assistant
-     *
-     * @return void
-     */
-    function sa_clear_log($channel = 'general')
-    {
-        $upload_dir = wp_upload_dir();
-        $log_file   = $upload_dir['basedir'] . '/safe_assistant/logs/' . sanitize_file_name($channel) . '.log';
-
-        if (file_exists($log_file)) {
-            unlink($log_file);
-        }
     }
 }
 

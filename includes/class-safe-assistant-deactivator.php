@@ -58,9 +58,7 @@ class Safe_Assistant_Deactivator
 			wp_unschedule_event($timestamp, 'sa_nir_wallet_expiration_check');
 		}
 
-		// delete sms log table
-		global $wpdb;
-		$table = $wpdb->prefix . 'sa_sms_log';
-		$wpdb->query("DROP TABLE IF EXISTS $table");
+		// delete log table
+		sa_drop_logs_table();
 	}
 }

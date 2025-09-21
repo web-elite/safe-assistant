@@ -144,11 +144,6 @@ class Addon_User_Importer
         ]);
     }
 
-    public function display_logs()
-    {
-        sa_display_logs(ADDON_USER_IMPORTER_SLUG);
-    }
-
     public function settings_section_handler()
     {
         $reset_section_title = esc_html__('Reset Section', 'safe-assistant');
@@ -311,9 +306,7 @@ class Addon_User_Importer
 
         function log_revert_action(string $message, string $status = 'info')
         {
-            $log_file = get_log_file_path('revert');
-            $log_line = sprintf("[%s] %s: %s\n", current_time('mysql'), strtoupper($status), $message);
-            file_put_contents($log_file, $log_line, FILE_APPEND | LOCK_EX);
+            sa_log(ADDON_USER_IMPORTER_SLUG, $status, 'Revert Action', $message);
         }
 
         $transactions = $wpdb->get_results(
@@ -387,13 +380,13 @@ class Addon_User_Importer
     {
         // Check user permissions
         if (!current_user_can('manage_options')) {
-            sa_add_log(__('Insufficient permissions to reset plugin settings.', 'safe-assistant'), 'error', 'system');
+            sa_log(ADDON_USER_IMPORTER_SLUG, 'error', __('Insufficient permissions to reset plugin settings.', 'safe-assistant'));
             return false;
         }
 
         // Verify nonce if called via AJAX
         if (isset($_POST['nonce']) && !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'addon_user_importer_reset')) {
-            sa_add_log(__('Invalid nonce for reset action.', 'safe-assistant'), 'error', 'system');
+            sa_log(ADDON_USER_IMPORTER_SLUG, 'error', __('Invalid nonce for reset action.', 'safe-assistant'));
             return false;
         }
 
@@ -401,9 +394,6 @@ class Addon_User_Importer
         require_once ABSPATH . 'wp-admin/includes/file.php';
         WP_Filesystem();
         global $wp_filesystem;
-
-        // Delete log file
-        sa_clear_log(ADDON_USER_IMPORTER_SLUG);
 
         // Delete transients
         $transients = [
@@ -414,7 +404,7 @@ class Addon_User_Importer
 
         foreach ($transients as $transient) {
             if (delete_transient($transient)) {
-                sa_add_log(sprintf(__('Transient %s deleted.', 'safe-assistant'), $transient), 'success', 'system');
+                sa_log(ADDON_USER_IMPORTER_SLUG, 'success', sprintf(__('Transient %s deleted.', 'safe-assistant'), $transient));
             }
         }
 
@@ -422,10 +412,10 @@ class Addon_User_Importer
         $timestamp = wp_next_scheduled(ADDON_USER_IMPORTER_CRON_EVENT);
         if ($timestamp) {
             wp_unschedule_event($timestamp, ADDON_USER_IMPORTER_CRON_EVENT);
-            sa_add_log(__('Scheduled cron event cleared.', 'safe-assistant'), 'success', 'system');
+            sa_log(ADDON_USER_IMPORTER_SLUG, 'success', __('Scheduled cron event cleared.', 'safe-assistant'));
         }
 
-        sa_add_log(__('Factory reset completed.', 'safe-assistant'), 'success', 'system');
+        sa_log(ADDON_USER_IMPORTER_SLUG, 'success', __('Factory reset completed.', 'safe-assistant'));
         return true;
     }
 

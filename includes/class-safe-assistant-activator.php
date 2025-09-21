@@ -74,22 +74,7 @@ class Safe_Assistant_Activator
 			}
 		}
 
-		// create sms log table 
-		global $wpdb;
-		$table = $wpdb->prefix . 'sa_sms_log';
-		$charset = $wpdb->get_charset_collate();
-
-		$sql = "CREATE TABLE IF NOT EXISTS $table (
-        id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        recipient VARCHAR(50) NOT NULL,
-        message TEXT NOT NULL,
-        response TEXT NULL,
-        status VARCHAR(20) NOT NULL,
-        created_at DATETIME NOT NULL,
-        PRIMARY KEY (id)
-    ) $charset;";
-
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
+		// create log table
+		sa_create_logs_table();
 	}
 }

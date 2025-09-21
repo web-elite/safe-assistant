@@ -478,3 +478,48 @@ add_action('shutdown', function () {
 if (sa_get_option('wp_custom_maintenance_status')) {
 	sa_create_custom_maintenance_page(sa_get_option('wp_custom_maintenance'));
 }
+global $pagenow;
+$ignored_page = [
+	'update-core.php',
+	'plugins.php',
+	'plugin-install.php',
+];
+// sa_send_sms_pattern('علیرضا;2',normalize_mobile_number('09155909469'),367981);
+if (!empty(sa_get_option('block_external_requests', '')) && !in_array($pagenow, $ignored_page)) {
+	add_filter('pre_http_request', function ($pre, $args, $url) {
+		$blocked_urls = explode("\n", sa_get_option('block_external_requests', ''));
+
+		foreach ($blocked_urls as $blocked) {
+			$blocked = trim($blocked);
+			if (!$blocked) continue;
+			if (str_starts_with($url, $blocked)) {
+				$block_title = esc_html('Blocked by Safe Assistant', 'safe-assistant');
+				$block_desc = esc_html("Request to $url blocked by Safe Assistant settings.", 'safe-assistant');
+				$args['body'] = '<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>' . $block_title . '</title>
+        <link>' . esc_url(site_url()) . '</link>
+        <description>' . $block_desc . '</description>
+        <item>
+            <title>' . $block_title . '</title>
+            <link>' . esc_url(site_url()) . '</link>
+            <description>' . $block_desc . '</description>
+            <pubDate>' . date(DATE_RSS) . '</pubDate>
+            <guid>' . esc_url(site_url()) . '</guid>
+        </item>
+    </channel>
+</rss>';
+				return array_merge($args, [
+					'headers' => ['content-type' => 'application/rss+xml; charset=UTF-8'],
+					'timeout' => 0.1,
+					'blocking' => 1,
+					'reject_unsafe_urls' => 1,
+					'response' => ['code' => 200, 'message' => 'Blocked'],
+				]);
+			}
+		}
+
+		return $pre;
+	}, 10, 3);
+}
