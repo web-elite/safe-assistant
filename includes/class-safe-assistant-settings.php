@@ -214,6 +214,13 @@ class Safe_Assistant_Settings
 						'default' => false,
 						'desc'    => esc_html__('Disable the Gutenberg block editor and use Classic Editor.', 'safe-assistant'),
 					],
+					[
+						'id'      => 'block_external_requests',
+						'type'    => 'textarea',
+						'title'   => esc_html__('Block External Requests', 'safe-assistant'),
+						'default' => 'https://my.elementor.com/api/v2/info',
+						'desc'    => esc_html__('List external URLs to block (one per line).', 'safe-assistant'),
+					],
 				],
 			],
 			[
