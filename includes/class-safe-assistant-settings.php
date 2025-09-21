@@ -509,16 +509,23 @@ class Safe_Assistant_Settings
 
 	private function create_last_options()
 	{
-		CSF::createSection($this->prefix, [
-			'title'  => esc_html__('Logs', 'safe-assistant'),
-			'icon'   => 'fas fa-file-alt',
-			'fields' => [
-				[
-					'type'     => 'fallback',
-					'function'  => [$this, 'render_logs'],
-				],
+		CSF::createSection(
+			$this->prefix,
+			[
+				'title'  => esc_html__('Logs', 'safe-assistant'),
+				'icon'   => 'fas fa-file-alt',
+				'fields' => [
+					[
+						'type'     => 'callback',
+						'function'  => [$this, 'render_logs'],
+					],
+					[
+						'type'     => 'callback',
+						'function'  => [$this, 'render_sms_logs'],
+					],
+				]
 			]
-		]);
+		);
 		CSF::createSection($this->prefix, [
 			'title'  => esc_html__('Settings', 'safe-assistant'),
 			'icon'   => 'fas fa-cog',
@@ -566,5 +573,10 @@ class Safe_Assistant_Settings
 				]
 			]
 		]);
+	}
+
+	public function render_sms_logs()
+	{
+		sa_render_sms_logs('1000');
 	}
 }
