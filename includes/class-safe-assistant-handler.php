@@ -45,7 +45,10 @@ if (is_admin()) {
 	}
 
 	// Disable WordPress updates
-	if (sa_get_option('disable_wp_updates', false) && strpos($_SERVER['PHP_SELF'], 'update-core.php') === false) {
+	if (
+		sa_get_option('disable_wp_updates', false) &&
+		strpos($_SERVER['PHP_SELF'], 'update-core.php') === false
+	) {
 		add_filter('automatic_updater_disabled', '__return_true');
 		add_filter('auto_update_core', '__return_false');
 		add_filter('auto_update_plugin', '__return_false');
@@ -67,7 +70,11 @@ if (is_admin()) {
 /**
  * WooCommerce Admin Settings
  */
-if (class_exists('WooCommerce') && is_admin() && !is_woocommerce_admin_page()) {
+if (
+	class_exists('WooCommerce') &&
+	is_admin() &&
+	!is_woocommerce_admin_page()
+) {
 	// Disable WooCommerce Admin
 	if (sa_get_option('disable_wc_admin', false)) {
 		add_filter('woocommerce_admin_disabled', '__return_true');
@@ -107,7 +114,9 @@ if (class_exists('WooCommerce') && is_admin() && !is_woocommerce_admin_page()) {
  */
 if (sa_get_option('disable_woodmart_patch_checker', false)) {
 	add_filter('woodmart_load_patches_map_from_server', function ($enabled) {
-		return (is_admin() && isset($_GET['page']) && $_GET['page'] === 'xts_patcher') ? true : false;
+		return (is_admin() &&
+			isset($_GET['page']) &&
+			$_GET['page'] === 'xts_patcher') ? true : false;
 	});
 }
 
@@ -118,7 +127,10 @@ if (class_exists('WooCommerce')) {
 	$free_shipping_min_mashhad = (int) sa_get_option('free_shipping_min_mashhad', 0);
 	$free_shipping_min_other_cities = (int) sa_get_option('free_shipping_min_other_cities', 0);
 
-	if (sa_get_option('free_shipping_status', false) && ($free_shipping_min_mashhad > 0 || $free_shipping_min_other_cities > 0)) {
+	if (
+		sa_get_option('free_shipping_status', false) &&
+		($free_shipping_min_mashhad > 0 || $free_shipping_min_other_cities > 0)
+	) {
 		add_action('woocommerce_cart_totals_after_order_total', 'render_free_shipping_progress');
 		add_action('woocommerce_checkout_before_order_review', 'render_free_shipping_progress');
 		add_action('woocommerce_widget_shopping_cart_after_buttons', 'render_free_shipping_progress');
@@ -134,7 +146,10 @@ if (class_exists('WooCommerce')) {
 		$min_mashhad = (int) sa_get_option('free_shipping_min_mashhad', 0);
 		$min_others = (int) sa_get_option('free_shipping_min_other_cities', 0);
 
-		if ($min_mashhad <= 0 && $min_others <= 0) {
+		if (
+			$min_mashhad <= 0 &&
+			$min_others <= 0
+		) {
 			return;
 		}
 
@@ -142,7 +157,8 @@ if (class_exists('WooCommerce')) {
 		$progress_others = ($min_others > 0) ? min(100, ($cart_total / $min_others) * 100) : 0;
 		$remain_mashhad = max(0, $min_mashhad - $cart_total);
 		$remain_others = max(0, $min_others - $cart_total);
-		$shipping_is_free = ($cart_total >= $min_mashhad && $cart_total >= $min_others);
+		$shipping_is_free = ($cart_total >= $min_mashhad &&
+			$cart_total >= $min_others);
 
 ?>
 		<div class="safe-assistant-free-shipping-progress <?php echo $shipping_is_free ? esc_attr('success') : ''; ?>">
@@ -203,7 +219,8 @@ if (class_exists('WooCommerce')) {
 			<script type="text/javascript">
 				document.addEventListener('DOMContentLoaded', () => {
 					const checkbox = document.getElementById('createaccount');
-					if (checkbox && !checkbox.checked) {
+					if (checkbox &&
+						!checkbox.checked) {
 						checkbox.checked = true;
 					}
 				});
@@ -226,7 +243,10 @@ if (class_exists('WooCommerce')) {
 /**
  * Order Management
  */
-if (class_exists('WooCommerce') && sa_get_option('order_convertor_status', false)) {
+if (
+	class_exists('WooCommerce') &&
+	sa_get_option('order_convertor_status', false)
+) {
 	add_action('wp', 'sa_setup_order_status_cron');
 	add_filter('cron_schedules', 'sa_add_cron_interval');
 	add_action('sa_change_pending_orders', 'sa_change_pending_orders');
@@ -395,7 +415,9 @@ if (defined('nirweb_wallet')) {
 		error_log("pattern_day: $pattern_day");
 		error_log("pattern_last: $pattern_last");
 
-		if (!$expire_hours || (!$pattern_hour && !$pattern_day && !$pattern_last)) {
+		if (!$expire_hours || (!$pattern_hour &&
+			!$pattern_day &&
+			!$pattern_last)) {
 			error_log("No patterns or expire_hours set. Exiting.");
 			return;
 		}
@@ -423,7 +445,10 @@ if (defined('nirweb_wallet')) {
 			foreach ($expire_hours as $hour) {
 				$min = max(1, $hour - 23);
 				$max = $hour;
-				if ($diff_hours >= $min && $diff_hours <= $max) {
+				if (
+					$diff_hours >= $min &&
+					$diff_hours <= $max
+				) {
 					$include_user = true;
 					break;
 				}
@@ -436,15 +461,22 @@ if (defined('nirweb_wallet')) {
 			}
 
 			$user_info = get_userdata($user->user_id);
-			$name      = $user_info && $user_info->first_name ? $user_info->first_name : $user_info->display_name;
+			$name      = $user_info &&
+				$user_info->first_name ? $user_info->first_name : $user_info->display_name;
 			error_log("Sending SMS to $name, phone: $phone, diff_hours: $diff_hours");
 
 			if ($check_by_day) {
-				if ($diff_hours <= 24 && $pattern_last) {
+				if (
+					$diff_hours <= 24 &&
+					$pattern_last
+				) {
 					$pattern_vars_day = "$name";
 					error_log("Using last day pattern: $pattern_last, vars: $pattern_vars_day");
 					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_last);
-				} elseif ($diff_hours > 24 && $pattern_day) {
+				} elseif (
+					$diff_hours > 24 &&
+					$pattern_day
+				) {
 					$days_remaining   = ceil($diff_hours / 24);
 					$pattern_vars_day = "$name;$days_remaining";
 					error_log("Using day pattern: $pattern_day, vars: $pattern_vars_day");
@@ -485,7 +517,10 @@ $ignored_page = [
 	'plugin-install.php',
 ];
 // sa_send_sms_pattern('علیرضا;2',normalize_mobile_number('09155909469'),367981);
-if (!empty(sa_get_option('block_external_requests', '')) && !in_array($pagenow, $ignored_page)) {
+if (
+	!empty(sa_get_option('block_external_requests', '')) &&
+	!in_array($pagenow, $ignored_page)
+) {
 	add_filter('pre_http_request', function ($pre, $args, $url) {
 		$blocked_urls = explode("\n", sa_get_option('block_external_requests', ''));
 
