@@ -410,6 +410,708 @@ class Safe_Assistant_Settings
 				],
 			],
 			[
+				'parent' => 'woocommerce',
+				'id'     => 'woocommerce_checkout',
+				'title'  => esc_html__('WooCommerce Checkout Settings', 'safe-assistant'),
+				'icon'   => 'fas fa-dolly-flatbed',
+				'fields' => [
+					[
+						'id'     => 'checkout_billing_fields_accordion',
+						'type'   => 'accordion',
+						'title'  => esc_html__('Billing Fields Editor', 'safe-assistant'),
+						'accordions' => [
+							// First Name
+							[
+								'title'  => esc_html__('Billing First Name', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_first_name_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_first_name_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_first_name_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('First name', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_first_name_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Last Name
+							[
+								'title'  => esc_html__('Billing Last Name', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_last_name_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_last_name_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_last_name_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Last name', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_last_name_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Company
+							[
+								'title'  => esc_html__('Billing Company', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_company_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_company_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => false,
+									],
+									[
+										'id'      => 'billing_company_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Company name', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_company_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Country
+							[
+								'title'  => esc_html__('Billing Country', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_country_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_country_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_country_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Country / Region', 'woocommerce'),
+									],
+								],
+							],
+
+							// Address 1
+							[
+								'title'  => esc_html__('Billing Address 1', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_address_1_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_address_1_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_address_1_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Street address', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_address_1_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Address 2
+							[
+								'title'  => esc_html__('Billing Address 2', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_address_2_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_address_2_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => false,
+									],
+									[
+										'id'      => 'billing_address_2_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Apartment, suite, unit, etc. (optional)', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_address_2_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// City
+							[
+								'title'  => esc_html__('Billing City', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_city_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_city_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_city_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Town / City', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_city_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// State
+							[
+								'title'  => esc_html__('Billing State', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_state_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_state_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_state_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('State / County', 'woocommerce'),
+									],
+								],
+							],
+
+							// Postcode
+							[
+								'title'  => esc_html__('Billing Postcode', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_postcode_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_postcode_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_postcode_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Postcode / ZIP', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_postcode_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Phone
+							[
+								'title'  => esc_html__('Billing Phone', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_phone_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_phone_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_phone_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Phone', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_phone_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Email
+							[
+								'title'  => esc_html__('Billing Email', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'billing_email_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_email_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'billing_email_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Email address', 'woocommerce'),
+									],
+									[
+										'id'      => 'billing_email_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+						],
+					],
+					// End of Billing Fields
+
+					// Start of Shipping Fields
+					[
+						'id'     => 'checkout_shipping_fields_accordion',
+						'type'   => 'accordion',
+						'title'  => esc_html__('Shipping Fields Editor', 'safe-assistant'),
+						'accordions' => [
+							// First Name
+							[
+								'title'  => esc_html__('Shipping First Name', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_first_name_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_first_name_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_first_name_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('First name', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_first_name_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Last Name
+							[
+								'title'  => esc_html__('Shipping Last Name', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_last_name_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_last_name_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_last_name_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Last name', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_last_name_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Company
+							[
+								'title'  => esc_html__('Shipping Company', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_company_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_company_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => false,
+									],
+									[
+										'id'      => 'shipping_company_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Company name', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_company_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Country
+							[
+								'title'  => esc_html__('Shipping Country', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_country_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_country_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_country_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Country / Region', 'woocommerce'),
+									],
+								],
+							],
+
+							// Address 1
+							[
+								'title'  => esc_html__('Shipping Address 1', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_address_1_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_address_1_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_address_1_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Street address', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_address_1_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Address 2
+							[
+								'title'  => esc_html__('Shipping Address 2', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_address_2_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_address_2_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => false,
+									],
+									[
+										'id'      => 'shipping_address_2_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Apartment, suite, unit, etc. (optional)', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_address_2_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// City
+							[
+								'title'  => esc_html__('Shipping City', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_city_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_city_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_city_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Town / City', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_city_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// State
+							[
+								'title'  => esc_html__('Shipping State', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_state_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_state_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_state_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('State / County', 'woocommerce'),
+									],
+								],
+							],
+
+							// Postcode
+							[
+								'title'  => esc_html__('Shipping Postcode', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_postcode_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_postcode_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_postcode_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Postcode / ZIP', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_postcode_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Phone
+							[
+								'title'  => esc_html__('Shipping Phone', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_phone_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_phone_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_phone_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Phone', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_phone_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+
+							// Email
+							[
+								'title'  => esc_html__('Shipping Email', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'shipping_email_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_email_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'shipping_email_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Email address', 'woocommerce'),
+									],
+									[
+										'id'      => 'shipping_email_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+									],
+								],
+							],
+						],
+					],
+					// Start of Order Fields
+					[
+						'id'     => 'checkout_order_fields_accordion',
+						'type'   => 'accordion',
+						'title'  => esc_html__('Order Fields Editor', 'safe-assistant'),
+						'accordions' => [
+							// Order Comments
+							[
+								'title'  => esc_html__('Order Comments', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'order_comments_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'order_comments_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => false,
+									],
+									[
+										'id'      => 'order_comments_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('Order notes', 'woocommerce'),
+									],
+									[
+										'id'      => 'order_comments_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value / Placeholder', 'safe-assistant'),
+										'default' => esc_html__('Notes about your order, e.g. special notes for delivery.', 'woocommerce'),
+									],
+								],
+							],
+						],
+					],
+					// End of Order Fields
+				],
+			],
+			[
 				'id'     => 'addons',
 				'title'  => esc_html__('Addons', 'safe-assistant'),
 				'icon'   => 'fas fa-plug',

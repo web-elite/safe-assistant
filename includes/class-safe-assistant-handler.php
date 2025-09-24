@@ -523,3 +523,322 @@ if (!empty(sa_get_option('block_external_requests', '')) && !in_array($pagenow, 
 		return $pre;
 	}, 10, 3);
 }
+
+add_filter('woocommerce_checkout_fields', 'safe_assistant_custom_checkout_fields');
+
+function safe_assistant_custom_checkout_fields($fields)
+{
+	if (isset($fields['billing']['billing_first_name'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_first_name_enabled']) {
+			unset($fields['billing']['billing_first_name']);
+		} else {
+			$fields['billing']['billing_first_name']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_first_name_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_first_name_label'])) {
+				$fields['billing']['billing_first_name']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_first_name_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_first_name_default'] !== '') {
+				$fields['billing']['billing_first_name']['placeholder'] = $fields['billing']['billing_first_name']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_first_name_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_last_name'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_last_name_enabled']) {
+			unset($fields['billing']['billing_last_name']);
+		} else {
+			$fields['billing']['billing_last_name']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_last_name_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_last_name_label'])) {
+				$fields['billing']['billing_last_name']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_last_name_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_last_name_default'] !== '') {
+				$fields['billing']['billing_last_name']['placeholder'] = $fields['billing']['billing_last_name']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_last_name_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_company'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_company_enabled']) {
+			unset($fields['billing']['billing_company']);
+		} else {
+			$fields['billing']['billing_company']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_company_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_company_label'])) {
+				$fields['billing']['billing_company']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_company_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_company_default'] !== '') {
+				$fields['billing']['billing_company']['placeholder'] = $fields['billing']['billing_company']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_company_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_country'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_country_enabled']) {
+			unset($fields['billing']['billing_country']);
+		} else {
+			$fields['billing']['billing_country']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_country_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_country_label'])) {
+				$fields['billing']['billing_country']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_country_label']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_address_1'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_address_1_enabled']) {
+			unset($fields['billing']['billing_address_1']);
+		} else {
+			$fields['billing']['billing_address_1']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_address_1_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_address_1_label'])) {
+				$fields['billing']['billing_address_1']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_address_1_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_address_1_default'] !== '') {
+				$fields['billing']['billing_address_1']['placeholder'] = $fields['billing']['billing_address_1']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_address_1_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_address_2'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_address_2_enabled']) {
+			unset($fields['billing']['billing_address_2']);
+		} else {
+			$fields['billing']['billing_address_2']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_address_2_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_address_2_label'])) {
+				$fields['billing']['billing_address_2']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_address_2_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_address_2_default'] !== '') {
+				$fields['billing']['billing_address_2']['placeholder'] = $fields['billing']['billing_address_2']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_address_2_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_city'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_city_enabled']) {
+			unset($fields['billing']['billing_city']);
+		} else {
+			$fields['billing']['billing_city']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_city_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_city_label'])) {
+				$fields['billing']['billing_city']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_city_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_city_default'] !== '') {
+				$fields['billing']['billing_city']['placeholder'] = $fields['billing']['billing_city']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_city_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_state'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_state_enabled']) {
+			unset($fields['billing']['billing_state']);
+		} else {
+			$fields['billing']['billing_state']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_state_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_state_label'])) {
+				$fields['billing']['billing_state']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_state_label']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_postcode'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_postcode_enabled']) {
+			unset($fields['billing']['billing_postcode']);
+		} else {
+			$fields['billing']['billing_postcode']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_postcode_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_postcode_label'])) {
+				$fields['billing']['billing_postcode']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_postcode_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_postcode_default'] !== '') {
+				$fields['billing']['billing_postcode']['placeholder'] = $fields['billing']['billing_postcode']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_postcode_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_phone'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_phone_enabled']) {
+			unset($fields['billing']['billing_phone']);
+		} else {
+			$fields['billing']['billing_phone']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_phone_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_phone_label'])) {
+				$fields['billing']['billing_phone']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_phone_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_phone_default'] !== '') {
+				$fields['billing']['billing_phone']['placeholder'] = $fields['billing']['billing_phone']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_phone_default']);
+			}
+		}
+	}
+
+	if (isset($fields['billing']['billing_email'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_email_enabled']) {
+			unset($fields['billing']['billing_email']);
+		} else {
+			$fields['billing']['billing_email']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_email_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_email_label'])) {
+				$fields['billing']['billing_email']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_email_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_email_default'] !== '') {
+				$fields['billing']['billing_email']['placeholder'] = $fields['billing']['billing_email']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_email_default']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_first_name'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_first_name_enabled']) {
+			unset($fields['shipping']['shipping_first_name']);
+		} else {
+			$fields['shipping']['shipping_first_name']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_first_name_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_first_name_label'])) {
+				$fields['shipping']['shipping_first_name']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_first_name_label']);
+			}
+			if (sa_get_option('checkout_shipping_fields_accordion')['shipping_first_name_default'] !== '') {
+				$fields['shipping']['shipping_first_name']['placeholder'] = $fields['shipping']['shipping_first_name']['default'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_first_name_default']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_last_name'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_last_name_enabled']) {
+			unset($fields['shipping']['shipping_last_name']);
+		} else {
+			$fields['shipping']['shipping_last_name']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_last_name_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_last_name_label'])) {
+				$fields['shipping']['shipping_last_name']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_last_name_label']);
+			}
+			if (sa_get_option('checkout_shipping_fields_accordion')['shipping_last_name_default'] !== '') {
+				$fields['shipping']['shipping_last_name']['placeholder'] = $fields['shipping']['shipping_last_name']['default'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_last_name_default']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_company'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_company_enabled']) {
+			unset($fields['shipping']['shipping_company']);
+		} else {
+			$fields['shipping']['shipping_company']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_company_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_company_label'])) {
+				$fields['shipping']['shipping_company']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_company_label']);
+			}
+			if (sa_get_option('checkout_shipping_fields_accordion')['shipping_company_default'] !== '') {
+				$fields['shipping']['shipping_company']['placeholder'] = $fields['shipping']['shipping_company']['default'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_company_default']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_country'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_country_enabled']) {
+			unset($fields['shipping']['shipping_country']);
+		} else {
+			$fields['shipping']['shipping_country']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_country_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_country_label'])) {
+				$fields['shipping']['shipping_country']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_country_label']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_address_1'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_address_1_enabled']) {
+			unset($fields['shipping']['shipping_address_1']);
+		} else {
+			$fields['shipping']['shipping_address_1']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_address_1_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_address_1_label'])) {
+				$fields['shipping']['shipping_address_1']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_address_1_label']);
+			}
+			if (sa_get_option('checkout_shipping_fields_accordion')['shipping_address_1_default'] !== '') {
+				$fields['shipping']['shipping_address_1']['placeholder'] = $fields['shipping']['shipping_address_1']['default'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_address_1_default']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_address_2'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_address_2_enabled']) {
+			unset($fields['shipping']['shipping_address_2']);
+		} else {
+			$fields['shipping']['shipping_address_2']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_address_2_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_address_2_label'])) {
+				$fields['shipping']['shipping_address_2']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_address_2_label']);
+			}
+			if (sa_get_option('checkout_shipping_fields_accordion')['shipping_address_2_default'] !== '') {
+				$fields['shipping']['shipping_address_2']['placeholder'] = $fields['shipping']['shipping_address_2']['default'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_address_2_default']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_city'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_city_enabled']) {
+			unset($fields['shipping']['shipping_city']);
+		} else {
+			$fields['shipping']['shipping_city']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_city_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_city_label'])) {
+				$fields['shipping']['shipping_city']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_city_label']);
+			}
+			if (sa_get_option('checkout_shipping_fields_accordion')['shipping_city_default'] !== '') {
+				$fields['shipping']['shipping_city']['placeholder'] = $fields['shipping']['shipping_city']['default'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_city_default']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_state'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_state_enabled']) {
+			unset($fields['shipping']['shipping_state']);
+		} else {
+			$fields['shipping']['shipping_state']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_state_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_state_label'])) {
+				$fields['shipping']['shipping_state']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_state_label']);
+			}
+		}
+	}
+
+	if (isset($fields['shipping']['shipping_postcode'])) {
+		if (!sa_get_option('checkout_shipping_fields_accordion')['shipping_postcode_enabled']) {
+			unset($fields['shipping']['shipping_postcode']);
+		} else {
+			$fields['shipping']['shipping_postcode']['required'] = (bool) sa_get_option('checkout_shipping_fields_accordion')['shipping_postcode_required'];
+			if (!empty(sa_get_option('checkout_shipping_fields_accordion')['shipping_postcode_label'])) {
+				$fields['shipping']['shipping_postcode']['label'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_postcode_label']);
+			}
+			if (sa_get_option('checkout_shipping_fields_accordion')['shipping_postcode_default'] !== '') {
+				$fields['shipping']['shipping_postcode']['placeholder'] = $fields['shipping']['shipping_postcode']['default'] = sanitize_text_field(sa_get_option('checkout_shipping_fields_accordion')['shipping_postcode_default']);
+			}
+		}
+	}
+
+	if (isset($fields['order']['order_comments'])) {
+		if (!sa_get_option('checkout_order_fields_accordion')['order_comments_enabled']) {
+			unset($fields['order']['order_comments']);
+		} else {
+			$fields['order']['order_comments']['required'] = (bool) sa_get_option('checkout_order_fields_accordion')['order_comments_required'];
+			if (!empty(sa_get_option('checkout_order_fields_accordion')['order_comments_label'])) {
+				$fields['order']['order_comments']['label'] = sanitize_text_field(sa_get_option('checkout_order_fields_accordion')['order_comments_label']);
+			}
+			if (sa_get_option('checkout_order_fields_accordion')['order_comments_default'] !== '') {
+				$fields['order']['order_comments']['placeholder'] = $fields['order']['order_comments']['default'] = sanitize_text_field(sa_get_option('checkout_order_fields_accordion')['order_comments_default']);
+			}
+		}
+	}
+
+	return $fields;
+}
+
+function user_have_vpn(): bool
+{
+	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$user_ip = strtok($_SERVER['HTTP_X_FORWARDED_FOR'], ',');
+	} else {
+		$user_ip = $_SERVER['REMOTE_ADDR'];
+	}
+	$url = "http://ip-api.com/json/{$user_ip}?fields=country";
+	$response = wp_remote_get($url);
+
+	if (is_wp_error($response)) {
+		error_log('HTTP Error: ' . $response->get_error_message());
+		return false;
+	}
+
+	$data = wp_remote_retrieve_body($response);
+	$response = json_decode($data);
+
+	if (isset($response->error)) {
+		error_log('API Error: ' . $response->error);
+		return false;
+	}
+
+	if ($response && isset($response->country) && $response->country !== 'Iran') {
+		return true;
+	}
+
+	return false;
+}
