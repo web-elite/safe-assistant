@@ -25,12 +25,16 @@ if (!class_exists('JsonUpdater')) {
 
         protected function get_remote_info($force_refresh = false)
         {
-            $transient_key = $this->config['slug'] . '_json_release';
+            $transient_key = $this->config['slug'] . '_json_updater';
             global $pagenow;
-            $ignored_pages = ['plugins.php', 'plugin-install.php', 'update-core.php'];
-            if ($force_refresh || (is_admin() && in_array($pagenow, $ignored_pages))) {
+
+            $is_update_core = (is_admin() && $pagenow === 'update-core.php');
+            $is_bulk_update = (is_admin() && $pagenow === 'update.php' && isset($_REQUEST['action']) && $_REQUEST['action'] === 'update-selected');
+            $force = $force_refresh || $is_update_core || $is_bulk_update;
+
+            if ($force) {
                 delete_transient($transient_key);
-                WE_Update_Checker_Logger::log("Force refresh transient for {$this->config['slug']}");
+                WE_Update_Checker_Logger::log("Force refresh transient for {$this->config['slug']} (reason: " . ($is_update_core ? 'update-core' : ($is_bulk_update ? 'bulk-update' : 'manual')) . ")");
             } else {
                 $cached = get_transient($transient_key);
                 if ($cached) {

@@ -34,24 +34,6 @@ if (!class_exists('WE_Updater')) {
 
             WE_Update_Checker_Logger::log("Init WE_Updater for {$this->plugin_slug}");
             $this->load_source();
-
-            add_action('upgrader_pre_install', function ($bool, $hook_extra) {
-                WE_Update_Checker_Logger::log("upgrader_pre_install", $hook_extra);
-                return $bool;
-            }, 10, 2);
-
-            add_action('upgrader_post_install', function ($bool, $hook_extra, $result) {
-                WE_Update_Checker_Logger::log("upgrader_post_install", [
-                    'hook_extra' => $hook_extra,
-                    'result'     => $result
-                ]);
-                return $bool;
-            }, 10, 3);
-
-            add_action('upgrader_package_options', function ($options) {
-                WE_Update_Checker_Logger::log("upgrader_package_options", $options);
-                return $options;
-            });
         }
 
         protected function load_source()
