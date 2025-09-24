@@ -16,7 +16,7 @@
  * Plugin Name:       Safe Assistant
  * Plugin URI:        https://iranqq.com
  * Description:       Safe Assistant Sales assistant and necessary and efficient tools
- * Version:           1.2.9
+ * Version:           1.3.0
  * Requires at least: 5.2
  * Requires PHP:	  7.4
  * Author:            AlirezaYaghouti
@@ -86,26 +86,3 @@ function run_safe_assistant()
 	$plugin->run();
 }
 run_safe_assistant();
-
-add_action( 'upgrader_process_complete', 'de_upgrader_process_complete', 10, 2 );
-add_filter( 'upgrader_pre_install', 'de_upgrader_process_complete', 10, 2 );
-
-function de_upgrader_process_complete( $upgrader_object, $hook_extra ) {
-    error_log( 'Upgrader process complete triggered.' );
-	error_log( print_r( $upgrader_object, true ) );
-	error_log( print_r( $hook_extra, true ) );
-}
-
-add_filter('site_transient_update_plugins', 'debug_update_info');
-function debug_update_info($transient) {
-    if (empty($transient->checked)) {
-        return $transient;
-    }
-    error_log('Update transient debug: ' . print_r($transient, true));
-    // مخصوص افزونه‌ت
-    if (isset($transient->response['safe-assistant/safe-assistant.php'])) {
-        error_log('Response for safe-assistant: ' . print_r($transient->response['safe-assistant/safe-assistant.php'], true));
-    }
-    return $transient;
-}
-error_log("Force during check: " . ($force ? 'yes' : 'no') . ", remote version: " . ($remote['version'] ?? 'null'));

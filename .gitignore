@@ -1,7 +1,7 @@
 /debug.log
 /.vscode
-*backup*
-composer.lock
 /node_modules
 /vendor
 composer.json
+composer.lock
+*backup*
