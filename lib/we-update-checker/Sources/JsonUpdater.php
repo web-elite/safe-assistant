@@ -26,16 +26,17 @@ if (!class_exists('JsonUpdater')) {
         protected function get_remote_info($force_refresh = false)
         {
             $transient_key = $this->config['slug'] . '_json_release';
-
-            if ($force_refresh) {
+            global $pagenow;
+            $ignored_pages = ['plugins.php', 'plugin-install.php', 'update-core.php'];
+            if ($force_refresh || (is_admin() && in_array($pagenow, $ignored_pages))) {
                 delete_transient($transient_key);
                 WE_Update_Checker_Logger::log("Force refresh transient for {$this->config['slug']}");
-            }
-
-            $cached = get_transient($transient_key);
-            if ($cached) {
-                WE_Update_Checker_Logger::log("Using cached remote info", $cached);
-                return $cached;
+            } else {
+                $cached = get_transient($transient_key);
+                if ($cached) {
+                    WE_Update_Checker_Logger::log("Using cached remote info", $cached);
+                    return $cached;
+                }
             }
 
             $url = $this->config['json_url'];

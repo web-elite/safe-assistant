@@ -28,13 +28,21 @@ if (!class_exists('GithubUpdater')) {
             return $plugin_data['Version'] ?? '0.0.0';
         }
 
-        protected function get_remote_info()
+        protected function get_remote_info($force_refresh = false)
         {
 
             $transient_key = $this->config['slug'] . '_github_release';
-            $cached        = get_transient($transient_key);
-            if ($cached) {
-                return $cached;
+            global $pagenow;
+            $ignored_pages = ['plugins.php', 'plugin-install.php', 'update-core.php'];
+            if ($force_refresh || (is_admin() && in_array($pagenow, $ignored_pages))) {
+                delete_transient($transient_key);
+                WE_Update_Checker_Logger::log("Force refresh transient for {$this->config['slug']}");
+            } else {
+                $cached = get_transient($transient_key);
+                if ($cached) {
+                    WE_Update_Checker_Logger::log("Using cached remote info", $cached);
+                    return $cached;
+                }
             }
 
             $headers = [
@@ -133,6 +141,9 @@ if (!class_exists('GithubUpdater')) {
                 'banners'       => [
                     'low'  => $this->config['icon'] ?? '',
                     'high' => $this->config['icon'] ?? '',
+                ],
+                'icons' => [
+                    'default' => $remote['icon'],
                 ],
                 'download_link' => $remote['zip_url'],
                 'last_updated'  => $remote['published_at'],
