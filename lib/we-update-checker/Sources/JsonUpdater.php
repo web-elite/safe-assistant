@@ -61,11 +61,15 @@ if (!class_exists('JsonUpdater')) {
             }
 
             $remote_info = [
-                'version'     => $body['version'],
-                'zip_url'     => $body['zip_url'],
-                'icon'        => $body['icon'] ?? '',
-                'changelog'   => $body['changelog'] ?? '',
-                'homepage'    => $body['homepage'] ?? '',
+                "version"    => $body['version'] ?? '',
+                "zip_url"    => $body['zip_url'] ?? '',
+                "icon"       => $body['icon'] ?? '',
+                "changelog"  => $body['changelog'] ?? '',
+                "slug"       => $body['slug'] ?? '',
+                "author"     => $body['author'] ?? '',
+                "author_url" => $body['author_url'] ?? '',
+                "desc"       => $body['desc'] ?? '',
+                "homepage"   => $body['homepage'] ?? '',
             ];
 
             set_transient($transient_key, $remote_info, 12 * HOUR_IN_SECONDS);
@@ -145,8 +149,7 @@ if (!class_exists('JsonUpdater')) {
                     'high' => $remote['icon'] ?? '',
                 ],
                 'icons' => [
-                    '1x' => $remote['icon'],
-                    '2x' => $remote['icon'],
+                    'default' => $remote['icon'],
                 ],
                 'download_link' => $remote['zip_url'],
                 'last_updated'  => current_time('mysql'),
