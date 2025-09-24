@@ -15,26 +15,7 @@
             }
         }
 
-        if (sa_vars.vpn_checker_status) {
-            fetch(sa_vars.vpn_checker_url)
-                .then(response => response.json())
-                .then(data => {
-                    let isVpn = false;
-                    if (sa_vars.vpn_checker_type) {
-                        if (data.country && data.country !== "IR") {
-                            isVpn = true;
-                        }
-                    } else {
-                        if (data.privacy && (data.privacy.vpn || data.privacy.proxy || data.privacy.tor)) {
-                            isVpn = true;
-                        }
-                    }
-
-                    if (isVpn) {
-                        showVpnPopup(sa_vars.vpn_checker_title, sa_vars.vpn_checker_message);
-                    }
-                })
-                .catch(error => console.error("VPN check failed", error));
+        if (sa_vars.vpn_checker_result > 0) {
             function showVpnPopup(title, message) {
                 let popup = document.createElement("div");
                 popup.innerHTML = `
@@ -54,6 +35,7 @@
 `;
                 document.body.appendChild(popup);
             }
+            showVpnPopup(sa_vars.vpn_checker_title, sa_vars.vpn_checker_message);
         }
 
     });

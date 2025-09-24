@@ -99,19 +99,20 @@ class Safe_Assistant_Public
 		 */
 
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/safe-assistant-public.js', array('jquery'), $this->version, false);
+
+		$vpn_checker_result = false;
 		$only_checkout = sa_get_option('vpn_checker_only_in_checkout', true);
 		$vpn_checker_status = sa_get_option('vpn_checker_status', false);
-		if ($only_checkout && !is_checkout()) {
-			$vpn_checker_status = false;
+
+		if ($vpn_checker_status && (!$only_checkout || is_checkout())) {
+			$vpn_checker_result = user_have_vpn();
 		}
 
 		wp_localize_script($this->plugin_name, 'sa_vars', [
 			'enable_auto_membership'          => sa_get_option('enable_auto_membership'),
 			'hide_membership_option_checkout' => sa_get_option('hide_membership_option_checkout', false),
 			'enable_auto_membership'          => sa_get_option('enable_auto_membership', false),
-			'vpn_checker_url'                 => 'https://ipinfo.io/json?token=' . sa_get_option('vpn_checker_token'),
-			'vpn_checker_status'              => (bool) $vpn_checker_status,
-			'vpn_checker_type'                => (bool) sa_get_option('vpn_checker_type', false),
+			'vpn_checker_result'              => (bool) $vpn_checker_result ? 1 : 0,
 			'vpn_checker_message'             => sa_get_option('vpn_checker_message'),
 			'vpn_checker_title'               => sa_get_option('vpn_checker_title'),
 		]);

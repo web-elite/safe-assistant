@@ -283,12 +283,6 @@ class Safe_Assistant_Settings
 						'desc'    => esc_html__('Enable or disable VPN checking for users only in the checkout page.', 'safe-assistant'),
 					],
 					[
-						'id'      => 'vpn_checker_token',
-						'type'    => 'text',
-						'title'   => esc_html__('VPN Checker Token', 'safe-assistant'),
-						'desc'    => esc_html__('Enter your VPN Checker API token. get it from', 'safe-assistant') . ' <a href="https://ipinfo.io/dashboard/token" target="_blank">ipinfo.io/dashboard/token</a>',
-					],
-					[
 						'id'         => 'vpn_checker_type',
 						'type'       => 'switcher',
 						'title'      => esc_html__('VPN Checker Type', 'safe-assistant'),
