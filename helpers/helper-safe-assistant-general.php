@@ -200,15 +200,19 @@ PHP;
     }
 }
 
-if (function_exists('is_update_page')) {
+if (! function_exists('is_update_page')) {
     function is_update_page(): bool
     {
         global $pagenow;
-        $ignored_page = [
+        echo "test .                         $pagenow";
+        $allowed_pages = [
             'update-core.php',
             'plugins.php',
             'plugin-install.php',
+            'themes.php',
+            'theme-install.php',
         ];
-        return in_array($pagenow, $ignored_page);
+
+        return in_array($pagenow, $allowed_pages, true);
     }
 }
