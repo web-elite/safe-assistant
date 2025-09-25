@@ -199,3 +199,16 @@ PHP;
         file_put_contents($target, $php);
     }
 }
+
+if (function_exists('is_update_page')) {
+    function is_update_page(): bool
+    {
+        global $pagenow;
+        $ignored_page = [
+            'update-core.php',
+            'plugins.php',
+            'plugin-install.php',
+        ];
+        return in_array($pagenow, $ignored_page);
+    }
+}

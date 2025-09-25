@@ -47,7 +47,7 @@ if (is_admin()) {
 	// Disable WordPress updates
 	if (
 		sa_get_option('disable_wp_updates', false) &&
-		strpos($_SERVER['PHP_SELF'], 'update-core.php') === false
+		!is_update_page()
 	) {
 		add_filter('automatic_updater_disabled', '__return_true');
 		add_filter('auto_update_core', '__return_false');
@@ -121,9 +121,13 @@ if (sa_get_option('disable_woodmart_patch_checker', false)) {
 }
 
 /**
- * Free Shipping Progress Bar
+ * Order Management
  */
 if (class_exists('WooCommerce')) {
+
+	/**
+	 * Free Shipping Progress Bar
+	 */
 	$free_shipping_min_mashhad = (int) sa_get_option('free_shipping_min_mashhad', 0);
 	$free_shipping_min_other_cities = (int) sa_get_option('free_shipping_min_other_cities', 0);
 
@@ -203,12 +207,10 @@ if (class_exists('WooCommerce')) {
 		</div>
 		<?php
 	}
-}
 
-/**
- * Automatic Membership Settings
- */
-if (class_exists('WooCommerce')) {
+	/**
+	 * Automatic Membership Settings
+	 */
 	add_action('wp_footer', function () {
 		if (!is_checkout() || is_order_received_page()) {
 			return;
@@ -238,19 +240,13 @@ if (class_exists('WooCommerce')) {
 <?php
 		}
 	});
-}
 
-/**
- * Order Management
- */
-if (
-	class_exists('WooCommerce') &&
-	sa_get_option('order_convertor_status', false)
-) {
-	add_action('wp', 'sa_setup_order_status_cron');
-	add_filter('cron_schedules', 'sa_add_cron_interval');
-	add_action('sa_change_pending_orders', 'sa_change_pending_orders');
-	add_action('sa_change_failed_orders', 'sa_change_failed_orders');
+	if (sa_get_option('order_convertor_status', false)) {
+		add_action('wp', 'sa_setup_order_status_cron');
+		add_filter('cron_schedules', 'sa_add_cron_interval');
+		add_action('sa_change_pending_orders', 'sa_change_pending_orders');
+		add_action('sa_change_failed_orders', 'sa_change_failed_orders');
+	}
 
 	function sa_setup_order_status_cron()
 	{
@@ -401,7 +397,7 @@ if (defined('nirweb_wallet')) {
 	 */
 	function nirweb_wallet_expiration_check()
 	{
-		error_log("=== Wallet expiration check started ===");
+		sa_log('general', 'info', "Wallet Cron Log", "=== Wallet expiration check started ===");
 
 		$check_by_day  = sa_get_option('nir_wallet_expire_check_by', false);
 		$expire_hours  = (array) sa_get_option('nir_wallet_expire_day_sms', []);
@@ -409,22 +405,22 @@ if (defined('nirweb_wallet')) {
 		$pattern_day   = sa_get_option('nir_wallet_expire_pattern_sms', '');
 		$pattern_last  = sa_get_option('nir_wallet_expire_last_pattern_sms', '');
 
-		error_log("check_by_day: " . ($check_by_day ? 'true' : 'false'));
-		error_log("expire_hours: " . implode(',', $expire_hours));
-		error_log("pattern_hour: $pattern_hour");
-		error_log("pattern_day: $pattern_day");
-		error_log("pattern_last: $pattern_last");
+		sa_log('general', 'info', "Wallet Cron Log", "check_by_day: " . ($check_by_day ? 'true' : 'false'));
+		sa_log('general', 'info', "Wallet Cron Log", "expire_hours: " . implode(',', $expire_hours));
+		sa_log('general', 'info', "Wallet Cron Log", "pattern_hour: $pattern_hour");
+		sa_log('general', 'info', "Wallet Cron Log", "pattern_day: $pattern_day");
+		sa_log('general', 'info', "Wallet Cron Log", "pattern_last: $pattern_last");
 
 		if (!$expire_hours || (!$pattern_hour &&
 			!$pattern_day &&
 			!$pattern_last)) {
-			error_log("No patterns or expire_hours set. Exiting.");
+			sa_log('general', 'info', "Wallet Cron Log", "No patterns or expire_hours set. Exiting.");
 			return;
 		}
 
 		global $wpdb;
 		$current_time = current_time('timestamp');
-		error_log("current_time: $current_time (" . date('Y-m-d H:i:s', $current_time) . ")");
+		sa_log('general', 'info', "Wallet Cron Log", "current_time: $current_time (" . date('Y-m-d H:i:s', $current_time) . ")");
 
 		$users = $wpdb->get_results(
 			"SELECT user_id, amount, expire_time 
@@ -433,7 +429,7 @@ if (defined('nirweb_wallet')) {
 		);
 
 		if (!$users) {
-			error_log("No users found with remaining expire_time.");
+			sa_log('general', 'info', "Wallet Cron Log", "No users found with remaining expire_time.");
 			return;
 		}
 
@@ -463,7 +459,7 @@ if (defined('nirweb_wallet')) {
 			$user_info = get_userdata($user->user_id);
 			$name      = $user_info &&
 				$user_info->first_name ? $user_info->first_name : $user_info->display_name;
-			error_log("Sending SMS to $name, phone: $phone, diff_hours: $diff_hours");
+			sa_log('general', 'info', "Wallet Cron Log", "Sending SMS to $name, phone: $phone, diff_hours: $diff_hours");
 
 			if ($check_by_day) {
 				if (
@@ -471,7 +467,7 @@ if (defined('nirweb_wallet')) {
 					$pattern_last
 				) {
 					$pattern_vars_day = "$name";
-					error_log("Using last day pattern: $pattern_last, vars: $pattern_vars_day");
+					sa_log('general', 'info', "Wallet Cron Log", "Using last day pattern: $pattern_last, vars: $pattern_vars_day");
 					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_last);
 				} elseif (
 					$diff_hours > 24 &&
@@ -479,19 +475,19 @@ if (defined('nirweb_wallet')) {
 				) {
 					$days_remaining   = ceil($diff_hours / 24);
 					$pattern_vars_day = "$name;$days_remaining";
-					error_log("Using day pattern: $pattern_day, vars: $pattern_vars_day");
+					sa_log('general', 'info', "Wallet Cron Log", "Using day pattern: $pattern_day, vars: $pattern_vars_day");
 					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_day);
 				}
 			} else {
 				if ($pattern_hour) {
 					$pattern_vars_hour = "$name;$diff_hours";
-					error_log("Using hour pattern: $pattern_hour, vars: $pattern_vars_hour");
+					sa_log('general', 'info', "Wallet Cron Log", "Using hour pattern: $pattern_hour, vars: $pattern_vars_hour");
 					sa_send_sms_pattern($pattern_vars_hour, ($phone), $pattern_hour);
 				}
 			}
 		}
 
-		error_log("=== Wallet expiration check finished ===");
+		sa_log('general', 'info', "Wallet Cron Log", "=== Wallet expiration check finished ===");
 	}
 	add_action('sa_nir_wallet_expiration_check', 'nirweb_wallet_expiration_check');
 }
@@ -510,16 +506,10 @@ add_action('shutdown', function () {
 if (sa_get_option('wp_custom_maintenance_status')) {
 	sa_create_custom_maintenance_page(sa_get_option('wp_custom_maintenance'));
 }
-global $pagenow;
-$ignored_page = [
-	'update-core.php',
-	'plugins.php',
-	'plugin-install.php',
-];
-// sa_send_sms_pattern('علیرضا;2',normalize_mobile_number('09155909469'),367981);
+
 if (
 	!empty(sa_get_option('block_external_requests', '')) &&
-	!in_array($pagenow, $ignored_page)
+	!is_update_page()
 ) {
 	add_filter('pre_http_request', function ($pre, $args, $url) {
 		$blocked_urls = explode("\n", sa_get_option('block_external_requests', ''));
@@ -859,7 +849,7 @@ function user_have_vpn(): bool
 	$response = wp_remote_get($url);
 
 	if (is_wp_error($response)) {
-		error_log('HTTP Error: ' . $response->get_error_message());
+		sa_log('general', 'info', "Wallet Cron Log", 'HTTP Error: ' . $response->get_error_message());
 		return false;
 	}
 
@@ -867,7 +857,7 @@ function user_have_vpn(): bool
 	$response = json_decode($data);
 
 	if (isset($response->error)) {
-		error_log('API Error: ' . $response->error);
+		sa_log('general', 'info', "Wallet Cron Log", 'API Error: ' . $response->error);
 		return false;
 	}
 
