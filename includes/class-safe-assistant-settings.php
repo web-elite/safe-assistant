@@ -201,11 +201,18 @@ class Safe_Assistant_Settings
 						'desc'    => esc_html__('Remove default widgets from the WordPress dashboard.', 'safe-assistant'),
 					],
 					[
-						'id'      => 'disable_wp_updates',
+						'id'      => 'disable_all_wp_updates',
 						'type'    => 'switcher',
 						'title'   => esc_html__('Disable All WordPress Updates', 'safe-assistant'),
 						'default' => false,
-						'desc'    => esc_html__('Disable core, plugin, and theme updates.', 'safe-assistant'),
+						'desc'    => "⚠️ " . esc_html__('Disable core, plugin, and theme updates.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'disable_auto_wp_updates',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Disable Automatic WordPress Updates', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Disable only automatic updates for WordPress core, plugins, and themes. Manual updates will still be available.', 'safe-assistant'),
 					],
 					[
 						'id'      => 'disable_gutenberg',

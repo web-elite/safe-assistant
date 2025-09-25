@@ -44,26 +44,31 @@ if (is_admin()) {
 		add_filter('use_block_editor_for_post_type', '__return_false', 10);
 	}
 
-	// Disable WordPress updates
-	if (
-		sa_get_option('disable_wp_updates', false) &&
-		!is_update_page()
-	) {
+	// Disable All WordPress updates
+	if (sa_get_option('disable_all_wp_updates', false) && !is_update_page()) {
+		add_filter('pre_site_transient_update_plugins', '__return_null');
+		add_filter('pre_site_transient_update_themes', '__return_null');
+		add_filter('pre_site_transient_update_core', '__return_null');
+		remove_action('init', 'wp_schedule_update_checks');
+		remove_action('admin_init', '_maybe_update_core');
+		remove_action('admin_init', '_maybe_update_plugins');
+		remove_action('admin_init', '_maybe_update_themes');
+		wp_clear_scheduled_hook('wp_version_check');
+		wp_clear_scheduled_hook('wp_update_plugins');
+		wp_clear_scheduled_hook('wp_update_themes');
+		wp_clear_scheduled_hook('wp_maybe_auto_update');
 		add_filter('automatic_updater_disabled', '__return_true');
 		add_filter('auto_update_core', '__return_false');
 		add_filter('auto_update_plugin', '__return_false');
 		add_filter('auto_update_theme', '__return_false');
-		// add_filter('pre_site_transient_update_plugins', '__return_null');
-		// add_filter('pre_site_transient_update_themes', '__return_null');
-		// add_filter('pre_site_transient_update_core', '__return_null');
-		// remove_action('init', 'wp_schedule_update_checks');
-		// remove_action('admin_init', '_maybe_update_core');
-		// remove_action('admin_init', '_maybe_update_plugins');
-		// remove_action('admin_init', '_maybe_update_themes');
-		// wp_clear_scheduled_hook('wp_version_check');
-		// wp_clear_scheduled_hook('wp_update_plugins');
-		// wp_clear_scheduled_hook('wp_update_themes');
-		// wp_clear_scheduled_hook('wp_maybe_auto_update');
+	}
+
+	// Disable Only Automatic WordPress updates
+	if (sa_get_option('disable_auto_wp_updates', false) && !is_update_page()) {
+		add_filter('automatic_updater_disabled', '__return_true');
+		add_filter('auto_update_core', '__return_false');
+		add_filter('auto_update_plugin', '__return_false');
+		add_filter('auto_update_theme', '__return_false');
 	}
 }
 
@@ -519,7 +524,7 @@ if (
 			if (!$blocked) continue;
 			if (str_starts_with($url, $blocked)) {
 				$block_title = esc_html('Blocked by Safe Assistant', 'safe-assistant');
-				$block_desc = esc_html("Request to $url blocked by Safe Assistant settings.", 'safe-assistant');
+				$block_desc = esc_html("Request to", 'safe-assistant')  . " $url " . esc_html("blocked by Safe Assistant settings.", 'safe-assistant');
 				$args['body'] = '<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
     <channel>
