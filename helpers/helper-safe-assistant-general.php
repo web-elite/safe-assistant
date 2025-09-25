@@ -220,12 +220,8 @@ if (! function_exists('is_update_page')) {
  * Check if WooCommerce is activated
  */
 if (! function_exists('is_woocommerce_activated')) {
-    function is_woocommerce_activated()
+    function is_woocommerce_activated(): bool
     {
-        if (class_exists('woocommerce')) {
-            return true;
-        } else {
-            return false;
-        }
+        return is_plugin_active( 'woocommerce/woocommerce.php' );
     }
 }
