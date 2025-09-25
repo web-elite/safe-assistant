@@ -215,3 +215,17 @@ if (! function_exists('is_update_page')) {
         return in_array($pagenow, $allowed_pages, true);
     }
 }
+
+/**
+ * Check if WooCommerce is activated
+ */
+if (! function_exists('is_woocommerce_activated')) {
+    function is_woocommerce_activated()
+    {
+        if (class_exists('woocommerce')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

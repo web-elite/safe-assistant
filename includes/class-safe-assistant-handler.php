@@ -76,7 +76,7 @@ if (is_admin()) {
  * WooCommerce Admin Settings
  */
 if (
-	class_exists('WooCommerce') &&
+	is_woocommerce_activated() &&
 	is_admin() &&
 	!is_woocommerce_admin_page()
 ) {
@@ -128,7 +128,7 @@ if (sa_get_option('disable_woodmart_patch_checker', false)) {
 /**
  * Order Management
  */
-if (class_exists('WooCommerce')) {
+if (is_woocommerce_activated()) {
 
 	/**
 	 * Free Shipping Progress Bar
