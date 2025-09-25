@@ -16,7 +16,7 @@
  * Plugin Name:       Safe Assistant
  * Plugin URI:        https://iranqq.com
  * Description:       Safe Assistant Sales assistant and necessary and efficient tools
- * Version:           1.3.0
+ * Version:           1.3.1
  * Requires at least: 5.2
  * Requires PHP:	  7.4
  * Author:            AlirezaYaghouti
@@ -36,7 +36,7 @@ if (! defined('WPINC')) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define('SAFE_ASSISTANT_VERSION', '1.3.0');
+define('SAFE_ASSISTANT_VERSION', '1.3.1');
 define('SAFE_ASSISTANT_NAME', 'Safe Assistant');
 define('SAFE_ASSISTANT_SLUG', 'safe-assistant');
 define('SAFE_ASSISTANT_DIR', plugin_dir_path(__FILE__));
