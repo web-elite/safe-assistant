@@ -204,7 +204,6 @@ if (! function_exists('is_update_page')) {
     function is_update_page(): bool
     {
         global $pagenow;
-        echo "test .                         $pagenow";
         $allowed_pages = [
             'update-core.php',
             'plugins.php',
