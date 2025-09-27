@@ -303,6 +303,9 @@ if (is_woocommerce_activated()) {
 			}
 
 			$product_ids = array_map(function ($item) {
+				/**
+				 * @disregard P1013 Undefined method
+				 */
 				return $item->get_product_id();
 			}, $order->get_items());
 
@@ -321,6 +324,9 @@ if (is_woocommerce_activated()) {
 				}
 
 				foreach ($co->get_items() as $item) {
+					/**
+					 * @disregard P1013 Undefined method
+					 */
 					if (in_array($item->get_product_id(), $product_ids, true)) {
 						$newer_similar_order_exists = true;
 						break 2;
