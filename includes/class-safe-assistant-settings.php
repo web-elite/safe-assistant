@@ -389,6 +389,41 @@ class Safe_Assistant_Settings
 			],
 			[
 				'parent' => 'woocommerce',
+				'id'     => 'order_management_pro',
+				'title'  => esc_html__('Orders Management Pro', 'safe-assistant'),
+				'icon'   => 'fas fa-clipboard-list',
+				'fields' => [
+					[
+						'id'      => 'order_management_pro_status',
+						'type'    => 'switcher',
+						'default' => false,
+						'title'   => esc_html__('Enable Post Tracking', 'safe-assistant'),
+						'desc'    => esc_html__('Enable post tracking for orders.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_management_pro_main_city',
+						'type'    => 'text',
+						'title'   => esc_html__('Your shop location', 'safe-assistant'),
+						'desc'    => esc_html__('Enter the original value of the city field on the checkout page here. For example, Mashhad', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_management_pro_sms_status',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Enable SMS Notifications', 'safe-assistant'),
+						'default' => true,
+						'desc'    => esc_html__('Enable automatic sending of SMS after order completion with "Post tracking code".', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_management_pro_sms_pattern',
+						'type'    => 'text',
+						'title'   => esc_html__('Sms pattern for after order completion', 'safe-assistant'),
+						'default' => true,
+						'desc'    => esc_html__('Sms pattern must include 2 arguments', 'safe-assistant') . '<br>1: {user_firstname} <br> 2: {tracking_code}',
+					],
+				],
+			],
+			[
+				'parent' => 'woocommerce',
 				'id'     => 'woocommerce_admin',
 				'title'  => esc_html__('WooCommerce Admin Settings', 'safe-assistant'),
 				'icon'   => 'fas fa-cog',

@@ -96,3 +96,55 @@
     color: #2196f3;
     font-weight: 600;
 }
+
+#safe-assistant-orders-page .order-table-wrapper {
+    margin-bottom: 40px;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+#safe-assistant-orders-page .status-pending {
+    border: 2px solid #f1c40f;
+    background: #fcf8e3;
+}
+
+#safe-assistant-orders-page .status-on-hold {
+    border: 2px solid #3498db;
+    background: #ebf5fb;
+}
+
+#safe-assistant-orders-page .status-failed {
+    border: 2px solid #e74c3c;
+    background: #fdecea;
+}
+
+#safe-assistant-orders-page .order-table-wrapper h2 {
+    margin-top: 0;
+}
+
+#safe-assistant-orders-page .notice,
+.digits_admin_notice {
+    display: none !important;
+}
+
+#safe-assistant-orders-page button.button.save-tracking {
+    background: #e4ffe4;
+    color: green;
+    border: 1px solid #9eff9e !important;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+#safe-assistant-orders-page button.button.save-tracking:hover {
+    background: green;
+    border-color: green !important;
+    color: white;
+}
+
+#safe-assistant-orders-page .status-processing {
+    border: 2px solid #cf9800;
+    background: #fffdf7;
+}

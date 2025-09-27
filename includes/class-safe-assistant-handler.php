@@ -889,3 +889,115 @@ function user_have_vpn(): bool
 
 	return false;
 }
+
+if (sa_get_option('order_management_pro_status', false)) {
+	add_action('admin_menu', 'add_tracking_admin_page');
+	add_action('wp_ajax_save_order_tracking_ajax', 'handle_save_tracking_ajax');
+}
+// Ajax handler for saving tracking code
+function handle_save_tracking_ajax()
+{
+	if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'tracking_nonce')) {
+		wp_die(__('Security check failed.', 'safe-assistant'));
+	}
+
+	if (!current_user_can('manage_woocommerce')) {
+		wp_die(__('You do not have permission.', 'safe-assistant'));
+	}
+
+	$order_id      = intval($_POST['order_id']);
+	$tracking_code = sanitize_text_field($_POST['tracking_code']);
+
+	if (empty($tracking_code)) {
+		wp_send_json_error(__('Tracking code is empty.', 'safe-assistant'));
+	}
+
+	$order = wc_get_order($order_id);
+
+	if (!$order) {
+		wp_send_json_error(__('Invalid order.', 'safe-assistant'));
+	}
+
+	// Save tracking code
+	update_post_meta($order_id, '_tracking_code', $tracking_code);
+
+	/**
+	 * @disregard P1010 Undefined function
+	 */
+	if (function_exists('PWSMS')) remove_action('woocommerce_order_status_changed', [PWSMS()->orders, 'send_order_sms'], 99);
+
+	if ($order->get_status() !== 'completed') {
+		$order->update_status(
+			'completed',
+			sprintf(__('Order completed with tracking code %s.', 'safe-assistant'), $tracking_code)
+		);
+	}
+
+	/**
+	 * @disregard P1010 Undefined function
+	 */
+	if (function_exists('PWSMS')) add_action('woocommerce_order_status_changed', [PWSMS()->orders, 'send_order_sms'], 99);
+
+	// Add order note
+	$order->add_order_note(sprintf(__('Tracking code saved: %s', 'safe-assistant'), $tracking_code));
+	$phone = '09903336117'; //$order->get_billing_phone();
+	sa_send_sms_pattern($order->get_billing_first_name() . ";" . $tracking_code, $phone, sa_get_option('order_management_pro_sms_pattern', ''));
+	wp_send_json_success(__('Saved successfully.', 'safe-assistant'));
+}
+
+// Add submenu page in WooCommerce
+function add_tracking_admin_page()
+{
+	add_submenu_page(
+		'woocommerce',
+		__('Orders Management Pro', 'safe-assistant'),
+		__('Orders Management Pro', 'safe-assistant'),
+		'manage_woocommerce',
+		'tracking-orders',
+		'render_tracking_admin_page'
+	);
+}
+
+// Render tracking page (loads partial)
+function render_tracking_admin_page()
+{
+	if (!current_user_can('manage_woocommerce')) {
+		wp_die(__('You do not have permission.', 'safe-assistant'));
+	}
+
+	$main_city = sa_get_option('order_management_pro_main_city');
+
+	$order = wc_get_order(33984);
+	$order->update_status('processing');
+	$order->save();
+	// Get orders by status
+	$statuses = ['wc-processing', 'wc-on-hold', 'wc-failed'];
+	$orders = wc_get_orders([
+		'status'  => $statuses,
+		'limit'   => -1,
+		'orderby' => 'date',
+		'order'   => 'DESC',
+	]);
+
+	// Group orders by status + main/other city
+	$orders_by_status = [];
+	foreach ($statuses as $status) {
+		$orders_by_status[$status] = [
+			'main_city'  => [],
+			'other_city' => [],
+		];
+	}
+
+	foreach ($orders as $order) {
+		$status     = $order->get_status(); // pending, on-hold, failed
+		$order_city = $order->get_shipping_city() ?: $order->get_billing_city();
+
+		if ($order_city === $main_city) {
+			$orders_by_status[$status]['main_city'][] = $order;
+		} else {
+			$orders_by_status[$status]['other_city'][] = $order;
+		}
+	}
+
+	include_once SAFE_ASSISTANT_DIR . 'admin/partials/safe-assistant-orders-page.php';
+}
