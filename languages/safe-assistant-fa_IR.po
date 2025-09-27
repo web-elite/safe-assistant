@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Safe Assistant\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-04 07:27+0000\n"
-"PO-Revision-Date: 2025-09-25 07:28+0000\n"
+"PO-Revision-Date: 2025-09-27 10:34+0000\n"
 "Last-Translator: مجتهدی\n"
 "Language-Team: فارسی\n"
 "Language: fa_IR\n"
@@ -15,6 +15,11 @@ msgstr ""
 "X-Loco-Version: 2.8.0; wp-6.8.2; php-8.1.33\n"
 "X-Domain: safe-assistant"
 
+#: admin/partials/safe-assistant-orders-page.php:20
+#, php-format
+msgid "%s (%d orders)"
+msgstr "%s (%d سفارش)"
+
 #: includes/class-safe-assistant-handler.php:181
 #, php-format
 msgid "%s Toman left for free shipping in Mashhad."
@@ -25,31 +30,31 @@ msgstr "%s تومان باقی مانده تا ارسال شما در مشهد �
 msgid "%s Toman left for free shipping nationwide."
 msgstr "%s تومان باقی مانده تا ارسال شما در کل کشور رایگان شود."
 
-#: includes/class-safe-assistant-settings.php:1245
+#: includes/class-safe-assistant-settings.php:1280
 msgid "1 Day"
 msgstr "۱ روز"
 
-#: includes/class-safe-assistant-settings.php:1246
+#: includes/class-safe-assistant-settings.php:1281
 msgid "2 Days"
 msgstr "۲ روز"
 
-#: includes/class-safe-assistant-settings.php:1247
+#: includes/class-safe-assistant-settings.php:1282
 msgid "3 Days"
 msgstr "۳ روز"
 
-#: includes/class-safe-assistant-settings.php:1248
+#: includes/class-safe-assistant-settings.php:1283
 msgid "4 Days"
 msgstr "۴ روز"
 
-#: includes/class-safe-assistant-settings.php:1249
+#: includes/class-safe-assistant-settings.php:1284
 msgid "5 Days"
 msgstr "۵ روز"
 
-#: includes/class-safe-assistant-settings.php:1250
+#: includes/class-safe-assistant-settings.php:1285
 msgid "6 Days"
 msgstr "۶ روز"
 
-#: includes/class-safe-assistant-settings.php:1251
+#: includes/class-safe-assistant-settings.php:1286
 msgid "7 Days"
 msgstr "۷ روز"
 
@@ -61,11 +66,15 @@ msgstr "در حال حاضر یک فرآیند در حال اجرا است."
 msgid "A process is currently running. Please wait until it completes."
 msgstr "یک فرآیند در حال اجرا است. لطفاً تا اتمام آن صبر کنید."
 
+#: admin/partials/safe-assistant-orders-page.php:33
+msgid "Actions"
+msgstr "اقدامات"
+
 #: includes/class-safe-assistant-settings.php:152
 msgid "Active custom maintenance"
 msgstr "فعال کردن صفحه تعمیرات سفارشی"
 
-#: includes/class-safe-assistant-settings.php:1218
+#: includes/class-safe-assistant-settings.php:1253
 msgid "Addons"
 msgstr "افزونه‌ها"
 
@@ -90,61 +99,61 @@ msgstr "مبالغ باید به تومان باشد."
 msgid "Automatic Membership Settings"
 msgstr "تنظیمات عضویت خودکار"
 
-#: includes/class-safe-assistant-settings.php:1269
-#: includes/class-safe-assistant-settings.php:1276
-#: includes/class-safe-assistant-settings.php:1283
+#: includes/class-safe-assistant-settings.php:1304
+#: includes/class-safe-assistant-settings.php:1311
+#: includes/class-safe-assistant-settings.php:1318
 msgid "Available placeholders:"
 msgstr "متغیرهای موجود:"
 
-#: includes/class-safe-assistant-settings.php:1402
+#: includes/class-safe-assistant-settings.php:1437
 msgid "Backup & Restore"
 msgstr "پشتیبان‌گیری و بازیابی"
 
-#: includes/class-safe-assistant-settings.php:562
+#: includes/class-safe-assistant-settings.php:597
 msgid "Billing Address 1"
 msgstr "آدرس صورتحساب ۱"
 
-#: includes/class-safe-assistant-settings.php:597
+#: includes/class-safe-assistant-settings.php:632
 msgid "Billing Address 2"
 msgstr "آدرس صورتحساب ۲"
 
-#: includes/class-safe-assistant-settings.php:632
+#: includes/class-safe-assistant-settings.php:667
 msgid "Billing City"
 msgstr "شهر صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:502
+#: includes/class-safe-assistant-settings.php:537
 msgid "Billing Company"
 msgstr "شرکت صدور صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:537
+#: includes/class-safe-assistant-settings.php:572
 msgid "Billing Country"
 msgstr "کشور صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:762
+#: includes/class-safe-assistant-settings.php:797
 msgid "Billing Email"
 msgstr "ایمیل صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:428
+#: includes/class-safe-assistant-settings.php:463
 msgid "Billing Fields Editor"
 msgstr "ویرایشگر فیلدهای صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:432
+#: includes/class-safe-assistant-settings.php:467
 msgid "Billing First Name"
 msgstr "نام و نام خانوادگی صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:467
+#: includes/class-safe-assistant-settings.php:502
 msgid "Billing Last Name"
 msgstr "نام خانوادگی صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:727
+#: includes/class-safe-assistant-settings.php:762
 msgid "Billing Phone"
 msgstr "تلفن صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:692
+#: includes/class-safe-assistant-settings.php:727
 msgid "Billing Postcode"
 msgstr "کد پستی صورتحساب"
 
-#: includes/class-safe-assistant-settings.php:667
+#: includes/class-safe-assistant-settings.php:702
 msgid "Billing State"
 msgstr "استان صورتحساب"
 
@@ -174,11 +183,11 @@ msgstr "تمام آی‌پی‌های خارج از ایران را بررسی �
 msgid "Check Only VPN service"
 msgstr "فقط سرویس VPN را بررسی کنید"
 
-#: includes/class-safe-assistant-settings.php:1258
+#: includes/class-safe-assistant-settings.php:1293
 msgid "Check Wallet Expiration By"
 msgstr "تاریخ انقضای کیف پول چک"
 
-#: includes/class-safe-assistant-settings.php:1243
+#: includes/class-safe-assistant-settings.php:1278
 #| msgid ""
 #| "Choose how many days after the user's wallet expiration date the SMS will "
 #| "be sent."
@@ -188,10 +197,11 @@ msgid ""
 msgstr ""
 "انتخاب کنید که پیامک چند روز قبل از تاریخ انقضای کیف پول کاربر ارسال شود."
 
-#: includes/class-safe-assistant-settings.php:1260
+#: includes/class-safe-assistant-settings.php:1295
 msgid "Choose whether to check wallet expiration by days or hours."
 msgstr "انتخاب کنید که آیا انقضای کیف پول را بر اساس روز یا ساعت بررسی کنید."
 
+#: admin/partials/safe-assistant-orders-page.php:30
 #: addons/user-importer/partials/addon-user-importer-main-section.php:17
 msgid "City"
 msgstr "شهر"
@@ -240,6 +250,10 @@ msgstr "ستون ۹:"
 msgid "Column Information:"
 msgstr "اطلاعات ستون:"
 
+#: admin/partials/safe-assistant-orders-page.php:46
+msgid "Contact support for follow-up"
+msgstr "برای پیگیری با پشتیبانی تماس بگیرید"
+
 #: includes/class-safe-assistant-settings.php:356
 msgid "Convert Pending Orders to Failed"
 msgstr "تبدیل سفارشات در حال انتظار به ناموفق"
@@ -255,8 +269,12 @@ msgstr "ایجاد شده توسط"
 msgid "CSV file not found or unreadable: %s"
 msgstr "فایل CSV یافت نشد یا قابل خواندن نیست: %s"
 
-#: includes/class-safe-assistant-handler.php:363
-#: includes/class-safe-assistant-handler.php:379
+#: admin/partials/safe-assistant-orders-page.php:29
+msgid "Customer Name"
+msgstr "نام مشتری"
+
+#: includes/class-safe-assistant-handler.php:369
+#: includes/class-safe-assistant-handler.php:385
 msgid "Customer Note"
 msgstr "یادداشت مشتری"
 
@@ -264,29 +282,29 @@ msgstr "یادداشت مشتری"
 msgid "Date columns should be in YYYY/MM/DD format, e.g., 1404/05/24."
 msgstr "ستون‌های تاریخ باید به فرمت YYYY/MM/DD باشند، مثلاً 1404/05/24."
 
-#: includes/class-safe-assistant-settings.php:1261
+#: includes/class-safe-assistant-settings.php:1296
 msgid "Days"
 msgstr "روز"
 
-#: includes/class-safe-assistant-settings.php:460
 #: includes/class-safe-assistant-settings.php:495
 #: includes/class-safe-assistant-settings.php:530
-#: includes/class-safe-assistant-settings.php:590
+#: includes/class-safe-assistant-settings.php:565
 #: includes/class-safe-assistant-settings.php:625
 #: includes/class-safe-assistant-settings.php:660
-#: includes/class-safe-assistant-settings.php:720
+#: includes/class-safe-assistant-settings.php:695
 #: includes/class-safe-assistant-settings.php:755
 #: includes/class-safe-assistant-settings.php:790
-#: includes/class-safe-assistant-settings.php:834
+#: includes/class-safe-assistant-settings.php:825
 #: includes/class-safe-assistant-settings.php:869
 #: includes/class-safe-assistant-settings.php:904
-#: includes/class-safe-assistant-settings.php:964
+#: includes/class-safe-assistant-settings.php:939
 #: includes/class-safe-assistant-settings.php:999
 #: includes/class-safe-assistant-settings.php:1034
-#: includes/class-safe-assistant-settings.php:1094
+#: includes/class-safe-assistant-settings.php:1069
 #: includes/class-safe-assistant-settings.php:1129
 #: includes/class-safe-assistant-settings.php:1164
-#: includes/class-safe-assistant-settings.php:1207
+#: includes/class-safe-assistant-settings.php:1199
+#: includes/class-safe-assistant-settings.php:1242
 msgid "Default Value"
 msgstr "مقدار پیشفرض"
 
@@ -323,27 +341,27 @@ msgid "Disable the Gutenberg block editor and use Classic Editor."
 msgstr ""
 "ویرایشگر بلوک گوتنبرگ را غیرفعال کنید و از ویرایشگر کلاسیک استفاده کنید."
 
-#: includes/class-safe-assistant-settings.php:408
+#: includes/class-safe-assistant-settings.php:443
 msgid "Disable the Marketing Hub in WooCommerce."
 msgstr "غیرفعال کردن مرکز بازاریابی در ووکامرس"
 
-#: includes/class-safe-assistant-settings.php:401
+#: includes/class-safe-assistant-settings.php:436
 msgid "Disable the WooCommerce Admin dashboard."
 msgstr "داشبورد مدیریت ووکامرس را غیرفعال کنید."
 
-#: includes/class-safe-assistant-settings.php:399
+#: includes/class-safe-assistant-settings.php:434
 msgid "Disable WooCommerce Admin"
 msgstr "غیرفعال کردن پنل مدیریت ووکامرس"
 
-#: includes/class-safe-assistant-settings.php:413
+#: includes/class-safe-assistant-settings.php:448
 msgid "Disable WooCommerce Blocks on Frontend"
 msgstr "غیرفعال کردن بلوک‌های ووکامرس در فرانت‌اند"
 
-#: includes/class-safe-assistant-settings.php:415
+#: includes/class-safe-assistant-settings.php:450
 msgid "Disable WooCommerce Blocks scripts/styles on frontend."
 msgstr "غیرفعال کردن اسکریپت‌ها/استایل‌های بلوک‌های ووکامرس در بخش کاربری."
 
-#: includes/class-safe-assistant-settings.php:406
+#: includes/class-safe-assistant-settings.php:441
 msgid "Disable WooCommerce Marketing Hub"
 msgstr "غیرفعال کردن مرکز بازاریابی ووکامرس"
 
@@ -366,6 +384,10 @@ msgstr "نمایش یادداشت‌های سفارش در جدول سفارش�
 msgid "Download Sample File"
 msgstr "دانلود فایل نمونه"
 
+#: admin/partials/safe-assistant-orders-page.php:61
+msgid "Edit Order"
+msgstr "ویرایش سفارش"
+
 #: includes/class-safe-assistant-settings.php:154
 msgid "Enable a custom maintenance mode for your site."
 msgstr "فعالسازی صفحه تعمیرات سفارشی شده"
@@ -378,33 +400,39 @@ msgstr "تبدیل خودکار سفارش‌های در حال انتظار ب�
 msgid "Enable Automatic Membership"
 msgstr "فعال کردن عضویت خودکار"
 
+#: includes/class-safe-assistant-settings.php:414
+msgid ""
+"Enable automatic sending of SMS after order completion with \"Post tracking "
+"code\"."
+msgstr "ارسال خودکار پیامک پس از تکمیل سفارش با «کد رهگیری پست» را فعال کنید."
+
 #: includes/class-safe-assistant-settings.php:351
 msgid "Enable displaying order notes in the admin orders table."
 msgstr "نمایش یادداشت‌های سفارش را در جدول سفارشات مدیریت فعال کنید."
 
-#: includes/class-safe-assistant-settings.php:437
 #: includes/class-safe-assistant-settings.php:472
 #: includes/class-safe-assistant-settings.php:507
 #: includes/class-safe-assistant-settings.php:542
-#: includes/class-safe-assistant-settings.php:567
+#: includes/class-safe-assistant-settings.php:577
 #: includes/class-safe-assistant-settings.php:602
 #: includes/class-safe-assistant-settings.php:637
 #: includes/class-safe-assistant-settings.php:672
-#: includes/class-safe-assistant-settings.php:697
+#: includes/class-safe-assistant-settings.php:707
 #: includes/class-safe-assistant-settings.php:732
 #: includes/class-safe-assistant-settings.php:767
-#: includes/class-safe-assistant-settings.php:811
+#: includes/class-safe-assistant-settings.php:802
 #: includes/class-safe-assistant-settings.php:846
 #: includes/class-safe-assistant-settings.php:881
 #: includes/class-safe-assistant-settings.php:916
-#: includes/class-safe-assistant-settings.php:941
+#: includes/class-safe-assistant-settings.php:951
 #: includes/class-safe-assistant-settings.php:976
 #: includes/class-safe-assistant-settings.php:1011
 #: includes/class-safe-assistant-settings.php:1046
-#: includes/class-safe-assistant-settings.php:1071
+#: includes/class-safe-assistant-settings.php:1081
 #: includes/class-safe-assistant-settings.php:1106
 #: includes/class-safe-assistant-settings.php:1141
-#: includes/class-safe-assistant-settings.php:1183
+#: includes/class-safe-assistant-settings.php:1176
+#: includes/class-safe-assistant-settings.php:1218
 msgid "Enable Field"
 msgstr "فعال کردن فیلد"
 
@@ -420,7 +448,7 @@ msgstr "فعال یا غیرفعال کردن عضویت خودکار کاربر
 msgid "Enable or disable free shipping for your store."
 msgstr "ارسال رایگان را برای فروشگاه خود فعال یا غیرفعال کنید."
 
-#: includes/class-safe-assistant-settings.php:1226
+#: includes/class-safe-assistant-settings.php:1261
 msgid "Enable or disable User Importer Addon."
 msgstr "افزونه‌ی واردکننده‌ی کاربر را فعال یا غیرفعال کنید."
 
@@ -432,7 +460,19 @@ msgstr "فعال یا غیرفعال کردن بررسی VPN برای کاربر
 msgid "Enable or disable VPN checking for users only in the checkout page."
 msgstr "فعال یا غیرفعال کردن بررسی VPN فقط برای کاربران در صفحه پرداخت."
 
-#: includes/class-safe-assistant-settings.php:1224
+#: includes/class-safe-assistant-settings.php:400
+msgid "Enable Post Tracking"
+msgstr "فعال کردن ردیابی پست"
+
+#: includes/class-safe-assistant-settings.php:401
+msgid "Enable post tracking for orders."
+msgstr "فعال کردن قابلیت رهگیری سفارش‌ها (Post Tracking)"
+
+#: includes/class-safe-assistant-settings.php:412
+msgid "Enable SMS Notifications"
+msgstr "فعالسازی ارسال SMS"
+
+#: includes/class-safe-assistant-settings.php:1259
 msgid "Enable User Importer Addon"
 msgstr "افزونه واردکننده کاربر را فعال کنید"
 
@@ -448,25 +488,36 @@ msgstr "فعال کردن بررسی VPN فقط در پرداخت"
 msgid "End Time for Failed Status Check (Hour)"
 msgstr "زمان پایان بررسی وضعیت ناموفق (ساعت)"
 
-#: includes/class-safe-assistant-settings.php:1289
+#: includes/class-safe-assistant-settings.php:1324
 msgid ""
 "Enter the expiration date check time and the time of day the SMS is sent."
 msgstr "زمان بررسی تاریخ انقضا و زمان ارسال پیامک را وارد کنید."
 
-#: includes/class-safe-assistant-settings.php:1276
+#: includes/class-safe-assistant-settings.php:407
+msgid ""
+"Enter the original value of the city field on the checkout page here. For "
+"example, Mashhad"
+msgstr ""
+"مقدار اصلی فیلد شهر در صفحه پرداخت را اینجا وارد کنید. به عنوان مثال، مشهد"
+
+#: includes/class-safe-assistant-settings.php:1311
 #| msgid "Enter the SMS pattern for wallet expiration notifications."
 msgid "Enter the SMS pattern for wallet expiration notifications by days."
 msgstr "الگوی پیامکی برای اعلان‌های انقضای کیف پول براساس روز را وارد کنید."
 
-#: includes/class-safe-assistant-settings.php:1269
+#: includes/class-safe-assistant-settings.php:1304
 msgid "Enter the SMS pattern for wallet expiration notifications by hour."
 msgstr "الگوی پیامکی اعلان‌های انقضای کیف پول را بر اساس ساعت وارد کنید."
 
-#: includes/class-safe-assistant-settings.php:1283
+#: includes/class-safe-assistant-settings.php:1318
 msgid ""
 "Enter the SMS pattern for wallet expiration notifications less than 24 hours."
 msgstr ""
 "الگوی پیامکی برای اعلان‌های انقضای کیف پول کمتر از ۲۴ ساعت را وارد کنید."
+
+#: admin/partials/safe-assistant-orders-page.php:54
+msgid "Enter tracking code"
+msgstr "کد رهگیری را وارد کنید"
 
 #: addons/user-importer/addon-user-importer-handler.php:317
 msgid "Error reading CSV row."
@@ -477,6 +528,10 @@ msgstr "خطا در خواندن ردیف CSV."
 #: addons/user-importer/addon-user-importer.php:250
 #: addons/user-importer/addon-user-importer.php:287
 msgid "Error:"
+msgstr "خطا:"
+
+#: admin/partials/safe-assistant-orders-page.php:103
+msgid "Error: "
 msgstr "خطا:"
 
 #: includes/class-safe-assistant-handler.php:270
@@ -498,6 +553,10 @@ msgstr "روزهای انقضا"
 #: addons/user-importer/addon-user-importer.php:418
 msgid "Factory reset completed."
 msgstr "تنظیم مجدد کارخانه تکمیل شد."
+
+#: admin/partials/safe-assistant-orders-page.php:9
+msgid "Failed Orders"
+msgstr "سفارشات ناموفق"
 
 #: addons/user-importer/addon-user-importer-handler.php:427
 #, php-format
@@ -526,29 +585,29 @@ msgstr "به‌روزرسانی آدرس برای کاربر %s ناموفق ب�
 msgid "Features"
 msgstr "ویژگی ها"
 
-#: includes/class-safe-assistant-settings.php:449
 #: includes/class-safe-assistant-settings.php:484
 #: includes/class-safe-assistant-settings.php:519
 #: includes/class-safe-assistant-settings.php:554
-#: includes/class-safe-assistant-settings.php:579
+#: includes/class-safe-assistant-settings.php:589
 #: includes/class-safe-assistant-settings.php:614
 #: includes/class-safe-assistant-settings.php:649
 #: includes/class-safe-assistant-settings.php:684
-#: includes/class-safe-assistant-settings.php:709
+#: includes/class-safe-assistant-settings.php:719
 #: includes/class-safe-assistant-settings.php:744
 #: includes/class-safe-assistant-settings.php:779
-#: includes/class-safe-assistant-settings.php:823
+#: includes/class-safe-assistant-settings.php:814
 #: includes/class-safe-assistant-settings.php:858
 #: includes/class-safe-assistant-settings.php:893
 #: includes/class-safe-assistant-settings.php:928
-#: includes/class-safe-assistant-settings.php:953
+#: includes/class-safe-assistant-settings.php:963
 #: includes/class-safe-assistant-settings.php:988
 #: includes/class-safe-assistant-settings.php:1023
 #: includes/class-safe-assistant-settings.php:1058
-#: includes/class-safe-assistant-settings.php:1083
+#: includes/class-safe-assistant-settings.php:1093
 #: includes/class-safe-assistant-settings.php:1118
 #: includes/class-safe-assistant-settings.php:1153
-#: includes/class-safe-assistant-settings.php:1195
+#: includes/class-safe-assistant-settings.php:1188
+#: includes/class-safe-assistant-settings.php:1230
 msgid "Field Label"
 msgstr "برچسب فیلد"
 
@@ -596,7 +655,11 @@ msgstr "ارسال رایگان در کل کشور، فعال شد."
 msgid "Free Shipping Settings"
 msgstr "تنظیمات ارسال رایگان"
 
-#: includes/class-safe-assistant-settings.php:1336
+#: admin/partials/safe-assistant-orders-page.php:31
+msgid "Full Address"
+msgstr "آدرس کامل"
+
+#: includes/class-safe-assistant-settings.php:1371
 msgid "General Logs"
 msgstr "گزارش‌های عمومی"
 
@@ -616,7 +679,7 @@ msgstr "گزینه عضویت را در صفحه پرداخت مخفی کنید.
 msgid "Hide the WordPress admin bar for all users except administrators."
 msgstr "نوار مدیریت وردپرس را برای همه کاربران به جز مدیران پنهان کنید."
 
-#: includes/class-safe-assistant-settings.php:1262
+#: includes/class-safe-assistant-settings.php:1297
 msgid "Hours"
 msgstr "ساعت"
 
@@ -637,7 +700,7 @@ msgstr "شناسه"
 msgid "Import"
 msgstr "درون ریزی"
 
-#: includes/class-safe-assistant-settings.php:1290
+#: includes/class-safe-assistant-settings.php:1325
 msgid "In 24-hour format. for example: 9 or 17"
 msgstr "در قالب ۲۴ ساعته. مثلاً: ۹ یا ۱۷"
 
@@ -674,34 +737,38 @@ msgstr "نانس نامعتبر."
 msgid "Invalid or missing CSV file."
 msgstr "فایل CSV نامعتبر است یا وجود ندارد."
 
+#: includes/class-safe-assistant-handler.php:924
+msgid "Invalid order."
+msgstr "سفارش نامعتبر."
+
 #: addons/user-importer/addon-user-importer-handler.php:375
 #, php-format
 msgid "Invalid phone number %s in row %d."
 msgstr "شماره تلفن نامعتبر %s در ردیف %d."
 
-#: includes/class-safe-assistant-settings.php:443
 #: includes/class-safe-assistant-settings.php:478
 #: includes/class-safe-assistant-settings.php:513
 #: includes/class-safe-assistant-settings.php:548
-#: includes/class-safe-assistant-settings.php:573
+#: includes/class-safe-assistant-settings.php:583
 #: includes/class-safe-assistant-settings.php:608
 #: includes/class-safe-assistant-settings.php:643
 #: includes/class-safe-assistant-settings.php:678
-#: includes/class-safe-assistant-settings.php:703
+#: includes/class-safe-assistant-settings.php:713
 #: includes/class-safe-assistant-settings.php:738
 #: includes/class-safe-assistant-settings.php:773
-#: includes/class-safe-assistant-settings.php:817
+#: includes/class-safe-assistant-settings.php:808
 #: includes/class-safe-assistant-settings.php:852
 #: includes/class-safe-assistant-settings.php:887
 #: includes/class-safe-assistant-settings.php:922
-#: includes/class-safe-assistant-settings.php:947
+#: includes/class-safe-assistant-settings.php:957
 #: includes/class-safe-assistant-settings.php:982
 #: includes/class-safe-assistant-settings.php:1017
 #: includes/class-safe-assistant-settings.php:1052
-#: includes/class-safe-assistant-settings.php:1077
+#: includes/class-safe-assistant-settings.php:1087
 #: includes/class-safe-assistant-settings.php:1112
 #: includes/class-safe-assistant-settings.php:1147
-#: includes/class-safe-assistant-settings.php:1189
+#: includes/class-safe-assistant-settings.php:1182
+#: includes/class-safe-assistant-settings.php:1224
 msgid "Is Required?"
 msgstr "الزامی است؟"
 
@@ -717,10 +784,23 @@ msgstr "نام خانوادگی"
 msgid "List external URLs to block (one per line)."
 msgstr "فهرستی از آدرس‌های اینترنتی خارجی برای مسدود کردن (هر کدام در یک خط)."
 
-#: includes/class-safe-assistant-settings.php:1326
+#: includes/class-safe-assistant-settings.php:1361
 #: addons/user-importer/addon-user-importer.php:113
 msgid "Logs"
 msgstr "گزارشات"
+
+#: admin/partials/safe-assistant-orders-page.php:22
+msgid "Main City Orders"
+msgstr "سفارشات اصلی شهر"
+
+#: admin/partials/safe-assistant-orders-page.php:3
+#, php-format
+msgid "Main City: %s | Orders from this city are managed directly."
+msgstr "شهر اصلی: %s | سفارشات در این شهر نیازی به کد رهگیری مرسوله ندارند."
+
+#: admin/partials/safe-assistant-orders-page.php:50
+msgid "Mark as Completed"
+msgstr "علامت گذاری به عنوان تکمیل شده"
 
 #: helpers/helper-safe-assistant-logs.php:118
 #: helpers/helper-safe-assistant-logs.php:169
@@ -765,17 +845,21 @@ msgstr "حداقل مبلغ خرید برای ارسال رایگان: %s توم
 msgid "Mobile Number"
 msgstr "شماره موبایل"
 
-#: includes/class-safe-assistant-settings.php:1233
+#: includes/class-safe-assistant-settings.php:1268
 msgid "Nir Wallet"
 msgstr "کیف پول نیر"
 
-#: includes/class-safe-assistant-settings.php:1302
+#: includes/class-safe-assistant-settings.php:1337
 msgid "Nir Wallet plugin not active or installed"
 msgstr "افزونه کیف پول نیر فعال یا نصب نشده است"
 
 #: helpers/helper-safe-assistant-logs.php:110
 msgid "No logs found."
 msgstr "هیچ لاگی یافت نشد."
+
+#: admin/partials/safe-assistant-orders-page.php:74
+msgid "No pending orders found."
+msgstr "هیچ سفارش معلقی یافت نشد."
 
 #: helpers/helper-safe-assistant-logs.php:162
 msgid "No SMS logs found."
@@ -796,6 +880,10 @@ msgstr ""
 msgid "Notice:"
 msgstr "توجه:"
 
+#: admin/partials/safe-assistant-orders-page.php:8
+msgid "On-Hold Orders"
+msgstr "سفارشات در انتظار"
+
 #: addons/user-importer/partials/addon-user-importer-main-section.php:20
 msgid "Only the first column"
 msgstr "فقط ستون اول"
@@ -804,33 +892,61 @@ msgstr "فقط ستون اول"
 msgid "Optimization"
 msgstr "بهینه‌سازی"
 
-#: includes/class-safe-assistant-handler.php:351
+#: includes/class-safe-assistant-handler.php:357
 msgid "Order auto-cancelled after timeout."
 msgstr "سفارش پس از اتمام مهلت، به صورت خودکار لغو شد."
 
-#: includes/class-safe-assistant-handler.php:334
+#: includes/class-safe-assistant-handler.php:340
 msgid "Order auto-failed after timeout."
 msgstr "سفارش پس از اتمام مهلت، به صورت خودکار ناموفق شد."
 
-#: includes/class-safe-assistant-handler.php:333
+#: includes/class-safe-assistant-handler.php:339
 msgid "Order cancelled due to newer similar order."
 msgstr "سفارش به دلیل سفارش مشابه جدید لغو شد."
 
-#: includes/class-safe-assistant-settings.php:1178
+#: includes/class-safe-assistant-settings.php:1213
 msgid "Order Comments"
 msgstr "نظرات سفارش"
 
-#: includes/class-safe-assistant-settings.php:1174
+#: includes/class-safe-assistant-handler.php:938
+#, php-format
+msgid "Order completed with tracking code %s."
+msgstr "سفارش با کد رهگیری %s تکمیل شد."
+
+#: includes/class-safe-assistant-settings.php:1209
 msgid "Order Fields Editor"
 msgstr "ویرایشگر فیلدهای سفارش"
+
+#: admin/partials/safe-assistant-orders-page.php:28
+msgid "Order ID"
+msgstr "شناسه سفارش"
 
 #: includes/class-safe-assistant-settings.php:343
 msgid "Order Management"
 msgstr "مدیریت سفارش"
 
-#: includes/class-safe-assistant-settings.php:1388
+#: includes/class-safe-assistant-handler.php:959
+#: includes/class-safe-assistant-handler.php:960
+#: includes/class-safe-assistant-settings.php:393
+#: admin/partials/safe-assistant-orders-page.php:2
+msgid "Orders Management Pro"
+msgstr "مدیریت حرفه‌ای سفارشات"
+
+#: admin/partials/safe-assistant-orders-page.php:22
+msgid "Other Cities Orders"
+msgstr "سفارش سایر شهرها"
+
+#: includes/class-safe-assistant-settings.php:1423
 msgid "Password"
 msgstr "رمز عبور"
+
+#: admin/partials/safe-assistant-orders-page.php:7
+msgid "Pending Orders"
+msgstr "سفارشات در انتظار"
+
+#: admin/partials/safe-assistant-orders-page.php:32
+msgid "Phone"
+msgstr "تلفن"
 
 #: addons/user-importer/addon-user-importer-handler.php:370
 msgid "Phone number empty in row %d."
@@ -841,25 +957,25 @@ msgstr "شماره تلفن در ردیف %d خالی است."
 msgid "Phone Number is %s and digits number is %s"
 msgstr "شماره تلفن %s و تعداد ارقام %s است."
 
-#: includes/class-safe-assistant-settings.php:455
 #: includes/class-safe-assistant-settings.php:490
 #: includes/class-safe-assistant-settings.php:525
-#: includes/class-safe-assistant-settings.php:585
+#: includes/class-safe-assistant-settings.php:560
 #: includes/class-safe-assistant-settings.php:620
 #: includes/class-safe-assistant-settings.php:655
-#: includes/class-safe-assistant-settings.php:715
+#: includes/class-safe-assistant-settings.php:690
 #: includes/class-safe-assistant-settings.php:750
 #: includes/class-safe-assistant-settings.php:785
-#: includes/class-safe-assistant-settings.php:829
+#: includes/class-safe-assistant-settings.php:820
 #: includes/class-safe-assistant-settings.php:864
 #: includes/class-safe-assistant-settings.php:899
-#: includes/class-safe-assistant-settings.php:959
+#: includes/class-safe-assistant-settings.php:934
 #: includes/class-safe-assistant-settings.php:994
 #: includes/class-safe-assistant-settings.php:1029
-#: includes/class-safe-assistant-settings.php:1089
+#: includes/class-safe-assistant-settings.php:1064
 #: includes/class-safe-assistant-settings.php:1124
 #: includes/class-safe-assistant-settings.php:1159
-#: includes/class-safe-assistant-settings.php:1201
+#: includes/class-safe-assistant-settings.php:1194
+#: includes/class-safe-assistant-settings.php:1236
 msgid "Placeholder"
 msgstr "متن نمایشی پیشفرض (placeholder)"
 
@@ -870,6 +986,10 @@ msgstr "مبلغ خرید قبلی"
 #: addons/user-importer/addon-user-importer-handler.php:463
 msgid "Processed %d rows, new offset: %d."
 msgstr "%d سطر پردازش شد، آفست جدید: %d."
+
+#: admin/partials/safe-assistant-orders-page.php:10
+msgid "Processing Orders"
+msgstr "سفارشات درحال پردازش "
 
 #: addons/user-importer/partials/addon-user-importer-main-section.php:18
 msgid "Purchase Date"
@@ -937,11 +1057,35 @@ msgstr "گزارش‌های به‌روزرسانی دستیار امن"
 msgid "Safe Assistant: Codestar Framework not found."
 msgstr "دستیار سیف: Codestar Framework یافت نشد."
 
+#: admin/partials/safe-assistant-orders-page.php:56
+msgid "Save & Complete"
+msgstr "ذخیره و تکمیل"
+
+#: admin/partials/safe-assistant-orders-page.php:105
+msgid "Save & Order completion"
+msgstr "ذخیره و تکمیل سفارش"
+
+#: admin/partials/safe-assistant-orders-page.php:100
+msgid "Saved & Completed!"
+msgstr "ذخیره و تکمیل شد!"
+
+#: includes/class-safe-assistant-handler.php:951
+msgid "Saved successfully."
+msgstr "با موفقیت ذخیره شد."
+
+#: admin/partials/safe-assistant-orders-page.php:91
+msgid "Saving..."
+msgstr "در حال ذخیره..."
+
 #: addons/user-importer/addon-user-importer.php:415
 msgid "Scheduled cron event cleared."
 msgstr "رویداد cron برنامه‌ریزی‌شده پاک شد."
 
-#: includes/class-safe-assistant-settings.php:1242
+#: includes/class-safe-assistant-handler.php:907
+msgid "Security check failed."
+msgstr "بررسی امنیتی ناموفق بود."
+
+#: includes/class-safe-assistant-settings.php:1277
 msgid "Select an option"
 msgstr "یک گزینه را انتخاب کنید"
 
@@ -980,73 +1124,73 @@ msgstr ""
 "ساعت (با فرمت ۲۴ ساعته) را تنظیم کنید تا سیستم بررسی سفارشات را متوقف کند و "
 "آنها را به عنوان ناموفق علامت‌گذاری کند."
 
-#: includes/class-safe-assistant-settings.php:1364
+#: includes/class-safe-assistant-settings.php:1399
 #: addons/user-importer/addon-user-importer.php:126
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/class-safe-assistant-settings.php:936
+#: includes/class-safe-assistant-settings.php:971
 msgid "Shipping Address 1"
 msgstr "آدرس ارسال ۱"
 
-#: includes/class-safe-assistant-settings.php:971
+#: includes/class-safe-assistant-settings.php:1006
 msgid "Shipping Address 2"
 msgstr "آدرس ارسال ۲"
 
-#: includes/class-safe-assistant-settings.php:1006
+#: includes/class-safe-assistant-settings.php:1041
 msgid "Shipping City"
 msgstr "شهر حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:876
+#: includes/class-safe-assistant-settings.php:911
 msgid "Shipping Company"
 msgstr "شرکت حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:911
+#: includes/class-safe-assistant-settings.php:946
 msgid "Shipping Country"
 msgstr "کشور حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:1136
+#: includes/class-safe-assistant-settings.php:1171
 msgid "Shipping Email"
 msgstr "ایمیل ارسال"
 
-#: includes/class-safe-assistant-settings.php:802
+#: includes/class-safe-assistant-settings.php:837
 msgid "Shipping Fields Editor"
 msgstr "ویرایشگر فیلدهای حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:806
+#: includes/class-safe-assistant-settings.php:841
 msgid "Shipping First Name"
 msgstr "نام کوچک حمل کننده"
 
-#: includes/class-safe-assistant-settings.php:841
+#: includes/class-safe-assistant-settings.php:876
 msgid "Shipping Last Name"
 msgstr "نام خانوادگی حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:1101
+#: includes/class-safe-assistant-settings.php:1136
 msgid "Shipping Phone"
 msgstr "تلفن حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:1066
+#: includes/class-safe-assistant-settings.php:1101
 msgid "Shipping Postcode"
 msgstr "کد پستی حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:1041
+#: includes/class-safe-assistant-settings.php:1076
 msgid "Shipping State"
 msgstr "استان حمل و نقل"
 
-#: includes/class-safe-assistant-settings.php:1374
+#: includes/class-safe-assistant-settings.php:1409
 msgid "SMS Gateway"
 msgstr "درگاه پیامکی"
 
-#: includes/class-safe-assistant-settings.php:1352
+#: includes/class-safe-assistant-settings.php:1387
 msgid "SMS Logs"
 msgstr "گزارش‌های پیامکی"
 
-#: includes/class-safe-assistant-settings.php:1369
+#: includes/class-safe-assistant-settings.php:1404
 msgid "SMS Panel Settings"
 msgstr "تنظیمات پنل پیامک"
 
-#: includes/class-safe-assistant-settings.php:1268
-#: includes/class-safe-assistant-settings.php:1275
+#: includes/class-safe-assistant-settings.php:1303
+#: includes/class-safe-assistant-settings.php:1310
 msgid "SMS Pattern"
 msgstr "پترن پیامک"
 
@@ -1054,9 +1198,17 @@ msgstr "پترن پیامک"
 msgid "Sms Pattern"
 msgstr "پترن پیامک"
 
-#: includes/class-safe-assistant-settings.php:1282
+#: includes/class-safe-assistant-settings.php:1317
 msgid "SMS Pattern (for last 24h)"
 msgstr "پترن پیامک (برای 24 ساعت باقی مانده)"
+
+#: includes/class-safe-assistant-settings.php:419
+msgid "Sms pattern for after order completion"
+msgstr "الگوی پیامکی برای پس از تکمیل سفارش"
+
+#: includes/class-safe-assistant-settings.php:421
+msgid "Sms pattern must include 2 arguments"
+msgstr "پترن پیامکی شما باید شامل 2 متغیر باشد."
 
 #: addons/user-importer/addon-user-importer-handler.php:445
 msgid "Sms Send to $cleaned_number failed!"
@@ -1066,7 +1218,7 @@ msgstr "ارسال پیامک به $cleaned_number ناموفق بود!"
 msgid "Sms Send to $cleaned_number Success!"
 msgstr "ارسال پیامک به $cleaned_number موفقیت آمیز بود!"
 
-#: includes/class-safe-assistant-settings.php:1396
+#: includes/class-safe-assistant-settings.php:1431
 msgid "Sms sender number"
 msgstr "شماره ارسال کننده پیامک"
 
@@ -1127,6 +1279,19 @@ msgstr "عنوانی که هنگام شناسایی VPN نمایش داده می
 msgid "Toman"
 msgstr "تومان"
 
+#: includes/class-safe-assistant-handler.php:918
+msgid "Tracking code is empty."
+msgstr "کد رهگیری خالی است."
+
+#: admin/partials/safe-assistant-orders-page.php:87
+msgid "Tracking code is required."
+msgstr "کد رهگیری الزامی است."
+
+#: includes/class-safe-assistant-handler.php:948
+#, php-format
+msgid "Tracking code saved: %s"
+msgstr "کد رهگیری ذخیره شد: %s"
+
 #: addons/user-importer/addon-user-importer.php:407
 #, php-format
 msgid "Transient %s deleted."
@@ -1176,7 +1341,7 @@ msgstr "جزئیات کاربر %s به‌روزرسانی شد."
 msgid "User Importer"
 msgstr "واردکننده کاربر"
 
-#: includes/class-safe-assistant-settings.php:1383
+#: includes/class-safe-assistant-settings.php:1418
 msgid "Username"
 msgstr "نام کاربری"
 
@@ -1217,7 +1382,7 @@ msgstr "هزینه کیف پول برای خریداران حضوری"
 msgid "Wallet charged for user %s with amount %s."
 msgstr "مبلغ %s از کیف پول کاربر %s کسر شد."
 
-#: includes/class-safe-assistant-settings.php:1239
+#: includes/class-safe-assistant-settings.php:1274
 msgid "Wallet expiration SMS"
 msgstr "پیامک انقضای کیف پول"
 
@@ -1225,11 +1390,11 @@ msgstr "پیامک انقضای کیف پول"
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: includes/class-safe-assistant-settings.php:393
+#: includes/class-safe-assistant-settings.php:428
 msgid "WooCommerce Admin Settings"
 msgstr "تنظیمات مدیریت ووکامرس"
 
-#: includes/class-safe-assistant-settings.php:422
+#: includes/class-safe-assistant-settings.php:457
 msgid "WooCommerce Checkout Settings"
 msgstr "تنظیمات پرداخت ووکامرس"
 
@@ -1242,6 +1407,15 @@ msgid "You are using a VPN. Please disable it to payment success."
 msgstr ""
 "شما از VPN استفاده می‌کنید. لطفاً آن را غیرفعال کنید تا پرداخت با موفقیت "
 "انجام شود."
+
+#: includes/class-safe-assistant-handler.php:911
+#: includes/class-safe-assistant-handler.php:971
+msgid "You do not have permission."
+msgstr "شما اجازه ندارید."
+
+#: includes/class-safe-assistant-settings.php:406
+msgid "Your shop location"
+msgstr "محل فروشگاه شما"
 
 #: addons/user-importer/addon-user-importer-handler.php:283
 msgid "🚀 Starting cron job."
