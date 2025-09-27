@@ -946,8 +946,7 @@ function handle_save_tracking_ajax()
 
 	// Add order note
 	$order->add_order_note(sprintf(__('Tracking code saved: %s', 'safe-assistant'), $tracking_code));
-	$phone = '09903336117'; //$order->get_billing_phone();
-	sa_send_sms_pattern($order->get_billing_first_name() . ";" . $tracking_code, $phone, sa_get_option('order_management_pro_sms_pattern', ''));
+	sa_send_sms_pattern($order->get_billing_first_name() . ";" . $tracking_code, $order->get_billing_phone(), sa_get_option('order_management_pro_sms_pattern', ''));
 	wp_send_json_success(__('Saved successfully.', 'safe-assistant'));
 }
 
@@ -973,9 +972,6 @@ function render_tracking_admin_page()
 
 	$main_city = sa_get_option('order_management_pro_main_city');
 
-	$order = wc_get_order(33984);
-	$order->update_status('processing');
-	$order->save();
 	// Get orders by status
 	$statuses = ['wc-processing', 'wc-on-hold', 'wc-failed'];
 	$orders = wc_get_orders([
