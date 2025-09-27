@@ -3,11 +3,11 @@
 if (!function_exists('sa_get_sms_url')) {
     function sa_get_sms_url(string $type): string
     {
-        $base_url = 'https://rest.payamak-panel.com/api/SendSMS/';
+        $base_url = 'http://api.payamak-panel.com/post/Send.asmx/';
         return match ($type) {
             'send' => $base_url . 'SendSMS',
             'pattern' => $base_url . 'BaseServiceNumber',
-            'pattern2' => 'http://api.payamak-panel.com/post/Send.asmx/SendByBaseNumber2',
+            'pattern2' => $base_url . 'SendByBaseNumber2',
             default => throw new InvalidArgumentException("Unsupported SMS URL type: $type"),
         };
     }
@@ -37,22 +37,24 @@ if (!function_exists('sa_send_sms')) {
 
 if (!function_exists('sa_send_sms_pattern')) {
     /**
-     * Send SMS using pattern (base number)
+     * Send SMS using pattern (base number) with POST
      */
-    function sa_send_sms_pattern(string|array $textArgs, string $to, ?int $bodyId = null): bool|string
+    function sa_send_sms_pattern(string $text, string $to, ?int $bodyId = null): bool|string
     {
-        if (empty($to) || empty($textArgs)) return false;
+        if (empty($to) || empty($text) || empty($bodyId)) return false;
+
         $data = [
             'username' => sa_get_option('sms_username'),
             'password' => sa_get_option('sms_password'),
-            'text'     => $textArgs,
             'to'       => normalize_mobile_number($to),
+            'text'     => $text,
             'bodyId'   => $bodyId,
         ];
-        $response = sa_sms_make_request(sa_get_sms_url('pattern2'), $data, 'GET');
-        return $response;
+
+        return sa_sms_make_request(sa_get_sms_url('pattern2'), $data, 'POST');
     }
 }
+
 if (!function_exists('sa_sms_make_request')) {
     /**
      * Make cURL POST request
@@ -63,6 +65,7 @@ if (!function_exists('sa_sms_make_request')) {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_HTTPHEADER     => ['Content-Type: application/x-www-form-urlencoded']
         ];
 
         switch ($method) {
@@ -83,7 +86,7 @@ if (!function_exists('sa_sms_make_request')) {
         $response = curl_exec($handle);
         $status   = curl_errno($handle) ? 'error' : 'success';
 
-        sa_log('sms', $status, 'SMS Request', $response, ['url' => $url, 'data' => $data, 'method' => $method]);
+        sa_log('sms', $status, 'SMS Request', json_encode(['url' => $url, 'data' => $data, 'method' => $method, 'response' => $response]), ['url' => $url, 'data' => $data, 'method' => $method]);
 
         if (curl_errno($handle)) {
             error_log('SMS Error: ' . curl_error($handle));

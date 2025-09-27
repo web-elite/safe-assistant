@@ -53,26 +53,22 @@ if (!function_exists('get_log_file_path')) {
 
 if (!function_exists('normalize_mobile_number')) {
     /**
-     * Normalize mobile number to Persian format starting with ۰۹
+     * Normalize mobile number to Persian format starting with 09 (English digits only)
      *
      * @param string $mobile
      * @return string|null Returns normalized number or null if invalid
      */
     function normalize_mobile_number(string $mobile): ?string
     {
-        // Remove spaces, dashes, parentheses, and non-digit chars (but keep +)
         $mobile = trim($mobile);
         $mobile = str_replace([' ', '-', '(', ')'], '', $mobile);
 
-        // Convert Arabic digits to English
+        // Convert Persian/Arabic digits to English
         $mobile = preg_replace_callback('/[۰-۹]/u', function ($matches) {
             return mb_ord($matches[0]) - 1776;
         }, $mobile);
 
-        // Replace Persian/Arabic "۰" with 0
-        $mobile = str_replace(['۰', '٠'], '0', $mobile);
-
-        // Remove leading "+" or "00"
+        // Normalize prefixes
         if (str_starts_with($mobile, '+98')) {
             $mobile = '0' . substr($mobile, 3);
         } elseif (str_starts_with($mobile, '0098')) {
@@ -84,23 +80,17 @@ if (!function_exists('normalize_mobile_number')) {
         } elseif (str_starts_with($mobile, '9')) {
             $mobile = '0' . $mobile;
         }
-        // Validate format
+
+        // Validate
         if (!preg_match('/^09\d{9}$/', $mobile)) {
+            sa_log('sms', 'error', "Invalid mobile number format: $mobile", 'Normalization failed');
             return $mobile;
         }
-
-        // Convert English digits to Persian
-        $mobile = preg_replace_callback('/\d/', function ($matches) {
-            return mb_chr($matches[0] + 1776);
-        }, $mobile);
-
-        $mobile = preg_replace_callback('/[۰-۹]/u', function ($matches) {
-            return mb_ord($matches[0]) - 1776;
-        }, $mobile);
 
         return $mobile;
     }
 }
+
 /**
  * Check if current page is a WooCommerce page
  */
@@ -222,6 +212,6 @@ if (! function_exists('is_update_page')) {
 if (! function_exists('is_woocommerce_activated')) {
     function is_woocommerce_activated(): bool
     {
-        return is_plugin_active( 'woocommerce/woocommerce.php' );
+        return is_plugin_active('woocommerce/woocommerce.php');
     }
 }
