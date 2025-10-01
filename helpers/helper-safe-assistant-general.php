@@ -10,7 +10,7 @@ if (! function_exists('sa_get_option')) {
      */
     function sa_get_option($option = '', $default = null)
     {
-        $options = get_option(SAFE_ASSISTANT_SLUG . '-settings');
+        $options = get_option(SAFE_ASSISTANT_SETTING_ID);
         return (isset($options[$option])) ? $options[$option] : $default;
     }
 }

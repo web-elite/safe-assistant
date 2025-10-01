@@ -41,6 +41,7 @@ define('SAFE_ASSISTANT_NAME', 'Safe Assistant');
 define('SAFE_ASSISTANT_SLUG', 'safe-assistant');
 define('SAFE_ASSISTANT_DIR', plugin_dir_path(__FILE__));
 define('SAFE_ASSISTANT_URL', plugin_dir_url(__FILE__));
+define('SAFE_ASSISTANT_SETTING_ID', 'safe-assistant-settings');
 
 /**
  * The code that runs during plugin activation.
