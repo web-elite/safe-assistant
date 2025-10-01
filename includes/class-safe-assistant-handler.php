@@ -477,7 +477,7 @@ if (defined('nirweb_wallet')) {
 					$diff_hours <= 24 &&
 					$pattern_last
 				) {
-					$pattern_vars_day = "$name";
+					$pattern_vars_day = ['name' => $name];
 					sa_log('general', 'info', "Wallet Cron Log", "Using last day pattern: $pattern_last, vars: $pattern_vars_day");
 					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_last);
 				} elseif (
@@ -485,13 +485,13 @@ if (defined('nirweb_wallet')) {
 					$pattern_day
 				) {
 					$days_remaining   = ceil($diff_hours / 24);
-					$pattern_vars_day = "$name;$days_remaining";
+					$pattern_vars_day = ['name' => $name, 'days' => $days_remaining];
 					sa_log('general', 'info', "Wallet Cron Log", "Using day pattern: $pattern_day, vars: $pattern_vars_day");
 					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_day);
 				}
 			} else {
 				if ($pattern_hour) {
-					$pattern_vars_hour = "$name;$diff_hours";
+					$pattern_vars_hour = ['name' => $name, 'hours' => $diff_hours];
 					sa_log('general', 'info', "Wallet Cron Log", "Using hour pattern: $pattern_hour, vars: $pattern_vars_hour");
 					sa_send_sms_pattern($pattern_vars_hour, ($phone), $pattern_hour);
 				}
@@ -946,7 +946,10 @@ function handle_save_tracking_ajax()
 
 	// Add order note
 	$order->add_order_note(sprintf(__('Tracking code saved: %s', 'safe-assistant'), $tracking_code));
-	sa_send_sms_pattern($order->get_billing_first_name() . ";" . $tracking_code, $order->get_billing_phone(), sa_get_option('order_management_pro_sms_pattern', ''));
+	sa_send_sms_pattern([
+		'name' => $order->get_billing_first_name() ?: $order->get_billing_last_name() ?: $order->get_billing_company() ?: __('Customer', 'safe-assistant'),
+		'code' => $tracking_code,
+	], $order->get_billing_phone(), sa_get_option('order_management_pro_sms_pattern', ''));
 	wp_send_json_success(__('Saved successfully.', 'safe-assistant'));
 }
 

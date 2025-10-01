@@ -3,6 +3,10 @@
  * included in this file.
  */
 
+[data-slug="safe-assistant-menu"] .notice {
+    display: none !important;
+}
+
 .toplevel_page_safe-assistant-menu img {
     width: 25px;
     padding: 0px !important;
@@ -122,11 +126,6 @@
     margin-top: 0;
 }
 
-#safe-assistant-orders-page .notice,
-.digits_admin_notice {
-    display: none !important;
-}
-
 #safe-assistant-orders-page button.button.save-tracking {
     background: #e4ffe4;
     color: green;
@@ -147,4 +146,43 @@
 #safe-assistant-orders-page .status-processing {
     border: 2px solid #cf9800;
     background: #fffdf7;
+}
+
+.circle-status {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    --pulse-color: black;
+}
+
+.circle-status.green {
+    background: green;
+    box-shadow: 0px 0px 1px 1px green;
+    --pulse-color: green;
+}
+
+.circle-status.red {
+    background: red;
+    box-shadow: 0px 0px 1px 1px red;
+    --pulse-color: red;
+}
+
+.pulse {
+    animation: pulse-animation 2s infinite;
+}
+
+.panel-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@keyframes pulse-animation {
+    0% {
+        box-shadow: 0 0 0 0px var(--pulse-color);
+    }
+
+    100% {
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    }
 }

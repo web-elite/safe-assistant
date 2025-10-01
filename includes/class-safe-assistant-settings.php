@@ -1301,21 +1301,26 @@ class Safe_Assistant_Settings
 						'id'      => 'nir_wallet_expire_pattern_sms_hour',
 						'type'    => 'text',
 						'title'   => esc_html__('SMS Pattern', 'safe-assistant'),
-						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications by hour.', 'safe-assistant') . '<br>' . esc_html__('Available placeholders:', 'safe-assistant') . ' {first_name}, {remain_hours}',
+						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications by hour.', 'safe-assistant') . '<br>'
+							. __('first parameter is name of user', 'safe-assistant') . '<code>name</code>' . '<br>'
+							. __('second parameter is remaining hours', 'safe-assistant') . '<code>hours</code>' . '<br>',
 						'dependency' => ['nir_wallet_expire_check_by', '==', 'false'],
 					],
 					[
 						'id'      => 'nir_wallet_expire_pattern_sms',
 						'type'    => 'text',
 						'title'   => esc_html__('SMS Pattern', 'safe-assistant'),
-						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications by days.', 'safe-assistant') . '<br>' . esc_html__('Available placeholders:', 'safe-assistant') . ' {first_name}, {remain_days}',
+						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications by days.', 'safe-assistant') . '<br>'
+							. __('first parameter is name of user', 'safe-assistant') . '<code>name</code>' . '<br>'
+							. __('second parameter is remaining days', 'safe-assistant') . '<code>days</code>' . '<br>',
 						'dependency' => ['nir_wallet_expire_check_by', '==', 'true'],
 					],
 					[
 						'id'      => 'nir_wallet_expire_last_pattern_sms',
 						'type'    => 'text',
 						'title'   => esc_html__('SMS Pattern (for last 24h)', 'safe-assistant'),
-						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications less than 24 hours.', 'safe-assistant') . '<br>' . esc_html__('Available placeholders:', 'safe-assistant') . ' {first_name}',
+						'desc'    => esc_html__('Enter the SMS pattern for wallet expiration notifications less than 24 hours.', 'safe-assistant') . '<br>'
+							. __('only available parameter is name of user', 'safe-assistant') . '<code>name</code>' . '<br>',
 						'dependency' => ['nir_wallet_expire_check_by', '==', 'true'],
 					],
 					[
@@ -1400,8 +1405,9 @@ class Safe_Assistant_Settings
 			'icon'   => 'fas fa-cog',
 			'fields' => [
 				[
-					'type'     => 'subheading',
-					'content'  => __('SMS Panel Settings', 'safe-assistant'),
+					'type'    => 'notice',
+					'style'   => 'warning',
+					'content' => __('Please note when changing SMS gateway settings, you may need to update other settings such as patterns.', 'safe-assistant'),
 				],
 				[
 					'id'       => 'sms_gateway',
@@ -1409,26 +1415,48 @@ class Safe_Assistant_Settings
 					'title'    => __('SMS Gateway', 'safe-assistant'),
 					'options'  => [
 						'melipayamak' => 'MeliPayamak.Com',
+						'smsir'       => 'Sms.ir',
 					],
 					'default'  => 'melipayamak',
 				],
+				// === MeliPayamak credentials ===
 				[
-					'id'       => 'sms_username',
+					'id'       => 'melipayamak_sms_username',
 					'type'     => 'text',
-					'title'    => __('Username', 'safe-assistant'),
+					'title'    => __('MeliPayamak Username', 'safe-assistant'),
+					'dependency' => ['sms_gateway', '==', 'melipayamak'],
 				],
 				[
-					'id'       => 'sms_password',
+					'id'       => 'melipayamak_sms_password',
 					'type'     => 'text',
-					'title'    => __('Password', 'safe-assistant'),
+					'title'    => __('MeliPayamak Password', 'safe-assistant'),
 					'attributes' => [
 						'type' => 'password',
 					],
+					'dependency' => ['sms_gateway', '==', 'melipayamak'],
 				],
 				[
-					'id'       => 'sms_from_number',
+					'id'       => 'melipayamak_sms_from',
 					'type'     => 'text',
 					'title'    => __('Sms sender number', 'safe-assistant'),
+					'dependency' => ['sms_gateway', '==', 'melipayamak'],
+				],
+				// === Sms.ir credentials ===
+				[
+					'id'       => 'smsir_sms_api_key',
+					'type'     => 'text',
+					'title'    => __('SMS.ir API Key', 'safe-assistant'),
+					'dependency' => ['sms_gateway', '==', 'smsir'],
+				],
+				[
+					'id'       => 'smsir_sms_from',
+					'type'     => 'text',
+					'title'    => __('Sms sender number', 'safe-assistant'),
+					'dependency' => ['sms_gateway', '==', 'smsir'],
+				],
+				[
+					'type'     => 'callback',
+					'function' => [$this, 'sms_profile_status'],
 				]
 			]
 		]);
@@ -1442,5 +1470,35 @@ class Safe_Assistant_Settings
 				]
 			]
 		]);
+	}
+
+	public function sms_profile_status()
+	{
+		$sms_result = sa_get_sms_gateway_credit();
+		if (!empty($sms_result) && isset($sms_result['status']) && $sms_result['status'] == 1) {
+			echo "<div class='panel-status'>";
+			echo "<div class='circle-status green pulse'></div>";
+			echo __('Panel is Connected', 'safe-assistant');
+			echo "</div>";
+			echo "<div class='sms-credit-box'>";
+			echo "<div class='credit-text'>";
+			echo __('Your Panel Credit:', 'safe-assistant');
+			echo "<strong>";
+			echo number_format($sms_result['credit']);
+			echo "</strong><br>";
+			echo "</div></div>";
+		} else {
+			echo "<div class='panel-status'>";
+			echo "<div class='circle-status red pulse'></div>";
+			echo __('Panel is Connected', 'safe-assistant');
+			echo "</div>";
+			echo "<div class='sms-credit-box'>";
+			__('Panel is Not Connected', 'safe-assistant');
+			echo "<div class='credit-text'>";
+			echo __('Unable to fetch credit.', 'safe-assistant');
+			echo __('Error:', 'safe-assistant');
+			print_r($sms_result['message']);
+			echo "</div></div>";
+		}
 	}
 }
