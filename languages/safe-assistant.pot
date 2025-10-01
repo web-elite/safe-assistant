@@ -59,11 +59,11 @@ msgstr ""
 msgid "7 Days"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:58
+#: addons/user-importer/partials/user-importer-main-section.php:58
 msgid "A process is currently running."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:244
+#: addons/user-importer/user-importer.php:244
 msgid "A process is currently running. Please wait until it completes."
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Addons"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:433
+#: addons/user-importer/user-importer-handler.php:433
 #, php-format
 msgid "Address updated for user %s."
 msgstr ""
@@ -88,11 +88,11 @@ msgstr ""
 msgid "AlirezaYaghouti"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:434
+#: addons/user-importer/user-importer.php:434
 msgid "All operations reverted successfully."
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:21
+#: addons/user-importer/partials/user-importer-main-section.php:21
 msgid "Amounts must be in Toman."
 msgstr ""
 
@@ -162,15 +162,15 @@ msgstr ""
 msgid "Block External Requests"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:38
+#: addons/user-importer/partials/user-importer-main-section.php:38
 msgid "Charge account if user exists?"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:12
+#: addons/user-importer/partials/user-importer-main-section.php:12
 msgid "Charge Percentage"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:42
+#: addons/user-importer/partials/user-importer-main-section.php:42
 msgid "Charge wallet for users with previous charges?"
 msgstr ""
 
@@ -197,51 +197,51 @@ msgid "Choose whether to check wallet expiration by days or hours."
 msgstr ""
 
 #: admin/partials/safe-assistant-orders-page.php:30
-#: addons/user-importer/partials/addon-user-importer-main-section.php:17
+#: addons/user-importer/partials/user-importer-main-section.php:17
 msgid "City"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:19
+#: addons/user-importer/partials/user-importer-main-section.php:19
 msgid "Column 10:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:10
+#: addons/user-importer/partials/user-importer-main-section.php:10
 msgid "Column 1:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:11
+#: addons/user-importer/partials/user-importer-main-section.php:11
 msgid "Column 2:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:12
+#: addons/user-importer/partials/user-importer-main-section.php:12
 msgid "Column 3:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:13
+#: addons/user-importer/partials/user-importer-main-section.php:13
 msgid "Column 4:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:14
+#: addons/user-importer/partials/user-importer-main-section.php:14
 msgid "Column 5:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:15
+#: addons/user-importer/partials/user-importer-main-section.php:15
 msgid "Column 6:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:16
+#: addons/user-importer/partials/user-importer-main-section.php:16
 msgid "Column 7:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:17
+#: addons/user-importer/partials/user-importer-main-section.php:17
 msgid "Column 8:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:18
+#: addons/user-importer/partials/user-importer-main-section.php:18
 msgid "Column 9:"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:8
+#: addons/user-importer/partials/user-importer-main-section.php:8
 msgid "Column Information:"
 msgstr ""
 
@@ -258,7 +258,7 @@ msgstr ""
 msgid "Created At"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:300
+#: addons/user-importer/user-importer-handler.php:300
 #, php-format
 msgid "CSV file not found or unreadable: %s"
 msgstr ""
@@ -272,7 +272,7 @@ msgstr ""
 msgid "Customer Note"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:23
+#: addons/user-importer/partials/user-importer-main-section.php:23
 msgid "Date columns should be in YYYY/MM/DD format, e.g., 1404/05/24."
 msgstr ""
 
@@ -369,7 +369,7 @@ msgstr ""
 msgid "Display order notes in the orders table"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:25
+#: addons/user-importer/partials/user-importer-main-section.php:25
 msgid "Download Sample File"
 msgstr ""
 
@@ -505,14 +505,14 @@ msgstr ""
 msgid "Enter tracking code"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:317
+#: addons/user-importer/user-importer-handler.php:317
 msgid "Error reading CSV row."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:232
-#: addons/user-importer/addon-user-importer.php:238
-#: addons/user-importer/addon-user-importer.php:250
-#: addons/user-importer/addon-user-importer.php:287
+#: addons/user-importer/user-importer.php:232
+#: addons/user-importer/user-importer.php:238
+#: addons/user-importer/user-importer.php:250
+#: addons/user-importer/user-importer.php:287
 msgid "Error:"
 msgstr ""
 
@@ -524,19 +524,19 @@ msgstr ""
 msgid "Every 15 Minutes"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:478
+#: addons/user-importer/user-importer-handler.php:478
 msgid "Every Minute (60s)"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:19
+#: addons/user-importer/partials/user-importer-main-section.php:19
 msgid "Expiration Date"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:50
+#: addons/user-importer/partials/user-importer-main-section.php:50
 msgid "Expiration Days"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:418
+#: addons/user-importer/user-importer.php:418
 msgid "Factory reset completed."
 msgstr ""
 
@@ -544,25 +544,25 @@ msgstr ""
 msgid "Failed Orders"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:427
+#: addons/user-importer/user-importer-handler.php:427
 #, php-format
 msgid "Failed to charge wallet for user %s."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:392
+#: addons/user-importer/user-importer-handler.php:392
 #, php-format
 msgid "Failed to create user %s: %s"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:454
+#: addons/user-importer/user-importer.php:454
 msgid "Failed to reset actions."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:436
+#: addons/user-importer/user-importer.php:436
 msgid "Failed to revert operations."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:435
+#: addons/user-importer/user-importer-handler.php:435
 #, php-format
 msgid "Failed to update address for user %s."
 msgstr ""
@@ -597,32 +597,32 @@ msgstr ""
 msgid "Field Label"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:285
+#: addons/user-importer/user-importer.php:285
 msgid "File Path:"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:454
+#: addons/user-importer/user-importer-handler.php:454
 msgid "File processing completed."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:466
+#: addons/user-importer/user-importer-handler.php:466
 #, php-format
 msgid "File processing failed: %s"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:285
+#: addons/user-importer/user-importer.php:285
 msgid "File processing started. Refresh the page to see updated logs."
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:14
+#: addons/user-importer/partials/user-importer-main-section.php:14
 msgid "First Name"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:13
+#: addons/user-importer/partials/user-importer-main-section.php:13
 msgid "Fixed Charge Amount"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:152
+#: addons/user-importer/user-importer.php:152
 msgid "Force Stop Working"
 msgstr ""
 
@@ -680,7 +680,7 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:100
+#: addons/user-importer/user-importer.php:100
 msgid "Import"
 msgstr ""
 
@@ -688,36 +688,36 @@ msgstr ""
 msgid "In 24-hour format. for example: 9 or 17"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:421
+#: addons/user-importer/user-importer-handler.php:421
 #, php-format
 msgid "Info: User %s wallet not charged due to settings."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:383
+#: addons/user-importer/user-importer.php:383
 msgid "Insufficient permissions to reset plugin settings."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:238
-#: addons/user-importer/addon-user-importer.php:425
-#: addons/user-importer/addon-user-importer.php:443
+#: addons/user-importer/user-importer.php:238
+#: addons/user-importer/user-importer.php:425
+#: addons/user-importer/user-importer.php:443
 msgid "Insufficient permissions."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:362
+#: addons/user-importer/user-importer-handler.php:362
 msgid "Invalid expiration date format in row %d."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:389
+#: addons/user-importer/user-importer.php:389
 msgid "Invalid nonce for reset action."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:232
-#: addons/user-importer/addon-user-importer.php:429
-#: addons/user-importer/addon-user-importer.php:447
+#: addons/user-importer/user-importer.php:232
+#: addons/user-importer/user-importer.php:429
+#: addons/user-importer/user-importer.php:447
 msgid "Invalid nonce."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:250
+#: addons/user-importer/user-importer.php:250
 msgid "Invalid or missing CSV file."
 msgstr ""
 
@@ -725,7 +725,7 @@ msgstr ""
 msgid "Invalid order."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:375
+#: addons/user-importer/user-importer-handler.php:375
 #, php-format
 msgid "Invalid phone number %s in row %d."
 msgstr ""
@@ -756,11 +756,11 @@ msgstr ""
 msgid "Is Required?"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:20
+#: addons/user-importer/partials/user-importer-main-section.php:20
 msgid "It can be a mobile number or random English characters."
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:15
+#: addons/user-importer/partials/user-importer-main-section.php:15
 msgid "Last Name"
 msgstr ""
 
@@ -769,7 +769,7 @@ msgid "List external URLs to block (one per line)."
 msgstr ""
 
 #: includes/class-safe-assistant-settings.php:1361
-#: addons/user-importer/addon-user-importer.php:113
+#: addons/user-importer/user-importer.php:113
 msgid "Logs"
 msgstr ""
 
@@ -795,7 +795,7 @@ msgstr ""
 msgid "Message to display when VPN is detected."
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:46
+#: addons/user-importer/partials/user-importer-main-section.php:46
 msgid "Minimum Charge Amount"
 msgstr ""
 
@@ -825,7 +825,7 @@ msgstr ""
 msgid "Minimum purchase for free shipping nationwide: %s Toman"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:10
+#: addons/user-importer/partials/user-importer-main-section.php:10
 msgid "Mobile Number"
 msgstr ""
 
@@ -855,7 +855,7 @@ msgid ""
 "will be affected."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:244
+#: addons/user-importer/user-importer.php:244
 msgid "Notice:"
 msgstr ""
 
@@ -863,7 +863,7 @@ msgstr ""
 msgid "On-Hold Orders"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:20
+#: addons/user-importer/partials/user-importer-main-section.php:20
 msgid "Only the first column"
 msgstr ""
 
@@ -927,11 +927,11 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:370
+#: addons/user-importer/user-importer-handler.php:370
 msgid "Phone number empty in row %d."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:380
+#: addons/user-importer/user-importer-handler.php:380
 #, php-format
 msgid "Phone Number is %s and digits number is %s"
 msgstr ""
@@ -958,11 +958,11 @@ msgstr ""
 msgid "Placeholder"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:11
+#: addons/user-importer/partials/user-importer-main-section.php:11
 msgid "Previous Purchase Amount"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:463
+#: addons/user-importer/user-importer-handler.php:463
 msgid "Processed %d rows, new offset: %d."
 msgstr ""
 
@@ -970,7 +970,7 @@ msgstr ""
 msgid "Processing Orders"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:18
+#: addons/user-importer/partials/user-importer-main-section.php:18
 msgid "Purchase Date"
 msgstr ""
 
@@ -994,15 +994,15 @@ msgstr ""
 msgid "Request Data"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:452
+#: addons/user-importer/user-importer.php:452
 msgid "Reset Actions successfully."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:151
+#: addons/user-importer/user-importer.php:151
 msgid "Reset Logs and Ongoing Tasks"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:149
+#: addons/user-importer/user-importer.php:149
 msgid "Reset Section"
 msgstr ""
 
@@ -1014,7 +1014,7 @@ msgstr ""
 msgid "Result"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:150
+#: addons/user-importer/user-importer.php:150
 msgid "Revert All Operations"
 msgstr ""
 
@@ -1056,7 +1056,7 @@ msgstr ""
 msgid "Saving..."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:415
+#: addons/user-importer/user-importer.php:415
 msgid "Scheduled cron event cleared."
 msgstr ""
 
@@ -1068,7 +1068,7 @@ msgstr ""
 msgid "Select an option"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:34
+#: addons/user-importer/partials/user-importer-main-section.php:34
 msgid "Select CSV File"
 msgstr ""
 
@@ -1096,7 +1096,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-safe-assistant-settings.php:1399
-#: addons/user-importer/addon-user-importer.php:126
+#: addons/user-importer/user-importer.php:126
 msgid "Settings"
 msgstr ""
 
@@ -1165,7 +1165,7 @@ msgstr ""
 msgid "SMS Pattern"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:137
+#: addons/user-importer/user-importer.php:137
 msgid "Sms Pattern"
 msgstr ""
 
@@ -1181,11 +1181,11 @@ msgstr ""
 msgid "Sms pattern must include 2 arguments"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:445
+#: addons/user-importer/user-importer-handler.php:445
 msgid "Sms Send to $cleaned_number failed!"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:443
+#: addons/user-importer/user-importer-handler.php:443
 msgid "Sms Send to $cleaned_number Success!"
 msgstr ""
 
@@ -1193,7 +1193,7 @@ msgstr ""
 msgid "Sms sender number"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:132
+#: addons/user-importer/user-importer.php:132
 msgid "Sms Status"
 msgstr ""
 
@@ -1201,11 +1201,11 @@ msgstr ""
 msgid "Start Time for Failed Status Check (Hour)"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:16
+#: addons/user-importer/partials/user-importer-main-section.php:16
 msgid "State"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:438
+#: addons/user-importer/user-importer-handler.php:438
 #, php-format
 msgid "State or city empty for user %s."
 msgstr ""
@@ -1215,7 +1215,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:285
+#: addons/user-importer/user-importer.php:285
 msgid "Success:"
 msgstr ""
 
@@ -1244,7 +1244,7 @@ msgstr ""
 
 #: includes/class-safe-assistant-settings.php:253
 #: includes/class-safe-assistant-settings.php:265
-#: addons/user-importer/partials/addon-user-importer-main-section.php:47
+#: addons/user-importer/partials/user-importer-main-section.php:47
 msgid "Toman"
 msgstr ""
 
@@ -1261,7 +1261,7 @@ msgstr ""
 msgid "Tracking code saved: %s"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:407
+#: addons/user-importer/user-importer.php:407
 #, php-format
 msgid "Transient %s deleted."
 msgstr ""
@@ -1270,41 +1270,41 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:308
+#: addons/user-importer/user-importer-handler.php:308
 msgid "Unable to open CSV file."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:287
+#: addons/user-importer/user-importer.php:287
 msgid "Unable to save file."
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:55
+#: addons/user-importer/partials/user-importer-main-section.php:55
 msgid "Upload File"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:22
+#: addons/user-importer/partials/user-importer-main-section.php:22
 msgid ""
 "Use the charge percentage field if you want the wallet charge to be based on "
 "the previous purchase amount."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:385
+#: addons/user-importer/user-importer-handler.php:385
 #, php-format
 msgid "User %s already exists (ID: %d)."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:396
+#: addons/user-importer/user-importer-handler.php:396
 #, php-format
 msgid "User %s created (ID: %d)."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:418
+#: addons/user-importer/user-importer-handler.php:418
 #, php-format
 msgid "User %s details updated."
 msgstr ""
 
-#: addons/user-importer/addon-user-importer.php:93
-#: addons/user-importer/partials/addon-user-importer-main-section.php:2
+#: addons/user-importer/user-importer.php:93
+#: addons/user-importer/partials/user-importer-main-section.php:2
 msgid "User Importer"
 msgstr ""
 
@@ -1312,7 +1312,7 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: addons/user-importer/partials/addon-user-importer-main-section.php:20
+#: addons/user-importer/partials/user-importer-main-section.php:20
 msgid "username is required"
 msgstr ""
 
@@ -1340,11 +1340,11 @@ msgstr ""
 msgid "Wallet"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:108
+#: addons/user-importer/user-importer-handler.php:108
 msgid "Wallet charge for in-person buyers"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:425
+#: addons/user-importer/user-importer-handler.php:425
 #, php-format
 msgid "Wallet charged for user %s with amount %s."
 msgstr ""
@@ -1382,6 +1382,6 @@ msgstr ""
 msgid "Your shop location"
 msgstr ""
 
-#: addons/user-importer/addon-user-importer-handler.php:283
+#: addons/user-importer/user-importer-handler.php:283
 msgid "🚀 Starting cron job."
 msgstr ""
