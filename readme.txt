@@ -30,6 +30,9 @@ Yes, `.pot` file is included inside the `languages` directory.
 3. addons page
 
 == Changelog ==
+= 1.5.45 =
+fetch update info in second time
+
 = 1.5.2 =
 fix many bugs about addons
 
