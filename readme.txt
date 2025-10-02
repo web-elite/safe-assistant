@@ -30,7 +30,10 @@ Yes, `.pot` file is included inside the `languages` directory.
 3. addons page
 
 == Changelog ==
-= 1.5.6 =
+= 1.5.66 =
+add notification for plugin (globally)
+
+= 1.5.60 =
 fix user importer (logs and send with smsir and ....)
 
 = 1.5.45 =
