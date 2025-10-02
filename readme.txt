@@ -30,6 +30,12 @@ Yes, `.pot` file is included inside the `languages` directory.
 3. addons page
 
 == Changelog ==
+= 1.5.2 =
+fix many bugs about addons
+
+= 1.5.1 =
+fix display sms status
+
 = 1.5.0 =
 add sms.ir gateway
 
