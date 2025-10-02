@@ -169,7 +169,7 @@ class Safe_Assistant
 			$updater = new WE_Updater(SAFE_ASSISTANT_DIR . 'safe-assistant.php', [
 				'slug'     => SAFE_ASSISTANT_SLUG,
 				'source'   => 'json',
-				'json_url' => 'https://raw.githubusercontent.com/web-elite/safe-assistant/master/info.json',
+				'json_url' => 'https://raw.githubusercontent.com/web-elite/safe-assistant/main/info.json',
 			]);
 			$updater->init();
 		} else {
