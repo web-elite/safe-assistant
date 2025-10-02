@@ -423,7 +423,7 @@ function my_csv_cron_handler()
                     continue;
                 }
                 if (add_wallet_balance($user_id, $charge, $wallet_timestamp)) {
-                    sa_log($type, 'success', sprintf(__('Wallet charged for user %s with amount %s.', 'safe-assistant'), $digits_phone_number, $charge));
+                    sa_log($type, 'success', sprintf(__('Wallet charged for user %s with amount %d.', 'safe-assistant'), $digits_phone_number, $charge));
                 } else {
                     sa_log($type, 'error', sprintf(__('Failed to charge wallet for user %s.', 'safe-assistant'), $digits_phone_number));
                 }
