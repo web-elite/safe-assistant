@@ -55,7 +55,7 @@ class Safe_Assistant_Activator
 		}
 
 		if (defined('nirweb_wallet')) {
-			$settings = get_option(SAFE_ASSISTANT_SLUG . '-settings', []);
+			$settings = get_option(SAFE_ASSISTANT_SETTING_ID, []);
 			$send_hour = isset($settings['nir_wallet_expire_send_time']) ? (int)$settings['nir_wallet_expire_send_time'] : 9;
 
 			$year  = gmdate('Y');

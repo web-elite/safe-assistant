@@ -22,13 +22,6 @@ class Safe_Assistant_Settings
 	private $table_name;
 
 	/**
-	 * prefix for setting fields
-	 *
-	 * @var string
-	 */
-	private $prefix = SAFE_ASSISTANT_SLUG . '-settings';
-
-	/**
 	 * __construct
 	 *
 	 * @return void
@@ -81,7 +74,7 @@ class Safe_Assistant_Settings
 	 */
 	private function create_options()
 	{
-		CSF::createOptions($this->prefix, array(
+		CSF::createOptions(SAFE_ASSISTANT_SETTING_ID, array(
 			'menu_title'              => esc_html__('Safe Assistant', 'safe-assistant'),
 			'menu_slug'               => SAFE_ASSISTANT_SLUG . '-menu',
 			'framework_title'         => esc_html__('Safe Assistant', 'safe-assistant'),
@@ -113,7 +106,7 @@ class Safe_Assistant_Settings
 		$sections = $this->get_sections();
 
 		foreach ($sections as $key => $value) {
-			CSF::createSection($this->prefix, $value);
+			CSF::createSection(SAFE_ASSISTANT_SETTING_ID, $value);
 		}
 	}
 
@@ -1362,7 +1355,7 @@ class Safe_Assistant_Settings
 	private function create_last_options()
 	{
 		CSF::createSection(
-			$this->prefix,
+			SAFE_ASSISTANT_SETTING_ID,
 			[
 				'id'     => 'logs',
 				'title'  => esc_html__('Logs', 'safe-assistant'),
@@ -1372,7 +1365,7 @@ class Safe_Assistant_Settings
 		);
 
 		CSF::createSection(
-			$this->prefix,
+			SAFE_ASSISTANT_SETTING_ID,
 			[
 				'parent' => 'logs',
 				'title'  => esc_html__('General Logs', 'safe-assistant'),
@@ -1387,7 +1380,7 @@ class Safe_Assistant_Settings
 		);
 
 		CSF::createSection(
-			$this->prefix,
+			SAFE_ASSISTANT_SETTING_ID,
 			[
 				'parent' => 'logs',
 				'id'     => 'sms_logs',
@@ -1402,7 +1395,7 @@ class Safe_Assistant_Settings
 			]
 		);
 
-		CSF::createSection($this->prefix, [
+		CSF::createSection(SAFE_ASSISTANT_SETTING_ID, [
 			'title'  => esc_html__('Settings', 'safe-assistant'),
 			'icon'   => 'fas fa-cog',
 			'fields' => [
@@ -1463,7 +1456,7 @@ class Safe_Assistant_Settings
 			]
 		]);
 
-		CSF::createSection($this->prefix, [
+		CSF::createSection(SAFE_ASSISTANT_SETTING_ID, [
 			'title'  => esc_html__('Backup & Restore', 'safe-assistant'),
 			'icon'   => 'fas fa-save',
 			'fields' => [
