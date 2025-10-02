@@ -50,12 +50,14 @@ if (!function_exists('sa_get_sms_gateway_credit')) {
                 ],
                 'CURLOPT_POST'       => false,
             ];
-            $response = json_decode(sa_sms_make_request(sa_get_sms_url('get_credit'), $curl_options ?? [], true));
-            if (is_array($response)) {
+
+            $response = sa_sms_make_request(sa_get_sms_url('get_credit'), $curl_options ?? []);
+            $response_as_array = json_decode($response, true);
+            if (is_array($response_as_array)) {
                 $result = [
-                    'status' => $response['status'] ?? false,
-                    'credit' => $response['data'] ?? '',
-                    'message' => $response['message'] ?? '',
+                    'status' => $response_as_array['status'] ?? false,
+                    'credit' => $response_as_array['data'] ?? '',
+                    'message' => $response_as_array['message'] ?? '',
                 ];
             }
         }
@@ -81,7 +83,6 @@ if (!function_exists('sa_get_sms_gateway_credit')) {
                 ];
             }
         }
-
         return $result;
     }
 }
