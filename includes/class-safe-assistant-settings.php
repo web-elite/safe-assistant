@@ -64,8 +64,9 @@ class Safe_Assistant_Settings
 	private function handle()
 	{
 		include_once SAFE_ASSISTANT_DIR . 'includes/class-safe-assistant-handler.php';
+
 		if (sa_get_option('user_importer_addons')) {
-			require_once SAFE_ASSISTANT_DIR . 'addons/user-importer/addon-user-importer.php';
+			require_once SAFE_ASSISTANT_DIR . 'addons/user-importer/user-importer.php';
 			$user_importer = new Addon_User_Importer();
 			$user_importer->activator();
 		}
@@ -1258,7 +1259,8 @@ class Safe_Assistant_Settings
 						'type'    => 'switcher',
 						'title'   => esc_html__('Enable User Importer Addon', 'safe-assistant'),
 						'default' => false,
-						'desc'    => esc_html__('Enable or disable User Importer Addon.', 'safe-assistant'),
+						'desc'    => esc_html__('you can import users from excel file and users imported in your site will be automatically and charge wallet with percentage or fixed amount and more.', 'safe-assistant'),
+					],
 					],
 				],
 			],
@@ -1474,20 +1476,34 @@ class Safe_Assistant_Settings
 
 	public function sms_profile_status()
 	{
-		$sms_result = sa_get_sms_gateway_credit();
-		if (!empty($sms_result) && isset($sms_result['status']) && $sms_result['status'] == 1) {
-			echo "<div class='panel-status'>";
-			echo "<div class='circle-status green pulse'></div>";
-			echo __('Panel is Connected', 'safe-assistant');
-			echo "</div>";
-			echo "<div class='sms-credit-box'>";
-			echo "<div class='credit-text'>";
-			echo __('Your Panel Credit:', 'safe-assistant');
-			echo "<strong>";
-			echo number_format($sms_result['credit']);
-			echo "</strong><br>";
-			echo "</div></div>";
-		} else {
+		try {
+			$sms_result = sa_get_sms_gateway_credit();
+			if (!empty($sms_result) && isset($sms_result['status']) && $sms_result['status'] == 1) {
+				echo "<div class='panel-status'>";
+				echo "<div class='circle-status green pulse'></div>";
+				echo __('Panel is Connected', 'safe-assistant');
+				echo "</div>";
+				echo "<div class='sms-credit-box'>";
+				echo "<div class='credit-text'>";
+				echo __('Your Panel Credit:', 'safe-assistant');
+				echo "<strong>";
+				echo number_format($sms_result['credit']);
+				echo "</strong><br>";
+				echo "</div></div>";
+			} else {
+				echo "<div class='panel-status'>";
+				echo "<div class='circle-status red pulse'></div>";
+				echo __('Panel is Connected', 'safe-assistant');
+				echo "</div>";
+				echo "<div class='sms-credit-box'>";
+				__('Panel is Not Connected', 'safe-assistant');
+				echo "<div class='credit-text'>";
+				echo __('Unable to fetch credit.', 'safe-assistant');
+				echo __('Error:', 'safe-assistant');
+				print_r($sms_result['message']);
+				echo "</div></div>";
+			}
+		} catch (\Throwable $th) {
 			echo "<div class='panel-status'>";
 			echo "<div class='circle-status red pulse'></div>";
 			echo __('Panel is Connected', 'safe-assistant');
@@ -1497,7 +1513,7 @@ class Safe_Assistant_Settings
 			echo "<div class='credit-text'>";
 			echo __('Unable to fetch credit.', 'safe-assistant');
 			echo __('Error:', 'safe-assistant');
-			print_r($sms_result['message']);
+			echo $th->getMessage();
 			echo "</div></div>";
 		}
 	}

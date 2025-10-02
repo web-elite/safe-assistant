@@ -39,7 +39,7 @@ class Safe_Assistant_Deactivator
 
 			foreach ($addon_folders as $folder) {
 				$addon_name = basename($folder);
-				$addon_file = $folder . '/addon-' . $addon_name . '.php';
+				$addon_file = $folder . '/' . $addon_name . '.php';
 
 				if (file_exists($addon_file)) {
 					require_once $addon_file;
