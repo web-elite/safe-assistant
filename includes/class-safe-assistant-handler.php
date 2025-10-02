@@ -564,17 +564,61 @@ add_filter('woocommerce_checkout_fields', 'safe_assistant_custom_checkout_fields
 
 function safe_assistant_custom_checkout_fields($fields)
 {
-	if (isset($fields['billing']['billing_first_name'])) {
-		if (!sa_get_option('checkout_billing_fields_accordion')['billing_first_name_enabled']) {
-			unset($fields['billing']['billing_first_name']);
+	if (isset($fields['account']['account_username'])) {
+		if (!sa_get_option('checkout_account_fields_accordion')['account_username_enabled']) {
+			unset($fields['account']['account_username']);
 		} else {
-			$fields['billing']['billing_first_name']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_first_name_required'];
-			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_first_name_label'])) {
-				$fields['billing']['billing_first_name']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_first_name_label']);
+			$fields['account']['account_username']['required'] = (bool) sa_get_option('checkout_account_fields_accordion')['account_username_required'];
+			if (!empty(sa_get_option('checkout_account_fields_accordion')['account_username_label'])) {
+				$fields['account']['account_username']['label'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_username_label']);
 			}
-			if (sa_get_option('checkout_billing_fields_accordion')['billing_first_name_default'] !== '') {
-				$fields['billing']['billing_first_name']['placeholder'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_first_name_placeholder']);
-				$fields['billing']['billing_first_name']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_first_name_default']);
+			if (sa_get_option('checkout_account_fields_accordion')['account_username_default'] !== '') {
+				$fields['account']['account_username']['placeholder'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_username_placeholder']);
+				$fields['account']['account_username']['default'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_username_default']);
+			}
+		}
+	}
+
+	if (isset($fields['account']['account_username'])) {
+		if (!sa_get_option('checkout_account_fields_accordion')['account_first_name_enabled']) {
+			unset($fields['account']['account_first_name']);
+		} else {
+			$fields['account']['account_first_name']['required'] = (bool) sa_get_option('checkout_account_fields_accordion')['account_first_name_required'];
+			if (!empty(sa_get_option('checkout_account_fields_accordion')['account_first_name_label'])) {
+				$fields['account']['account_first_name']['label'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_first_name_label']);
+			}
+			if (sa_get_option('checkout_account_fields_accordion')['account_first_name_default'] !== '') {
+				$fields['account']['account_first_name']['placeholder'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_first_name_placeholder']);
+				$fields['account']['account_first_name']['default'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_first_name_default']);
+			}
+		}
+	}
+
+	if (isset($fields['account']['account_password'])) {
+		if (!sa_get_option('checkout_account_fields_accordion')['account_password_enabled']) {
+			unset($fields['account']['account_password']);
+		} else {
+			$fields['account']['account_password']['required'] = (bool) sa_get_option('checkout_account_fields_accordion')['account_password_required'];
+			if (!empty(sa_get_option('checkout_account_fields_accordion')['account_password_label'])) {
+				$fields['account']['account_password']['label'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_password_label']);
+			}
+			if (sa_get_option('checkout_account_fields_accordion')['account_password_default'] !== '') {
+				$fields['account']['account_password']['placeholder'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_password_placeholder']);
+				$fields['account']['account_password']['default'] = sanitize_text_field(sa_get_option('checkout_account_fields_accordion')['account_password_default']);
+			}
+		}
+	}
+	if (isset($fields['billing']['billing_account_password-2'])) {
+		if (!sa_get_option('checkout_billing_fields_accordion')['billing_account_password-2_enabled']) {
+			unset($fields['billing']['billing_account_password-2']);
+		} else {
+			$fields['billing']['billing_account_password-2']['required'] = (bool) sa_get_option('checkout_billing_fields_accordion')['billing_account_password-2_required'];
+			if (!empty(sa_get_option('checkout_billing_fields_accordion')['billing_account_password-2_label'])) {
+				$fields['billing']['billing_account_password-2']['label'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_account_password-2_label']);
+			}
+			if (sa_get_option('checkout_billing_fields_accordion')['billing_account_password-2_default'] !== '') {
+				$fields['billing']['billing_account_password-2']['placeholder'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_account_password-2_placeholder']);
+				$fields['billing']['billing_account_password-2']['default'] = sanitize_text_field(sa_get_option('checkout_billing_fields_accordion')['billing_account_password-2_default']);
 			}
 		}
 	}
@@ -865,6 +909,18 @@ function safe_assistant_custom_checkout_fields($fields)
 
 	return $fields;
 }
+
+add_filter('woocommerce_checkout_required_field_notice', function ($message, $field_key) {
+	if ($field_key === 'billing_email' && !sa_get_option('checkout_billing_fields_accordion')['billing_email_enabled']) {
+		return '';
+	}
+
+	if ($field_key === 'billing_phone' && !sa_get_option('checkout_billing_fields_accordion')['billing_phone_enabled']) {
+		return '';
+	}
+
+	return $message;
+}, 10, 2);
 
 function user_have_vpn(): bool
 {
