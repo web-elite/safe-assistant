@@ -140,7 +140,6 @@ if (!function_exists('sa_render_logs')) {
         }
 
         $html .= '</tbody></table>';
-
         return $html;
     }
 }

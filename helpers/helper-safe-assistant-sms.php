@@ -263,7 +263,7 @@ if (!function_exists('sa_send_sms_pattern')) {
             $curl_options = [
                 CURLOPT_HTTPHEADER => [
                     'Content-Type: application/json',
-                    'x-sms-ir-secure-token: ' . sa_get_sms_profile('api_key')
+                    'X-API-KEY: ' . sa_get_sms_profile('api_key')
                 ],
                 CURLOPT_POST       => true,
                 CURLOPT_POSTFIELDS => json_encode($data)

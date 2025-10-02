@@ -345,6 +345,7 @@ function my_csv_cron_handler()
             $state = isset($data[6]) ? sanitize_text_field(trim($data[6])) : '';
             $city = isset($data[7]) ? sanitize_text_field(trim($data[7])) : '';
             $buy_date = isset($data[8]) ? sanitize_text_field(trim($data[8])) : '';
+            $buy_date_persian = convert_english_to_persian_numbers($buy_date);
             $expire_date_input = isset($data[9]) ? sanitize_text_field(trim($data[9])) : '';
 
             $charge = $percent_charge > 0 ? ($percent_charge / 100) * $amount : $fixed_charge;
@@ -440,8 +441,8 @@ function my_csv_cron_handler()
 
             if (sa_get_option('user_importer_sms_status')) {
                 if (sa_send_sms_pattern([
-                    "buy_date" => " " . $buy_date,
-                    "charge"   => $charge,
+                    "buy_date" => $buy_date_persian,
+                    "charge_amount"   => $charge,
                     "expire_date" => $persian_expire_date
                 ], $cleaned_number, sa_get_option('user_importer_sms_pattern'))) {
                     sa_log($type, 'success', sprintf(__('Sms Send to %s Success!', 'safe-assistant'), $cleaned_number));

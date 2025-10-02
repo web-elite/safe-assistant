@@ -26,6 +26,7 @@ class Addon_User_Importer
         add_action('wp_ajax_addon_user_importer_save_settings', [$this, 'save_setting_ajax']);
         add_action('wp_ajax_addon_user_importer_reverse', [$this, 'reverse_ajax']);
         add_action('wp_ajax_addon_user_importer_reset', [$this, 'reset_actions_ajax']);
+        add_action('admin_init', [$this, 'submit_csv_ajax']);
     }
 
     /**
@@ -169,30 +170,56 @@ class Addon_User_Importer
         $expire_date_value                = isset(get_transient('addon_user_importer_form_data')['expire_date']) ? intval(get_transient('addon_user_importer_form_data')['expire_date']) : 0;
         $current_url = get_current_url();
         echo ob_get_clean();
-        if (isset($_POST['submit_csv']) && isset($_FILES['csv_file'])) {
+        include_once ADDON_USER_IMPORTER_DIR . 'partials/user-importer-main-section.php';
+    }
+
+    public function display_logs()
+    {
+        echo sa_render_logs(ADDON_USER_IMPORTER_SLUG);
+    }
+
+    public function submit_csv_ajax()
+    {
+        if (!current_user_can('manage_options')) {
+            $result = (['message' => __('Insufficient permissions.', 'safe-assistant')]);
+        }
+
+        if (isset($_POST['addon_user_importer_action']) && $_POST['addon_user_importer_action'] === 'upload_csv' && isset($_FILES['csv_file'])) {
             $has_error = false;
 
             // Verify nonce
             if (!isset($_POST['addon_user_importer_nonce']) || !wp_verify_nonce($_POST['addon_user_importer_nonce'], 'addon_user_importer_upload')) {
-                echo '<div class="error notice"><p><strong>' . esc_html__('Error:', 'safe-assistant') . '</strong> ' . esc_html__('Invalid nonce.', 'safe-assistant') . '</p></div>';
+                $result = ([
+                    'message' => esc_html__('Error:', 'safe-assistant') . ' '
+                        . esc_html__('Invalid nonce.', 'safe-assistant')
+                ]);
                 $has_error = true;
             }
 
             // Check user permissions
             if (!current_user_can('manage_options')) {
-                echo '<div class="error notice"><p><strong>' . esc_html__('Error:', 'safe-assistant') . '</strong> ' . esc_html__('Insufficient permissions.', 'safe-assistant') . '</p></div>';
+                $result = ([
+                    'message' => esc_html__('Error:', 'safe-assistant') . ' '
+                        . esc_html__('Insufficient permissions.', 'safe-assistant')
+                ]);
                 $has_error = true;
             }
 
             // Check if a task is already running
             if (get_transient(ADDON_USER_IMPORTER_SLUG . '_task')) {
-                echo '<div class="notice notice-warning"><p><strong>' . esc_html__('Notice:', 'safe-assistant') . '</strong> ' . esc_html__('A process is currently running. Please wait until it completes.', 'safe-assistant') . '</p></div>';
+                $result = ([
+                    'message' => esc_html__('Error:', 'safe-assistant') . ' '
+                        . esc_html__('A process is currently running. Please wait until it completes.', 'safe-assistant')
+                ]);
                 $has_error = true;
             }
 
             // Validate file upload
             if (!isset($_FILES['csv_file']) || $_FILES['csv_file']['error'] !== UPLOAD_ERR_OK || $_FILES['csv_file']['type'] !== 'text/csv') {
-                echo '<div class="error notice"><p><strong>' . esc_html__('Error:', 'safe-assistant') . '</strong> ' . esc_html__('Invalid or missing CSV file.', 'safe-assistant') . '</p></div>';
+                $result = ([
+                    'message' => esc_html__('Error:', 'safe-assistant') . ' '
+                        . esc_html__('Invalid or missing CSV file.', 'safe-assistant')
+                ]);
                 $has_error = true;
             }
 
@@ -227,14 +254,22 @@ class Addon_User_Importer
                         'form_data' => $form_data
                     ];
                     set_transient(ADDON_USER_IMPORTER_SLUG . '_task', $task_data, 3600);
-                    echo '<div class="updated notice"><p><strong>' . esc_html__('Success:', 'safe-assistant') . '</strong> ' . esc_html__('File processing started. Refresh the page to see updated logs.', 'safe-assistant') . '</p><p>' . esc_html__('File Path:', 'safe-assistant') . ' ' . esc_html($temp_file_path) . '</p></div>';
+                    $result = ([
+                        'message' => esc_html__('File Path:', 'safe-assistant') . ' '
+                            . esc_html($temp_file_path)
+                    ]);
                 } else {
-                    echo '<div class="error notice"><p><strong>' . esc_html__('Error:', 'safe-assistant') . '</strong> ' . esc_html__('Unable to save file.', 'safe-assistant') . '</p></div>';
+                    $result = ([
+                        'message' => esc_html__('Error:', 'safe-assistant') . ' '
+                            . esc_html__('Unable to save file.', 'safe-assistant')
+                    ]);
                 }
             }
         }
 
-        include_once ADDON_USER_IMPORTER_DIR . 'partials/user-importer-main-section.php';
+        if (isset($result['message'])) {
+            echo '<div class="notice notice-info"><p>' . esc_html($result['message']) . '</p></div>';
+        }
     }
 
     /**
