@@ -51,11 +51,13 @@ if (!function_exists('sa_get_sms_gateway_credit')) {
                 'CURLOPT_POST'       => false,
             ];
             $response = json_decode(sa_sms_make_request(sa_get_sms_url('get_credit'), $curl_options ?? [], true));
-            $result = [
-                'status' => $response['status'] ?? false,
-                'credit' => $response['Value'] ?? '',
-                'message' => $response['StrRetStatus'] ?? '',
-            ];
+            if (is_array($response)) {
+                $result = [
+                    'status' => $response['status'] ?? false,
+                    'credit' => $response['data'] ?? '',
+                    'message' => $response['message'] ?? '',
+                ];
+            }
         }
 
         if ($gateway == 'melipayamak') {
@@ -71,11 +73,13 @@ if (!function_exists('sa_get_sms_gateway_credit')) {
             ];
 
             $response = json_decode(sa_sms_make_request(sa_get_sms_url('get_credit'), $curl_options ?? []), true);
-            $result = [
-                'status' => $response['RetStatus'] ?? false,
-                'credit' => $response['Value'] ?? '',
-                'message' => $response['StrRetStatus'] ?? '',
-            ];
+            if (is_array($response)) {
+                $result = [
+                    'status' => $response['RetStatus'] ?? false,
+                    'credit' => $response['Value'] ?? '',
+                    'message' => $response['StrRetStatus'] ?? '',
+                ];
+            }
         }
 
         return $result;
