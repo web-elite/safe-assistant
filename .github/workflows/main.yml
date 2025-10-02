@@ -45,23 +45,28 @@ jobs:
                   CHANGELOG_LINE=$(grep -n "== Changelog ==" readme.txt | head -1 | cut -d: -f1)
 
                   if [ -z "$CHANGELOG_LINE" ]; then
-                    # اگر changelog وجود ندارد، اضافه کن
-                    {
-                      cat readme.txt
-                      echo ""
-                      echo "== Changelog =="
-                      echo ""
-                      echo "= $VERSION ="
-                      echo "$COMMITS"
-                    } > readme_new.txt
+                      # اگر changelog وجود ندارد، اضافه کن
+                      {
+                        cat readme.txt
+                        echo ""
+                        echo "== Changelog =="
+                        echo ""
+                        echo "= $VERSION ="
+                        echo "$COMMITS"
+                      } > readme_new.txt
                   else
-                    # اگر changelog وجود دارد، درج کن
-                    head -n $((CHANGELOG_LINE - 1)) readme.txt > readme_new.txt
-                    echo "" >> readme_new.txt
-                    echo "= $VERSION =" >> readme_new.txt
-                    echo "$COMMITS" >> readme_new.txt
-                    echo "" >> readme_new.txt
-                    tail -n +$CHANGELOG_LINE readme.txt >> readme_new.txt
+                      # محتوای قبل از Changelog
+                      head -n $((CHANGELOG_LINE - 1)) readme.txt > readme_new.txt
+                      
+                      # عنوان Changelog و نسخه جدید
+                      echo "== Changelog ==" >> readme_new.txt
+                      echo "" >> readme_new.txt
+                      echo "= $VERSION =" >> readme_new.txt
+                      echo "$COMMITS" >> readme_new.txt
+                      echo "" >> readme_new.txt
+                      
+                      # محتوای قبلی Changelog (بدون عنوان)
+                      awk '/== Changelog ==/{found=1;next} found' readme.txt >> readme_new.txt
                   fi
 
                   mv readme_new.txt readme.txt
