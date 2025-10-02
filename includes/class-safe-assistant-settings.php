@@ -63,6 +63,18 @@ class Safe_Assistant_Settings
 			$user_importer = new Addon_User_Importer();
 			$user_importer->activator();
 		}
+
+		if (sa_get_option('social_order_management_addons')) {
+			require_once SAFE_ASSISTANT_DIR . 'addons/social-order-manager/social-order-manager.php';
+			$social_order_management = new Addon_Social_Order_Manager();
+			$social_order_management->activator();
+		}
+
+		if (sa_get_option('order_toolkit_addons')) {
+			require_once SAFE_ASSISTANT_DIR . 'addons/order-toolkit/order-toolkit.php';
+			$order_toolkit = new Addon_Order_Toolkit();
+			$order_toolkit->activator();
+		}
 	}
 
 	/**
@@ -333,91 +345,6 @@ class Safe_Assistant_Settings
 			],
 			[
 				'parent' => 'woocommerce',
-				'id'     => 'order_management',
-				'title'  => esc_html__('Order Management', 'safe-assistant'),
-				'icon'   => 'fas fa-clipboard-list',
-				'fields' => [
-					[
-						'id'      => 'show_order_notes_in_admin_table',
-						'type'    => 'switcher',
-						'title'   => esc_html__('Display order notes in the orders table', 'safe-assistant'),
-						'default' => false,
-						'desc'    => esc_html__('Enable displaying order notes in the admin orders table.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_convertor_status',
-						'type'    => 'switcher',
-						'title'   => esc_html__('Convert Pending Orders to Failed', 'safe-assistant'),
-						'default' => true,
-						'desc'    => esc_html__('Enable automatic conversion of pending orders to failed status.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_to_fail_pending_time',
-						'type'    => 'number',
-						'title'   => esc_html__('Time to Mark Order as Failed (Hours)', 'safe-assistant'),
-						'default' => 1,
-						'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as failed.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_to_canceled_pending_time',
-						'type'    => 'number',
-						'title'   => esc_html__('Time to Mark Order as Cancelled (Hours)', 'safe-assistant'),
-						'default' => 36,
-						'desc'    => esc_html__('Set how many hours after creation a pending order should be marked as cancelled.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_convertor_start_time',
-						'type'    => 'number',
-						'title'   => esc_html__('Start Time for Failed Status Check (Hour)', 'safe-assistant'),
-						'default' => 8,
-						'desc'    => esc_html__('Set the hour (24h format) when the system starts checking for orders to mark as failed.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_convertor_end_time',
-						'type'    => 'number',
-						'title'   => esc_html__('End Time for Failed Status Check (Hour)', 'safe-assistant'),
-						'default' => 16,
-						'desc'    => esc_html__('Set the hour (24h format) when the system stops checking for orders to mark as failed.', 'safe-assistant'),
-					],
-				],
-			],
-			[
-				'parent' => 'woocommerce',
-				'id'     => 'order_management_pro',
-				'title'  => esc_html__('Orders Management Pro', 'safe-assistant'),
-				'icon'   => 'fas fa-clipboard-list',
-				'fields' => [
-					[
-						'id'      => 'order_management_pro_status',
-						'type'    => 'switcher',
-						'default' => false,
-						'title'   => esc_html__('Enable Post Tracking', 'safe-assistant'),
-						'desc'    => esc_html__('Enable post tracking for orders.', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_management_pro_main_city',
-						'type'    => 'text',
-						'title'   => esc_html__('Your shop location', 'safe-assistant'),
-						'desc'    => esc_html__('Enter the original value of the city field on the checkout page here. For example, Mashhad', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_management_pro_sms_status',
-						'type'    => 'switcher',
-						'title'   => esc_html__('Enable SMS Notifications', 'safe-assistant'),
-						'default' => true,
-						'desc'    => esc_html__('Enable automatic sending of SMS after order completion with "Post tracking code".', 'safe-assistant'),
-					],
-					[
-						'id'      => 'order_management_pro_sms_pattern',
-						'type'    => 'text',
-						'title'   => esc_html__('Sms pattern for after order completion', 'safe-assistant'),
-						'default' => true,
-						'desc'    => esc_html__('Sms pattern must include 2 arguments', 'safe-assistant') . '<br>1: {user_firstname} <br> 2: {tracking_code}',
-					],
-				],
-			],
-			[
-				'parent' => 'woocommerce',
 				'id'     => 'woocommerce_admin',
 				'title'  => esc_html__('WooCommerce Admin Settings', 'safe-assistant'),
 				'icon'   => 'fas fa-cog',
@@ -451,6 +378,112 @@ class Safe_Assistant_Settings
 				'title'  => esc_html__('WooCommerce Checkout Settings', 'safe-assistant'),
 				'icon'   => 'fas fa-dolly-flatbed',
 				'fields' => [
+					[
+						'id'     => 'checkout_account_fields_accordion',
+						'type'   => 'accordion',
+						'title'  => esc_html__('Account Fields Editor', 'safe-assistant'),
+						'accordions' => [
+							[
+								'title'  => esc_html__('Account Username', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'account_username_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'account_username_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'account_username_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('First name', 'woocommerce'),
+									],
+									[
+										'id'      => 'account_username_placeholder',
+										'type'    => 'text',
+										'title'   => esc_html__('Placeholder', 'safe-assistant'),
+									],
+									[
+										'id'      => 'account_username_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value', 'safe-assistant'),
+									],
+								],
+							],
+							[
+								'title'  => esc_html__('Account Password', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'account_password_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'account_password_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'account_password_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('First name', 'woocommerce'),
+									],
+									[
+										'id'      => 'account_password_placeholder',
+										'type'    => 'text',
+										'title'   => esc_html__('Placeholder', 'safe-assistant'),
+									],
+									[
+										'id'      => 'account_password_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value', 'safe-assistant'),
+									],
+								],
+							],
+							[
+								'title'  => esc_html__('Account Password Confirmation', 'safe-assistant'),
+								'fields' => [
+									[
+										'id'      => 'account_password-2_enabled',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Enable Field', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'account_password-2_required',
+										'type'    => 'switcher',
+										'title'   => esc_html__('Is Required?', 'safe-assistant'),
+										'default' => true,
+									],
+									[
+										'id'      => 'account_password-2_label',
+										'type'    => 'text',
+										'title'   => esc_html__('Field Label', 'safe-assistant'),
+										'default' => esc_html__('First name', 'woocommerce'),
+									],
+									[
+										'id'      => 'account_password-2_placeholder',
+										'type'    => 'text',
+										'title'   => esc_html__('Placeholder', 'safe-assistant'),
+									],
+									[
+										'id'      => 'account_password-2_default',
+										'type'    => 'text',
+										'title'   => esc_html__('Default Value', 'safe-assistant'),
+									],
+								],
+							],
+						],
+					],
 					[
 						'id'     => 'checkout_billing_fields_accordion',
 						'type'   => 'accordion',
@@ -1254,6 +1287,19 @@ class Safe_Assistant_Settings
 						'default' => false,
 						'desc'    => esc_html__('you can import users from excel file and users imported in your site will be automatically and charge wallet with percentage or fixed amount and more.', 'safe-assistant'),
 					],
+					[
+						'id'      => 'social_order_management_addons',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Enable Social Order Management Addon', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Management Woocommerce orders via Social Media Platforms like WhatsApp or Telegram.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'order_toolkit_addons',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Enable Order Toolkit Addon', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Toolkit for managing and processing orders. you can print invoices, add tracking information, update order statuses easily and more.', 'safe-assistant'),
 					],
 				],
 			],
