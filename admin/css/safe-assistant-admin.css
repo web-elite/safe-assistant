@@ -186,3 +186,30 @@
         box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
     }
 }
+
+.assistant-notice {
+    position: fixed;
+    top: 20px;
+    right: -100%;
+    transform: translateX(0);
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    min-width: 300px;
+    max-width: 400px;
+    transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s ease;
+    opacity: 0;
+}
+
+.assistant-notice.show {
+    right: 20px;
+    opacity: 1;
+}
+
+.assistant-notice.hide {
+    right: -100%;
+    opacity: 0;
+}

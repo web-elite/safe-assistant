@@ -215,3 +215,14 @@ if (! function_exists('is_woocommerce_activated')) {
         return is_plugin_active('woocommerce/woocommerce.php');
     }
 }
+
+/**
+ * Create admin notice
+ */
+if (! function_exists('sa_create_notif')) {
+    function sa_create_notif($message, $title = '', $status = 'info'): void
+    {
+        $title = $title ?: __('New Notification', 'safe-assistant');
+        echo '<div class="assistant-notice notice notice-' . esc_attr($status) . ' is-dismissible"><h3>' . esc_html($title) . '</h3><p>' . esc_html($message) . '</p></div>';
+    }
+}

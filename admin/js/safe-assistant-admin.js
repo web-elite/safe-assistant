@@ -1,4 +1,4 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
 	/**
@@ -29,4 +29,45 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-})( jQuery );
+	function showAssistantNotice() {
+		const notice = document.getElementById('safe-assistant-notice');
+
+		notice.classList.add('show');
+		notice.classList.remove('hide');
+
+		setTimeout(() => {
+			hideAssistantNotice();
+		}, 5000);
+	}
+
+	function hideAssistantNotice() {
+		const notice = document.getElementById('safe-assistant-notice');
+
+		notice.classList.add('hide');
+		notice.classList.remove('show');
+
+		setTimeout(() => {
+			notice.remove();
+		}, 500);
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		const notice = document.getElementById("safe-assistant-notice");
+		if (notice) {
+			notice.style.transform = "translateX(100%)";
+			notice.style.transition = "transform 0.5s ease-in-out";
+
+			setTimeout(() => {
+				notice.style.transform = "translateX(0)";
+			}, 100);
+
+			setTimeout(() => {
+				notice.style.transform = "translateX(100%)";
+				setTimeout(() => {
+					notice.remove();
+				}, 500);
+			}, 5000);
+		}
+	});
+
+})(jQuery);
