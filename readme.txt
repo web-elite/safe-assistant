@@ -5,7 +5,7 @@ Donate link: https://webelitee.ir
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,16 @@ Yes, `.pot` file is included inside the `languages` directory.
 3. addons page
 
 == Changelog ==
+
+= 1.6.1 =
+- fix (addon): log for charge wallet in user importer
+- fix: set charge default to 0
+- update translations
+- fix(addon): update revert user wallet action logs
+- release 1.6.0
+- fix change log on readme updater
+- release 1.6.1
+
 = 1.6.0 =
 - fix (addon): log for charge wallet in user importer
 - fix: set charge default to 0
