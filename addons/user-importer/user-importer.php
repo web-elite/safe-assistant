@@ -237,7 +237,7 @@ class Addon_User_Importer
                     'min_charge' => $min_charge,
                     'expire_date' => $expire_date
                 ];
-                set_transient('addon_user_importer_form_data', $form_data, 3600);
+                set_transient('addon_user_importer_form_data', $form_data);
 
                 // Use WP_Filesystem for file handling
                 require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -253,10 +253,12 @@ class Addon_User_Importer
                         'offset' => 0,
                         'form_data' => $form_data
                     ];
-                    set_transient(ADDON_USER_IMPORTER_SLUG . '_task', $task_data, 3600);
+                    set_transient(ADDON_USER_IMPORTER_SLUG . '_task', $task_data, 12 * HOUR_IN_SECONDS);
                     $result = ([
+                        'title'   => esc_html__('User import is in progress in the background.', 'safe-assistant'),
                         'message' => esc_html__('File Path:', 'safe-assistant') . ' '
-                            . esc_html($temp_file_path)
+                            . esc_html($temp_file_path),
+                        'status'  => 'success',
                     ]);
                 } else {
                     $result = ([
@@ -268,7 +270,7 @@ class Addon_User_Importer
         }
 
         if (isset($result['message'])) {
-            echo '<div class="notice notice-info"><p>' . esc_html($result['message']) . '</p></div>';
+            sa_create_notif($result['message'], $result['title'] ?? 'خطا', $result['status'] ?? 'error');
         }
     }
 
