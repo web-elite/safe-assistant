@@ -325,9 +325,9 @@ function my_csv_cron_handler()
             $processed_count++;
             $user_id = null;
             $phone_number = '';
-            $amount = 0.0;
-            $percent_charge = 0.0;
-            $fixed_charge = 0.0;
+            $amount = 0;
+            $percent_charge = 0;
+            $fixed_charge = 0;
             $first_name = '';
             $last_name = '';
             $state = '';
@@ -337,9 +337,9 @@ function my_csv_cron_handler()
             $charge = 0;
 
             $phone_number = isset($data[0]) ? sanitize_text_field(trim($data[0])) : '';
-            $amount = isset($data[1]) ? floatval(trim($data[1])) : 0.0;
-            $percent_charge = isset($data[2]) ? floatval(trim($data[2])) : 0.0;
-            $fixed_charge = isset($data[3]) ? floatval(trim($data[3])) : 0.0;
+            $amount = isset($data[1]) ? trim($data[1]) : 0;
+            $percent_charge = isset($data[2]) ? trim($data[2]) : 0;
+            $fixed_charge = isset($data[3]) ? trim($data[3]) : 0;
             $first_name = isset($data[4]) ? sanitize_text_field(trim($data[4])) : '';
             $last_name = isset($data[5]) ? sanitize_text_field(trim($data[5])) : '';
             $state = isset($data[6]) ? sanitize_text_field(trim($data[6])) : '';
