@@ -37,7 +37,7 @@ class Addon_User_Importer
      */
     private function load_dependencies()
     {
-        require_once ADDON_USER_IMPORTER_DIR . 'addon-user-importer-handler.php';
+        require_once ADDON_USER_IMPORTER_DIR . ADDON_USER_IMPORTER_SLUG . '-handler.php';
     }
 
     /**
@@ -49,11 +49,10 @@ class Addon_User_Importer
      */
     public function set_variables()
     {
-        define('ADDON_USER_IMPORTER_SLUG', 'sa-addon-user-importer');
-        define('ADDON_USER_IMPORTER_CRON_EVENT', 'sa-addon-user-importer');
+        define('ADDON_USER_IMPORTER_SLUG', 'user-importer');
+        define('ADDON_USER_IMPORTER_NAME', 'user_importer');
         define('ADDON_USER_IMPORTER_DIR', plugin_dir_path(__FILE__));
         define('ADDON_USER_IMPORTER_URL', plugin_dir_url(__FILE__));
-        define('ADDONS_USER_IMPORTER_KEY', hash('sha256', ADDON_USER_IMPORTER_SLUG));
     }
 
     /**
@@ -74,8 +73,8 @@ class Addon_User_Importer
      */
     public function deactivator()
     {
-        delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
-        wp_clear_scheduled_hook(ADDON_USER_IMPORTER_CRON_EVENT);
+        delete_transient(ADDON_USER_IMPORTER_SLUG . '_task');
+        wp_clear_scheduled_hook(ADDON_USER_IMPORTER_SLUG);
     }
 
     /**
@@ -87,15 +86,14 @@ class Addon_User_Importer
      */
     public function create_setting()
     {
-        $prefix = SAFE_ASSISTANT_SLUG . '-settings';
-        CSF::createSection($prefix, [
+        CSF::createSection(SAFE_ASSISTANT_SETTING_ID, [
             'id'     => 'user_importer_addon',
             'title'  => __('User Importer', 'safe-assistant'),
             'icon'   => 'fas fa-user-plus',
         ]);
 
         // Main Section
-        CSF::createSection($prefix, [
+        CSF::createSection(SAFE_ASSISTANT_SETTING_ID, [
             'parent' => 'user_importer_addon',
             'title'  => __('Import', 'safe-assistant'),
             'icon'   => 'fas fa-file-alt',
@@ -108,7 +106,7 @@ class Addon_User_Importer
         ]);
 
         // Log Section
-        CSF::createSection($prefix, [
+        CSF::createSection(SAFE_ASSISTANT_SETTING_ID, [
             'parent' => 'user_importer_addon',
             'title'  => __('Logs', 'safe-assistant'),
             'icon'   => 'fas fa-file-alt',
@@ -121,7 +119,7 @@ class Addon_User_Importer
         ]);
 
         // Settings Section
-        CSF::createSection($prefix, [
+        CSF::createSection(SAFE_ASSISTANT_SETTING_ID, [
             'parent' => 'user_importer_addon',
             'title'  => __('Settings', 'safe-assistant'),
             'icon'   => 'fas fa-cog',
@@ -135,6 +133,11 @@ class Addon_User_Importer
                     'id'      => 'user_importer_sms_pattern',
                     'type'    => 'text',
                     'title'   => __('Sms Pattern', 'safe-assistant'),
+                    'desc'    => __('Enter the SMS pattern ID to use for sending messages.', 'safe-assistant') . '<br>'
+                        . __('Make sure the pattern includes below parameters:', 'safe-assistant') . '<br>'
+                        . __('first parameter is buy date', 'safe-assistant') . ' (<code>buy_date</code>)' . '<br>'
+                        . __('second parameter is charge amount', 'safe-assistant') . ' (<code>charge_amount</code>)' . '<br>'
+                        . __('third parameter is expire date.', 'safe-assistant') . ' (<code>expire_date</code>)' . '<br>',
                 ],
                 [
                     'type'     => 'callback',
@@ -155,61 +158,7 @@ class Addon_User_Importer
         $reset_nonce = wp_create_nonce('addon_user_importer_reset');
         $force_stop_url = esc_url(add_query_arg('force_stop', 1));
 
-        echo <<<HTML
-        <div class="postbox">
-            <div class="inside">
-            <h3>{$reset_section_title}</h3>
-
-            <form id="addon_user_importer_reverse_form" method="post" class="addon-user-importer-action-form">
-                <input type="hidden" name="action" value="addon_user_importer_reverse">
-                <input type="hidden" name="nonce" value="{$reverse_nonce}">
-                <p>
-                <input type="submit" name="submit_reverse" class="button button-secondary" value="{$revert_button_text}" />
-                <span class="spinner"></span>
-                </p>
-            </form>
-
-            <form id="addon_user_importer_reset_form" method="post" class="addon-user-importer-action-form">
-                <input type="hidden" name="action" value="addon_user_importer_reset">
-                <input type="hidden" name="nonce" value="{$reset_nonce}">
-                <p>
-                <input type="submit" name="submit_reset_factory" class="button button-secondary" value="{$reset_button_text}" />
-                <span class="spinner"></span>
-                </p>
-            </form>
-
-            <p>
-                <a href="{$force_stop_url}" class="button button-secondary">{$force_stop_button_text}</a>
-            </p>
-            </div>
-        </div>
-        <script>
-            jQuery(document).ready(function($) {
-                $('.addon-user-importer-action-form').on('submit', function(e) {
-                    e.preventDefault();
-
-                    var form = $(this);
-                    var submitButton = form.find('input[type="submit"]');
-                    var spinner = form.find('.spinner');
-
-                    submitButton.prop('disabled', true);
-                    spinner.addClass('is-active'); 
-
-                    $.post(ajaxurl, form.serialize(), function(response) {
-                    if (response.success) {
-                        alert(response.data.message);
-                        location.reload();
-                    } else {
-                        alert(response.data.message);
-                    }
-                    }).always(function() {
-                    submitButton.prop('disabled', false);
-                    spinner.removeClass('is-active');
-                    });
-                });
-            });
-        </script>
-        HTML;
+        include_once ADDON_USER_IMPORTER_DIR . 'partials/user-importer-settings-section.php';
     }
 
     public function main_section_handler()
@@ -218,10 +167,6 @@ class Addon_User_Importer
         $not_only_wallet_first_time_value = isset(get_transient('addon_user_importer_form_data')['not_only_wallet_first_time']) ? 1 : 0;
         $min_charge_value                 = isset(get_transient('addon_user_importer_form_data')['min_charge']) ? intval(get_transient('addon_user_importer_form_data')['min_charge']) : 0;
         $expire_date_value                = isset(get_transient('addon_user_importer_form_data')['expire_date']) ? intval(get_transient('addon_user_importer_form_data')['expire_date']) : 0;
-        $sms_gateway                      = sa_get_option('sms_gateway', 'melipayamak');
-        $sms_username                     = sa_get_option('sms_username', '');
-        $sms_password                     = sa_get_option('sms_password', '');
-        $sms_pattern                      = sa_get_option('sms_pattern', '');
         $current_url = get_current_url();
         echo ob_get_clean();
         if (isset($_POST['submit_csv']) && isset($_FILES['csv_file'])) {
@@ -240,7 +185,7 @@ class Addon_User_Importer
             }
 
             // Check if a task is already running
-            if (get_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task')) {
+            if (get_transient(ADDON_USER_IMPORTER_SLUG . '_task')) {
                 echo '<div class="notice notice-warning"><p><strong>' . esc_html__('Notice:', 'safe-assistant') . '</strong> ' . esc_html__('A process is currently running. Please wait until it completes.', 'safe-assistant') . '</p></div>';
                 $has_error = true;
             }
@@ -281,7 +226,7 @@ class Addon_User_Importer
                         'offset' => 0,
                         'form_data' => $form_data
                     ];
-                    set_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task', $task_data, 3600);
+                    set_transient(ADDON_USER_IMPORTER_SLUG . '_task', $task_data, 3600);
                     echo '<div class="updated notice"><p><strong>' . esc_html__('Success:', 'safe-assistant') . '</strong> ' . esc_html__('File processing started. Refresh the page to see updated logs.', 'safe-assistant') . '</p><p>' . esc_html__('File Path:', 'safe-assistant') . ' ' . esc_html($temp_file_path) . '</p></div>';
                 } else {
                     echo '<div class="error notice"><p><strong>' . esc_html__('Error:', 'safe-assistant') . '</strong> ' . esc_html__('Unable to save file.', 'safe-assistant') . '</p></div>';
@@ -289,7 +234,7 @@ class Addon_User_Importer
             }
         }
 
-        include_once 'partials/addon-user-importer-main-section.php';
+        include_once ADDON_USER_IMPORTER_DIR . 'partials/user-importer-main-section.php';
     }
 
     /**
@@ -397,8 +342,8 @@ class Addon_User_Importer
 
         // Delete transients
         $transients = [
-            ADDON_USER_IMPORTER_CRON_EVENT . '_task',
-            ADDON_USER_IMPORTER_CRON_EVENT . '_running',
+            ADDON_USER_IMPORTER_SLUG . '_task',
+            ADDON_USER_IMPORTER_SLUG . '_running',
             'addon_user_importer_form_data',
         ];
 
@@ -409,9 +354,9 @@ class Addon_User_Importer
         }
 
         // Clear scheduled cron events
-        $timestamp = wp_next_scheduled(ADDON_USER_IMPORTER_CRON_EVENT);
+        $timestamp = wp_next_scheduled(ADDON_USER_IMPORTER_SLUG);
         if ($timestamp) {
-            wp_unschedule_event($timestamp, ADDON_USER_IMPORTER_CRON_EVENT);
+            wp_unschedule_event($timestamp, ADDON_USER_IMPORTER_SLUG);
             sa_log(ADDON_USER_IMPORTER_SLUG, 'success', __('Scheduled cron event cleared.', 'safe-assistant'));
         }
 

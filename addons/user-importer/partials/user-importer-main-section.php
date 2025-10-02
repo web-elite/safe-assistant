@@ -51,7 +51,7 @@
                         <td><input type="number" name="expire_date" id="expire_date" value="<?php echo esc_attr($expire_date_value); ?>" /></td>
                     </tr>
                 </table>
-                <?php if (!get_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task')) : ?>
+                <?php if (!get_transient(ADDON_USER_IMPORTER_SLUG . '_task')) : ?>
                     <p class="submit"><input type="submit" name="submit_csv" class="button button-primary" value="<?php esc_attr_e('Upload File', 'safe-assistant'); ?>" /></p>
                 <?php else : ?>
                     <div class="notice notice-warning inline">

@@ -274,14 +274,14 @@ function generateRefCode(int $user_id): string
  */
 function my_csv_cron_handler()
 {
-    if (!get_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task') || get_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running')) {
+    if (!get_transient(ADDON_USER_IMPORTER_SLUG . '_task') || get_transient(ADDON_USER_IMPORTER_SLUG . '_running')) {
         return;
     }
     $type = ADDON_USER_IMPORTER_SLUG;
     try {
-        set_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running', true);
+        set_transient(ADDON_USER_IMPORTER_SLUG . '_running', true);
         sa_log($type, 'info', __('🚀 Starting cron job.', 'safe-assistant'), '', current_time('mysql'));
-        $task_data = get_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
+        $task_data = get_transient(ADDON_USER_IMPORTER_SLUG . '_task');
         $file_path = $task_data['file_path'];
         $offset = intval($task_data['offset']);
         $form_data = $task_data['form_data'];
@@ -298,16 +298,16 @@ function my_csv_cron_handler()
 
         if (!$wp_filesystem->exists($file_path) || !$wp_filesystem->is_readable($file_path)) {
             sa_log($type, 'error', sprintf(__('CSV file not found or unreadable: %s', 'safe-assistant'), $file_path));
-            delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
-            delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
+            delete_transient(ADDON_USER_IMPORTER_SLUG . '_task');
+            delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
             return;
         }
 
         $handle = fopen($file_path, 'r');
         if (!$handle) {
             sa_log($type, 'error', __('Unable to open CSV file.', 'safe-assistant'));
-            delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
-            delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
+            delete_transient(ADDON_USER_IMPORTER_SLUG . '_task');
+            delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
             return;
         }
 
@@ -439,10 +439,14 @@ function my_csv_cron_handler()
             }
 
             if (sa_get_option('user_importer_sms_status')) {
-                if (sa_send_sms_pattern(" $buy_date;$charge;$persian_expire_date", $cleaned_number, sa_get_option('user_importer_sms_pattern'))) {
-                    sa_log($type, 'success', __('Sms Send to $cleaned_number Success!', 'safe-assistant'));
+                if (sa_send_sms_pattern([
+                    "buy_date" => " " . $buy_date,
+                    "charge"   => $charge,
+                    "expire_date" => $persian_expire_date
+                ], $cleaned_number, sa_get_option('user_importer_sms_pattern'))) {
+                    sa_log($type, 'success', sprintf(__('Sms Send to %s Success!', 'safe-assistant'), $cleaned_number));
                 } else {
-                    sa_log($type, 'error', __('Sms Send to $cleaned_number failed!', 'safe-assistant'));
+                    sa_log($type, 'error', sprintf(__('Sms Send to %s failed!', 'safe-assistant'), $cleaned_number));
                 }
             }
         }
@@ -452,14 +456,14 @@ function my_csv_cron_handler()
 
         if ($is_eof) {
             sa_log($type, 'success', __('File processing completed.', 'safe-assistant'));
-            delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
-            delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
+            delete_transient(ADDON_USER_IMPORTER_SLUG . '_task');
+            delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
             $wp_filesystem->delete($file_path);
         } else {
             $new_offset = $offset + $processed_count;
             $task_data['offset'] = $new_offset;
-            set_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task', $task_data, HOUR_IN_SECONDS);
-            delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
+            set_transient(ADDON_USER_IMPORTER_SLUG . '_task', $task_data, HOUR_IN_SECONDS);
+            delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
             sa_log($type, 'info', sprintf(__('Processed %d rows, new offset: %d.', 'safe-assistant'), $processed_count, $new_offset));
         }
     } catch (Throwable $th) {
@@ -467,8 +471,8 @@ function my_csv_cron_handler()
         if (is_resource($handle)) {
             fclose($handle);
         }
-        delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_task');
-        delete_transient(ADDON_USER_IMPORTER_CRON_EVENT . '_running');
+        delete_transient(ADDON_USER_IMPORTER_SLUG . '_task');
+        delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
     }
 }
 
@@ -480,7 +484,7 @@ add_filter('cron_schedules', function ($schedules) {
     return $schedules;
 });
 
-add_action(ADDON_USER_IMPORTER_CRON_EVENT, 'my_csv_cron_handler');
-if (!wp_next_scheduled(ADDON_USER_IMPORTER_CRON_EVENT)) {
-    wp_schedule_event(time(), 'every_minute', ADDON_USER_IMPORTER_CRON_EVENT);
+add_action(ADDON_USER_IMPORTER_SLUG, 'my_csv_cron_handler');
+if (!wp_next_scheduled(ADDON_USER_IMPORTER_SLUG)) {
+    wp_schedule_event(time(), 'every_minute', ADDON_USER_IMPORTER_SLUG);
 }
