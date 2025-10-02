@@ -178,7 +178,7 @@ if (!function_exists('sa_create_custom_maintenance_page')) {
 if (!headers_sent()) {
     @header((\$_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1') . ' 503 Service Unavailable', true, 503);
     @header('Content-Type: text/html; charset=UTF-8');
-    @header('Retry-After: 3600');
+    @header('Retry-After: 600'); // SEO-friendly
 }
 echo <<<'HTML'
 {$html}
