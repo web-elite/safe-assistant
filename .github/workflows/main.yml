@@ -12,12 +12,59 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
             - name: Get plugin version from header
               id: get_version
               run: |
                   VERSION=$(grep -Po 'Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' safe-assistant.php | head -1)
                   echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+            - name: Get previous version from readme
+              id: get_prev_version
+              run: |
+                  PREV_VERSION=$(grep -Po '= \K[0-9]+\.[0-9]+\.[0-9]+(? = =)' readme.txt | head -1)
+                  if [ -z "$PREV_VERSION" ]; then
+                    PREV_VERSION="1.5.66"  # نسخه پیش‌فرض اگر پیدا نشد
+                  fi
+                  echo "PREV_VERSION=$PREV_VERSION" >> $GITHUB_ENV
+
+            - name: Get commit messages since last release
+              id: get_commits
+              run: |
+                  # دریافت کامیت‌ها از آخرین نسخه تا حالا
+                  COMMITS=$(git log --pretty=format:"- %s" $PREV_VERSION..HEAD --reverse | grep -v "chore: sync version" || echo "- Maintenance and improvements")
+                  echo "COMMITS<<EOF" >> $GITHUB_ENV
+                  echo "$COMMITS" >> $GITHUB_ENV
+                  echo "EOF" >> $GITHUB_ENV
+
+            - name: Update changelog in readme.txt
+              run: |
+                  # پیدا کردن خط شروع changelog
+                  CHANGELOG_LINE=$(grep -n "== Changelog ==" readme.txt | head -1 | cut -d: -f1)
+
+                  if [ -z "$CHANGELOG_LINE" ]; then
+                    # اگر changelog وجود ندارد، اضافه کن
+                    {
+                      cat readme.txt
+                      echo ""
+                      echo "== Changelog =="
+                      echo ""
+                      echo "= $VERSION ="
+                      echo "$COMMITS"
+                    } > readme_new.txt
+                  else
+                    # اگر changelog وجود دارد، درج کن
+                    head -n $((CHANGELOG_LINE - 1)) readme.txt > readme_new.txt
+                    echo "" >> readme_new.txt
+                    echo "= $VERSION =" >> readme_new.txt
+                    echo "$COMMITS" >> readme_new.txt
+                    echo "" >> readme_new.txt
+                    tail -n +$CHANGELOG_LINE readme.txt >> readme_new.txt
+                  fi
+
+                  mv readme_new.txt readme.txt
 
             - name: Sync constants and readme
               run: |
@@ -31,7 +78,7 @@ jobs:
               run: |
                   jq --arg v "${VERSION}" --arg url "https://github.com/web-elite/safe-assistant/releases/download/${VERSION}/safe-assistant.zip" \
                       '.version = $v | .zip_url = $url' info.json > info.tmp.json
-                      mv info.tmp.json info.json
+                  mv info.tmp.json info.json
 
             - name: Commit changes if needed
               run: |
@@ -56,7 +103,13 @@ jobs:
               with:
                   tag_name: ${{ env.VERSION }}
                   name: "Release ${{ env.VERSION }}"
-                  body: "Automatic release for version ${{ env.VERSION }}"
+                  body: |
+                      ## Changes in version ${{ env.VERSION }}
+
+                      ${{ env.COMMITS }}
+
+                      ### Full Changelog
+                      https://github.com/web-elite/safe-assistant/compare/${{ env.PREV_VERSION }}...${{ env.VERSION }}
                   files: safe-assistant.zip
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
