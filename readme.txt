@@ -30,6 +30,12 @@ Yes, `.pot` file is included inside the `languages` directory.
 3. addons page
 
 == Changelog ==
+= 1.5.0 =
+add sms.ir gateway
+
+= 1.4.0 =
+add tracking code to WC orders and complete order sms to user with post tracking code
+
 = 1.1.7 =
 add expire notif (sms) to nirwallet users
 
