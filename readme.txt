@@ -29,11 +29,7 @@ Yes, `.pot` file is included inside the `languages` directory.
 2. settings page
 3. addons page
 
-
-= 1.5.66 =
-- Maintenance and improvements
-
-
+== Changelog ==
 = 1.6.0 =
 - fix (addon): log for charge wallet in user importer
 - fix: set charge default to 0
@@ -41,11 +37,11 @@ Yes, `.pot` file is included inside the `languages` directory.
 - fix(addon): update revert user wallet action logs
 - release 1.6.0
 
-== Changelog ==
 = 1.5.66 =
 add notification for plugin (globally)
 
 = 1.5.60 =
+- Maintenance and improvements
 fix user importer (logs and send with smsir and ....)
 
 = 1.5.45 =
