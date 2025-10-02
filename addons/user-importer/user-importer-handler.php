@@ -334,7 +334,7 @@ function my_csv_cron_handler()
             $city = '';
             $buy_date = '';
             $expire_date_input = '';
-            $charge = 0.0;
+            $charge = 0;
 
             $phone_number = isset($data[0]) ? sanitize_text_field(trim($data[0])) : '';
             $amount = isset($data[1]) ? floatval(trim($data[1])) : 0.0;
