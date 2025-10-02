@@ -286,23 +286,23 @@ class Addon_User_Importer
     {
         global $wpdb;
 
-        function log_revert_action(string $message, string $status = 'info')
-        {
-            sa_log(ADDON_USER_IMPORTER_SLUG, $status, 'Revert Action', $message);
-        }
-
         $transactions = $wpdb->get_results(
             $wpdb->prepare(
                 "SELECT * FROM {$wpdb->prefix}nirweb_wallet_op 
              WHERE description = %s AND type_op = %s AND type_v = %s",
-                "شارژ کیف پول برای خریداران حضوری",
+                __("Wallet charge for in-person buyers", 'safe-assistant'),
                 "credit",
                 "register"
             )
         );
 
         if (empty($transactions)) {
-            log_revert_action("❌ هیچ تراکنشی با توضیحات 'شارژ کیف پول برای خریداران حضوری' یافت نشد.", "warning");
+            sa_log(
+                ADDON_USER_IMPORTER_SLUG,
+                'warning',
+                __('Revert Wallet Charges', 'safe-assistant'),
+                __('No transactions found for refund process', 'safe-assistant')
+            );
             return false;
         }
 
@@ -316,7 +316,17 @@ class Addon_User_Importer
             $current_balance = $current_balance ? floatval($current_balance) : 0;
 
             if ($current_balance < $amount) {
-                log_revert_action("❌ موجودی کاربر $user_id ($current_balance) برای کسر $amount کافی نیست.", "error");
+                sa_log(
+                    ADDON_USER_IMPORTER_SLUG,
+                    'error',
+                    __('Revert Wallet Charges', 'safe-assistant'),
+                    sprintf(
+                        __('Insufficient balance for user %1$s. Current: %2$s, Required: %3$s', 'safe-assistant'),
+                        $user_id,
+                        $current_balance,
+                        $amount
+                    )
+                );
                 continue;
             }
 
@@ -327,7 +337,7 @@ class Addon_User_Importer
                 "user_id"      => $user_id,
                 "user_created" => 0,
                 "amount"       => -$amount,
-                "description"  => "بازگشت شارژ حساب برای خریداران حضوری",
+                "description"  => __("Refund of incorrect wallet charge", 'safe-assistant'),
                 "type_op"      => "debit",
                 "type_v"       => "revert",
                 "created"      => current_time("mysql"),
@@ -342,11 +352,29 @@ class Addon_User_Importer
                 ]
             );
 
-            log_revert_action("✅ شارژ $amount از کیف پول کاربر $user_id کسر شد و تراکنش معکوس ثبت شد.", "success");
+            sa_log(
+                ADDON_USER_IMPORTER_SLUG,
+                'success',
+                __('Revert Wallet Charges', 'safe-assistant'),
+                sprintf(
+                    __('Amount %1$s deducted from user %2$s wallet. Reverse transaction recorded.', 'safe-assistant'),
+                    $amount,
+                    $user_id
+                )
+            );
             $reverted_count++;
         }
 
-        log_revert_action("🎉 عملیات بازگشت برای $reverted_count تراکنش با موفقیت انجام شد.", "success");
+        sa_log(
+            ADDON_USER_IMPORTER_SLUG,
+            'success',
+            __('Revert Wallet Charges', 'safe-assistant'),
+            sprintf(
+                __('Refund process completed successfully. %d transactions processed.', 'safe-assistant'),
+                $reverted_count
+            )
+        );
+
         return true;
     }
 
