@@ -180,10 +180,6 @@ class Addon_User_Importer
 
     public function submit_csv_ajax()
     {
-        if (!current_user_can('manage_options')) {
-            $result = (['message' => __('Insufficient permissions.', 'safe-assistant')]);
-        }
-
         if (isset($_POST['addon_user_importer_action']) && $_POST['addon_user_importer_action'] === 'upload_csv' && isset($_FILES['csv_file'])) {
             $has_error = false;
 
@@ -267,10 +263,10 @@ class Addon_User_Importer
                     ]);
                 }
             }
-        }
 
-        if (isset($result['message'])) {
-            sa_create_notif($result['message'], $result['title'] ?? 'خطا', $result['status'] ?? 'error');
+            if (isset($result['message'])) {
+                sa_create_notif($result['message'], $result['title'] ?? 'خطا', $result['status'] ?? 'error');
+            }
         }
     }
 
