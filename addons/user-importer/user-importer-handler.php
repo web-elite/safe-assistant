@@ -287,7 +287,7 @@ function my_csv_cron_handler()
         $form_data = $task_data['form_data'];
         $continue_if_exists = (bool) $form_data['continue_if_exists'];
         $not_only_wallet_first_time = (bool) $form_data['not_only_wallet_first_time'];
-        $min_charge = floatval($form_data['min_charge']);
+        $min_charge = intval($form_data['min_charge']);
         $expire_days = intval($form_data['expire_date']);
 
         $chunk_size = 20;
@@ -337,9 +337,11 @@ function my_csv_cron_handler()
             $charge = 0;
 
             $phone_number = isset($data[0]) ? sanitize_text_field(trim($data[0])) : '';
-            $amount = isset($data[1]) ? trim($data[1]) : 0;
-            $percent_charge = isset($data[2]) ? trim($data[2]) : 0;
-            $fixed_charge = isset($data[3]) ? trim($data[3]) : 0;
+
+            $amount = isset($data[1]) ? intval(preg_replace('/[^0-9]/', '', trim($data[1]))) : 0;
+            $percent_charge = isset($data[2]) ? intval(preg_replace('/[^0-9]/', '', trim($data[2]))) : 0;
+            $fixed_charge = isset($data[3]) ? intval(preg_replace('/[^0-9]/', '', trim($data[3]))) : 0;
+
             $first_name = isset($data[4]) ? sanitize_text_field(trim($data[4])) : '';
             $last_name = isset($data[5]) ? sanitize_text_field(trim($data[5])) : '';
             $state = isset($data[6]) ? sanitize_text_field(trim($data[6])) : '';
@@ -348,8 +350,23 @@ function my_csv_cron_handler()
             $buy_date_persian = convert_english_to_persian_numbers($buy_date);
             $expire_date_input = isset($data[9]) ? sanitize_text_field(trim($data[9])) : '';
 
-            $charge = $percent_charge > 0 ? ($percent_charge / 100) * $amount : $fixed_charge;
-            $charge = $charge > 0 ? $charge : $min_charge;
+            if ($percent_charge > 0) {
+                $charge = intval(($percent_charge * $amount) / 100);
+            } else {
+                $charge = $fixed_charge;
+            }
+
+            if ($charge < $min_charge) {
+                $charge = $min_charge;
+            }
+
+            sa_log($type, 'info', sprintf(
+                __('Amount: %d, Percent: %d, Fixed: %d, Calculated Charge: %d', 'safe-assistant'),
+                $amount,
+                $percent_charge,
+                $fixed_charge,
+                $charge
+            ));
 
             $wallet_timestamp = 0;
             $persian_expire_date = '';
