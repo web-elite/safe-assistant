@@ -39,6 +39,20 @@ Yes, `.pot` file is included inside the `languages` directory.
 - release 1.6.0
 - fix change log on readme updater
 - release 1.6.1
+- fix numbers for charge
+- move order options to order toolkit addon
+- fix(addon): bugs about $charge
+- fix(addon): ajax handler block smsir ajax request
+
+
+= 1.6.1 =
+- fix (addon): log for charge wallet in user importer
+- fix: set charge default to 0
+- update translations
+- fix(addon): update revert user wallet action logs
+- release 1.6.0
+- fix change log on readme updater
+- release 1.6.1
 
 = 1.6.0 =
 - fix (addon): log for charge wallet in user importer
