@@ -783,7 +783,7 @@ function user_have_vpn(): bool
 	$response = wp_remote_get($url);
 
 	if (is_wp_error($response)) {
-		sa_log('general', 'info', "Wallet Cron Log", 'HTTP Error: ' . $response->get_error_message());
+		sa_log('general', 'info', "VPN Checker", 'HTTP Error: ' . $response->get_error_message());
 		return false;
 	}
 
@@ -791,7 +791,7 @@ function user_have_vpn(): bool
 	$response = json_decode($data);
 
 	if (isset($response->error)) {
-		sa_log('general', 'info', "Wallet Cron Log", 'API Error: ' . $response->error);
+		sa_log('general', 'info', "VPN Checker", 'API Error: ' . $response->error);
 		return false;
 	}
 
