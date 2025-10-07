@@ -179,6 +179,38 @@ function digits_standard_username(string $phone): string
 }
 
 /**
+ * Standardize phone number for SmsIR plugin
+ *
+ * @param string $phone Phone number
+ * @return string Standardized phone number
+ * @since 1.0.0
+ */
+function smsir_standard_username(string $phone): string
+{
+    $cleaned = preg_replace('/[^\d+]/', '', $phone);
+    $cleaned = ltrim($cleaned, '0');
+
+    // SmsIR expects format like 09123456789
+    if (0 === strpos($cleaned, '+980')) {
+        return '0' . substr($cleaned, 4);
+    } elseif (0 === strpos($cleaned, '+98')) {
+        return '0' . substr($cleaned, 3);
+    } elseif (0 === strpos($cleaned, '980')) {
+        return '0' . substr($cleaned, 3);
+    } elseif (0 === strpos($cleaned, '989')) {
+        return '0' . substr($cleaned, 2);
+    } elseif (0 === strpos($cleaned, '98')) {
+        return '0' . substr($cleaned, 2);
+    } elseif (0 === strpos($cleaned, '9') && 10 === strlen($cleaned)) {
+        return '0' . $cleaned;
+    } elseif (0 === strpos($cleaned, '0') && 11 === strlen($cleaned)) {
+        return $cleaned;
+    }
+
+    return $phone;
+}
+
+/**
  * Clean phone number to raw format
  *
  * @param string $phone Phone number
@@ -228,11 +260,29 @@ function find_user_by_phone(string $phone): ?int
     );
     $user_id = $user_id ? (int) $user_id : null;
 
-    if (is_null($user_id)) {
+    if (!function_exists('is_plugin_active')) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+    $digits_active = is_plugin_active('digits/index.php');
+    $smsir_active = is_plugin_active('smsir/index.php');
+
+    if ($digits_active && is_null($user_id)) {
         $user_id = $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT user_id FROM {$wpdb->prefix}usermeta 
          WHERE meta_key = 'digits_phone_no' 
+         AND meta_value LIKE %s",
+                '%' . $wpdb->esc_like($cleaned_number) . '%'
+            )
+        );
+        $user_id = $user_id ? (int) $user_id : null;
+    }
+
+    if ($smsir_active && is_null($user_id)) {
+        $user_id = $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT user_id FROM {$wpdb->prefix}usermeta 
+         WHERE meta_key = 'smsir_phone' 
          AND meta_value LIKE %s",
                 '%' . $wpdb->esc_like($cleaned_number) . '%'
             )
@@ -394,24 +444,38 @@ function my_csv_cron_handler()
                 continue;
             }
 
-            $digits_phone_number = digits_standard_username($phone_number);
-            sa_log($type, 'info', sprintf(__('Phone Number is %s and digits number is %s', 'safe-assistant'), $phone_number, $digits_phone_number));
+            // Detect which plugin is active: Digits or SmsIR by checking plugin files
+            if (!function_exists('is_plugin_active')) {
+                require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+            $digits_active = is_plugin_active('digits/index.php');
+            $smsir_active = is_plugin_active('smsir/index.php');
+
+            if ($digits_active) {
+                $standard_phone = digits_standard_username($phone_number);
+            } elseif ($smsir_active) {
+                $standard_phone = smsir_standard_username($phone_number);
+            } else {
+                $standard_phone = $phone_number;
+            }
+            sa_log($type, 'info', sprintf(__('Phone Number is %s and digits number is %s', 'safe-assistant'), $phone_number, $standard_phone));
+
             $user_id = find_user_by_phone($phone_number);
             $cleaned_number = clean_phone_number($phone_number);
 
             if (!is_null($user_id)) {
-                sa_log($type, 'info', sprintf(__('User %s already exists (ID: %d).', 'safe-assistant'), $digits_phone_number, $user_id));
+                sa_log($type, 'info', sprintf(__('User %s already exists (ID: %d).', 'safe-assistant'), $standard_phone, $user_id));
             } else {
                 $password = wp_generate_password(12, false);
-                $email = $digits_phone_number . '@' . parse_url(get_site_url(), PHP_URL_HOST);
-                $user_id = wp_create_user($digits_phone_number, $password, $email);
+                $email = $standard_phone . '@' . parse_url(get_site_url(), PHP_URL_HOST);
+                $user_id = wp_create_user($standard_phone, $password, $email);
 
                 if (is_wp_error($user_id)) {
-                    sa_log($type, 'error', sprintf(__('Failed to create user %s: %s', 'safe-assistant'), $digits_phone_number, $user_id->get_error_message()));
+                    sa_log($type, 'error', sprintf(__('Failed to create user %s: %s', 'safe-assistant'), $standard_phone, $user_id->get_error_message()));
                     continue;
                 }
                 update_user_meta($user_id, 'billing_email', sanitize_email($email));
-                sa_log($type, 'success', sprintf(__('User %s created (ID: %d).', 'safe-assistant'), $digits_phone_number, $user_id));
+                sa_log($type, 'success', sprintf(__('User %s created (ID: %d).', 'safe-assistant'), $standard_phone, $user_id));
             }
 
             wp_update_user([
@@ -422,38 +486,52 @@ function my_csv_cron_handler()
             $ref_code = generateRefCode($user_id);
             update_user_meta($user_id, 'billing_state', $state);
             update_user_meta($user_id, 'billing_city', $city);
-            update_user_meta($user_id, 'billing_phone', $digits_phone_number);
+            update_user_meta($user_id, 'billing_phone', $standard_phone);
             update_user_meta($user_id, 'shipping_state', $state);
             update_user_meta($user_id, 'shipping_city', $city);
-            update_user_meta($user_id, 'shipping_phone', $digits_phone_number);
-            update_user_meta($user_id, 'digits_phone', $digits_phone_number);
-            update_user_meta($user_id, 'digits_phone_no', $cleaned_number);
-            update_user_meta($user_id, 'digits_form_data',  serialize([]));
+            update_user_meta($user_id, 'shipping_phone', $standard_phone);
+
+            if (!function_exists('is_plugin_active')) {
+                require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+
+            $digits_active = is_plugin_active('digits/index.php');
+            $smsir_active = is_plugin_active('smsir/index.php');
+            if ($smsir_active) {
+                update_user_meta($user_id, 'smsir_phone', $cleaned_number);
+            }
+
+            if ($digits_active) {
+                update_user_meta($user_id, 'digits_phone', $standard_phone);
+                update_user_meta($user_id, 'digits_phone_no', $cleaned_number);
+                update_user_meta($user_id, 'digits_form_data',  serialize([]));
+                update_user_meta($user_id, 'digt_countrycode', '+98');
+            }
+
             update_user_meta($user_id, 'billing_country', 'IR');
-            update_user_meta($user_id, 'digt_countrycode', '+98');
             update_user_meta($user_id, 'wp_capabilities', serialize(['customer' => true]));
             update_user_meta($user_id, 'nirwallet_referral_code', $ref_code);
-            sa_log($type, 'success', sprintf(__('User %s details updated.', 'safe-assistant'), $digits_phone_number));
+            sa_log($type, 'success', sprintf(__('User %s details updated.', 'safe-assistant'), $standard_phone));
             if ((user_has_ever_been_charged($user_id) && $not_only_wallet_first_time) || !user_has_ever_been_charged($user_id)) {
                 if (!$continue_if_exists) {
-                    sa_log($type, 'info', sprintf(__('Info: User %s wallet not charged due to settings.', 'safe-assistant'), $digits_phone_number));
+                    sa_log($type, 'info', sprintf(__('Info: User %s wallet not charged due to settings.', 'safe-assistant'), $standard_phone));
                     continue;
                 }
                 if (add_wallet_balance($user_id, $charge, $wallet_timestamp)) {
-                    sa_log($type, 'success', sprintf(__('Wallet charged for user %s with amount %d.', 'safe-assistant'), $digits_phone_number, $charge));
+                    sa_log($type, 'success', sprintf(__('Wallet charged for user %s with amount %d.', 'safe-assistant'), $standard_phone, $charge));
                 } else {
-                    sa_log($type, 'error', sprintf(__('Failed to charge wallet for user %s.', 'safe-assistant'), $digits_phone_number));
+                    sa_log($type, 'error', sprintf(__('Failed to charge wallet for user %s.', 'safe-assistant'), $standard_phone));
                 }
             }
 
             if (sa_filled($state) && sa_filled($city)) {
                 if (update_user_wc_address($user_id, $state, $city)) {
-                    sa_log($type, 'success', sprintf(__('Address updated for user %s.', 'safe-assistant'), $digits_phone_number));
+                    sa_log($type, 'success', sprintf(__('Address updated for user %s.', 'safe-assistant'), $standard_phone));
                 } else {
-                    sa_log($type, 'error', sprintf(__('Failed to update address for user %s.', 'safe-assistant'), $digits_phone_number));
+                    sa_log($type, 'error', sprintf(__('Failed to update address for user %s.', 'safe-assistant'), $standard_phone));
                 }
             } else {
-                sa_log($type, 'warning', sprintf(__('State or city empty for user %s.', 'safe-assistant'), $digits_phone_number));
+                sa_log($type, 'warning', sprintf(__('State or city empty for user %s.', 'safe-assistant'), $standard_phone));
             }
 
             if (sa_get_option('user_importer_sms_status')) {
