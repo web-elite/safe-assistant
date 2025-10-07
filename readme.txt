@@ -5,7 +5,7 @@ Donate link: https://webelitee.ir
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,28 @@ Yes, `.pot` file is included inside the `languages` directory.
 3. addons page
 
 == Changelog ==
+
+= 1.6.4 =
+- fix (addon): log for charge wallet in user importer
+- fix: set charge default to 0
+- update translations
+- fix(addon): update revert user wallet action logs
+- release 1.6.0
+- fix change log on readme updater
+- release 1.6.1
+- fix numbers for charge
+- move order options to order toolkit addon
+- fix(addon): bugs about $charge
+- fix(addon): ajax handler block smsir ajax request
+- release 1.6.2
+- fix(title log) VPN Checker title log
+- release 1.6.3
+- fix(add-on): remove extra charge for fucking nirwallet plugin
+- feat: show to user file proccess how to be perofrmed
+- feat: log ajax pagination
+- feat: add smsir meta together with digits (automatic detection)
+- release 1.6.4
+
 
 = 1.6.3 =
 - fix (addon): log for charge wallet in user importer
