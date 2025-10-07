@@ -96,10 +96,10 @@ function add_wallet_balance(int $user_id, float $add_balance, ?int $expire_times
 {
     global $wpdb;
 
-    $existing_balance = get_user_meta($user_id, 'nirweb_wallet_balance', true) ?? 0;
-    $new_balance = floatval($existing_balance) + $add_balance;
+    // $existing_balance = get_user_meta($user_id, 'nirweb_wallet_balance', true) ?? 0;
+    // $new_balance = floatval($existing_balance) + $add_balance;
 
-    update_user_meta($user_id, 'nirweb_wallet_balance', $new_balance);
+    // update_user_meta($user_id, 'nirweb_wallet_balance', $new_balance);
 
     $wpdb->insert("{$wpdb->prefix}nirweb_wallet_op", [
         'user_id'      => $user_id,
