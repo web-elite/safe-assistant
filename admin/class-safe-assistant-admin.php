@@ -53,6 +53,9 @@ class Safe_Assistant_Admin
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		
+		// Add AJAX handlers
+		add_action('wp_ajax_sa_get_logs_paginated', [$this, 'handle_logs_pagination_ajax']);
 	}
 
 	/**
@@ -99,5 +102,54 @@ class Safe_Assistant_Admin
 		 */
 
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/safe-assistant-admin.js', array('jquery'), $this->version, false);
+		
+		// Localize script for AJAX
+		wp_localize_script($this->plugin_name, 'sa_ajax', [
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('sa_logs_nonce'),
+			'loading_text' => __('Loading...', 'safe-assistant'),
+			'error_text' => __('Error loading logs. Please try again.', 'safe-assistant')
+		]);
+	}
+
+	/**
+	 * Handle AJAX request for paginated logs
+	 *
+	 * @since 1.0.0
+	 */
+	public function handle_logs_pagination_ajax()
+	{
+		// Verify nonce
+		if (!wp_verify_nonce($_POST['nonce'] ?? '', 'sa_logs_nonce')) {
+			wp_die(__('Security check failed', 'safe-assistant'));
+		}
+
+		// Check user permissions
+		if (!current_user_can('manage_options')) {
+			wp_die(__('Insufficient permissions', 'safe-assistant'));
+		}
+
+		$type = sanitize_text_field($_POST['type'] ?? '');
+		$status = sanitize_text_field($_POST['status'] ?? '');
+		$page = intval($_POST['page'] ?? 1);
+		$per_page = intval($_POST['per_page'] ?? 20);
+
+		// Ensure empty strings are converted to null for the function
+		$type = empty($type) ? null : $type;
+		$status = empty($status) ? null : $status;
+
+		// Validate per_page
+		if ($per_page < 1 || $per_page > 100) {
+			$per_page = 20;
+		}
+
+		// Validate page
+		if ($page < 1) {
+			$page = 1;
+		}
+
+		$result = sa_render_logs_paginated($type, $status, $page, $per_page, true);
+
+		wp_send_json($result);
 	}
 }
