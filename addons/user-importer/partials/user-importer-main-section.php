@@ -1,3 +1,10 @@
+<?php
+// Get current settings for warning display
+$sms_enabled = sa_get_option('user_importer_sms_status', false);
+$sms_pattern = sa_get_option('user_importer_sms_pattern', '');
+$has_sms_pattern = !empty(trim($sms_pattern));
+?>
+
 <div class="postbox">
     <div class="inside">
         <h3><?php esc_html_e('Column Information:', 'safe-assistant'); ?></h3>
@@ -44,9 +51,16 @@
                 <td><input type="number" name="expire_date" id="expire_date" value="<?php echo esc_attr($expire_date_value); ?>" /></td>
             </tr>
         </table>
+        
+        <!-- Live Settings Status Display -->
+        <div id="settings_preview" style="background: #f1f1f1; padding: 15px; margin: 10px 0; border-left: 4px solid #0073aa; display: none;">
+            <h4><?php esc_html_e('Current Settings Preview:', 'safe-assistant'); ?></h4>
+            <div id="settings_status"></div>
+        </div>
+        
         <?php if (!get_transient(ADDON_USER_IMPORTER_SLUG . '_task')) : ?>
             <p class="submit">
-                <input type="submit" name="submit_csv" class="button button-primary" value="<?php esc_attr_e('Upload File', 'safe-assistant'); ?>" />
+                <input type="submit" name="submit_csv" class="button button-primary" value="<?php esc_attr_e('Upload File & Show Actions Preview', 'safe-assistant'); ?>" id="submit_csv_btn" />
             </p>
         <?php else : ?>
             <div class="notice notice-warning inline">
@@ -55,3 +69,163 @@
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+jQuery(document).ready(function($) {
+    // Add change listeners to form inputs to update preview
+    $('input[name="if_user_exist_continue"], input[name="not_only_wallet_first_time"], input[name="min_charge"], input[name="expire_date"], input[name="csv_file"]').on('change keyup', function() {
+        updateSettingsPreview();
+    });
+    
+    // Add click handler to submit button
+    $('#submit_csv_btn').on('click', function(e) {
+        e.preventDefault();
+        showUploadWarning();
+    });
+    
+    // Initialize preview on page load
+    updateSettingsPreview();
+    
+    function updateSettingsPreview() {
+        var previewHtml = [];
+        var hasFile = $('#csv_file').val() !== '';
+        var continueIfExists = $('#if_user_exist_continue').is(':checked');
+        var chargeExistingUsers = $('#not_only_wallet_first_time').is(':checked');
+        var minCharge = parseInt($('#min_charge').val()) || 0;
+        var expireDays = parseInt($('#expire_date').val()) || 0;
+        
+        if (hasFile) {
+            previewHtml.push('<span style="color: green;">✓ <?php esc_html_e('File selected', 'safe-assistant'); ?></span>');
+        } else {
+            previewHtml.push('<span style="color: #999;">○ <?php esc_html_e('No file selected', 'safe-assistant'); ?></span>');
+        }
+        
+        previewHtml.push('<br>');
+        
+        // Charging behavior
+        if (continueIfExists) {
+            if (chargeExistingUsers) {
+                previewHtml.push('<span style="color: orange;">⚠️ <?php esc_html_e('Will charge ALL users (including existing ones)', 'safe-assistant'); ?></span>');
+            } else {
+                previewHtml.push('<span style="color: blue;">ℹ️ <?php esc_html_e('Will charge only first-time users', 'safe-assistant'); ?></span>');
+            }
+        } else {
+            previewHtml.push('<span style="color: #999;">⏸️ <?php esc_html_e('Will skip charging existing users', 'safe-assistant'); ?></span>');
+        }
+        
+        if (minCharge > 0) {
+            previewHtml.push('<br><span style="color: #333;">💰 <?php esc_html_e('Min charge:', 'safe-assistant'); ?> ' + minCharge.toLocaleString() + ' <?php esc_html_e('Toman', 'safe-assistant'); ?></span>');
+        }
+        
+        if (expireDays > 0) {
+            previewHtml.push('<br><span style="color: #333;">⏰ <?php esc_html_e('Expires in:', 'safe-assistant'); ?> ' + expireDays + ' <?php esc_html_e('days', 'safe-assistant'); ?></span>');
+        }
+        
+        // SMS Status
+        <?php if ($sms_enabled && $has_sms_pattern) : ?>
+        previewHtml.push('<br><span style="color: green;">📱 <?php esc_html_e('SMS notifications: ENABLED', 'safe-assistant'); ?></span>');
+        <?php elseif ($sms_enabled && !$has_sms_pattern) : ?>
+        previewHtml.push('<br><span style="color: red;">📱 <?php esc_html_e('SMS enabled but NO PATTERN set', 'safe-assistant'); ?></span>');
+        <?php else : ?>
+        previewHtml.push('<br><span style="color: #999;">📱 <?php esc_html_e('SMS notifications: DISABLED', 'safe-assistant'); ?></span>');
+        <?php endif; ?>
+        
+        $('#settings_status').html(previewHtml.join(''));
+        $('#settings_preview').show();
+    }
+    
+    function showUploadWarning() {
+        var warningMessages = [];
+        var csvFile = $('#csv_file').val();
+        
+        if (!csvFile) {
+            alert('<?php esc_html_e('Please select a CSV file first.', 'safe-assistant'); ?>');
+            return;
+        }
+        
+        // Check what actions will be performed
+        var continueIfExists = $('#if_user_exist_continue').is(':checked');
+        var chargeExistingUsers = $('#not_only_wallet_first_time').is(':checked');
+        var minCharge = parseInt($('#min_charge').val()) || 0;
+        var expireDays = parseInt($('#expire_date').val()) || 0;
+        
+        warningMessages.push('=== <?php esc_html_e('ACTIONS TO BE PERFORMED', 'safe-assistant'); ?> ===');
+        warningMessages.push('');
+        
+        // User creation/update
+        warningMessages.push('👤 <?php esc_html_e('USER MANAGEMENT:', 'safe-assistant'); ?>');
+        warningMessages.push('   ✓ <?php esc_html_e('Create new users for phone numbers not in system', 'safe-assistant'); ?>');
+        warningMessages.push('   ✓ <?php esc_html_e('Update existing user information (name, location)', 'safe-assistant'); ?>');
+        warningMessages.push('   ✓ <?php esc_html_e('Set billing and shipping addresses', 'safe-assistant'); ?>');
+        warningMessages.push('   ✓ <?php esc_html_e('Generate unique referral codes', 'safe-assistant'); ?>');
+        warningMessages.push('   ✓ <?php esc_html_e('Configure Digits plugin phone authentication', 'safe-assistant'); ?>');
+        warningMessages.push('');
+        
+        // Wallet charging
+        warningMessages.push('💰 <?php esc_html_e('WALLET CHARGING:', 'safe-assistant'); ?>');
+        if (continueIfExists) {
+            if (chargeExistingUsers) {
+                warningMessages.push('   ✓ <?php esc_html_e('Charge wallets for ALL users (new and existing)', 'safe-assistant'); ?>');
+                warningMessages.push('   ⚠️ <?php esc_html_e('WARNING: This will add balance to users who already have charges!', 'safe-assistant'); ?>');
+            } else {
+                warningMessages.push('   ✓ <?php esc_html_e('Charge wallets ONLY for first-time users', 'safe-assistant'); ?>');
+                warningMessages.push('   ℹ️ <?php esc_html_e('Existing users with previous charges will be skipped', 'safe-assistant'); ?>');
+            }
+        } else {
+            warningMessages.push('   ❌ <?php esc_html_e('Skip wallet charging for existing users completely', 'safe-assistant'); ?>');
+            warningMessages.push('   ℹ️ <?php esc_html_e('Only new users will get wallet charges', 'safe-assistant'); ?>');
+        }
+        
+        if (minCharge > 0) {
+            warningMessages.push('   • <?php esc_html_e('Minimum charge amount:', 'safe-assistant'); ?> ' + minCharge.toLocaleString() + ' <?php esc_html_e('Toman', 'safe-assistant'); ?>');
+        }
+        
+        if (expireDays > 0) {
+            warningMessages.push('   • <?php esc_html_e('Wallet charges will expire after:', 'safe-assistant'); ?> ' + expireDays + ' <?php esc_html_e('days', 'safe-assistant'); ?>');
+        } else {
+            warningMessages.push('   • <?php esc_html_e('Wallet charges will not expire', 'safe-assistant'); ?>');
+        }
+        warningMessages.push('');
+        
+        // WooCommerce integration
+        warningMessages.push('🛒 <?php esc_html_e('WooCommerce Integration:', 'safe-assistant'); ?>');
+        warningMessages.push('   • <?php esc_html_e('Update customer lookup table', 'safe-assistant'); ?>');
+        warningMessages.push('   • <?php esc_html_e('Set customer capabilities', 'safe-assistant'); ?>');
+        warningMessages.push('');
+        
+        // SMS notifications
+        <?php if ($sms_enabled && $has_sms_pattern) : ?>
+        warningMessages.push('📱 <?php esc_html_e('SMS Notifications:', 'safe-assistant'); ?>');
+        warningMessages.push('   • ✅ <?php esc_html_e('SMS notifications are ENABLED', 'safe-assistant'); ?>');
+        warningMessages.push('   • <?php esc_html_e('SMS will be sent to all processed users', 'safe-assistant'); ?>');
+        warningMessages.push('   • <?php esc_html_e('Pattern:', 'safe-assistant'); ?> <?php echo esc_js($sms_pattern); ?>');
+        <?php elseif ($sms_enabled && !$has_sms_pattern) : ?>
+        warningMessages.push('📱 <?php esc_html_e('SMS Notifications:', 'safe-assistant'); ?>');
+        warningMessages.push('   • ⚠️ <?php esc_html_e('SMS is enabled but NO PATTERN is set', 'safe-assistant'); ?>');
+        warningMessages.push('   • <?php esc_html_e('No SMS will be sent', 'safe-assistant'); ?>');
+        <?php else : ?>
+        warningMessages.push('📱 <?php esc_html_e('SMS Notifications:', 'safe-assistant'); ?>');
+        warningMessages.push('   • ❌ <?php esc_html_e('SMS notifications are DISABLED', 'safe-assistant'); ?>');
+        <?php endif; ?>
+        warningMessages.push('');
+        
+        // Processing info
+        warningMessages.push('⚙️ <?php esc_html_e('PROCESSING INFORMATION:', 'safe-assistant'); ?>');
+        warningMessages.push('   🔄 <?php esc_html_e('Process runs automatically in background', 'safe-assistant'); ?>');
+        warningMessages.push('   📊 <?php esc_html_e('Check \"Logs\" tab for real-time progress updates', 'safe-assistant'); ?>');
+        warningMessages.push('   ⏱️ <?php esc_html_e('Processing speed: ~20 rows per minute', 'safe-assistant'); ?>');
+        warningMessages.push('   🚫 <?php esc_html_e('Cannot upload new file while processing', 'safe-assistant'); ?>');
+        warningMessages.push('');
+        warningMessages.push('='.repeat(50));
+        warningMessages.push('❓ <?php esc_html_e('CONFIRM: Do you want to start the import process?', 'safe-assistant'); ?>');
+        warningMessages.push('   <?php esc_html_e('This action cannot be undone easily!', 'safe-assistant'); ?>');
+        
+        var confirmMessage = warningMessages.join('\n');
+        
+        if (confirm(confirmMessage)) {
+            // User confirmed, submit the form
+            $('#submit_csv_btn').off('click').attr('type', 'submit').trigger('click');
+        }
+    }
+});
+</script>
