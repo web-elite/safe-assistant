@@ -340,7 +340,29 @@ function my_csv_cron_handler()
         $min_charge = intval($form_data['min_charge']);
         $expire_days = intval($form_data['expire_date']);
 
-        $chunk_size = 20;
+        // Get batch size from settings or use default
+        $chunk_size = intval(sa_get_option('user_importer_batch_size', 20));
+        if ($chunk_size < 1 || $chunk_size > 1000) {
+            $chunk_size = 20;
+        }
+        
+        // Initialize or get statistics
+        $stats_key = ADDON_USER_IMPORTER_SLUG . '_current_stats';
+        $current_stats = get_transient($stats_key);
+        if (!$current_stats) {
+            $current_stats = [
+                'total_processed' => 0,
+                'users_created' => 0,
+                'users_updated' => 0,
+                'wallets_charged' => 0,
+                'sms_sent' => 0,
+                'sms_failed' => 0,
+                'errors' => 0,
+                'warnings' => 0,
+                'started_at' => current_time('mysql'),
+                'last_updated' => current_time('mysql')
+            ];
+        }
 
         require_once ABSPATH . 'wp-admin/includes/file.php';
         WP_Filesystem();
@@ -436,6 +458,7 @@ function my_csv_cron_handler()
 
             if ('' === $phone_number) {
                 sa_log($type, 'warning', sprintf(__('Phone number empty in row %d.', 'safe-assistant'), $offset + $processed_count));
+                $current_stats['warnings']++;
                 continue;
             }
 
@@ -461,6 +484,7 @@ function my_csv_cron_handler()
                 $is_valid = (bool) preg_match('/^\+98\d{10}$/', $standard_phone);
                 if (!$is_valid) {
                     sa_log($type, 'warning', sprintf(__('Invalid phone format for Digits plugin: %s', 'safe-assistant'), $phone_number));
+                    $current_stats['warnings']++;
                     continue;
                 }
             }
@@ -470,6 +494,7 @@ function my_csv_cron_handler()
                 $is_valid = (bool) preg_match('/^0\d{10}$/', $standard_phone);
                 if (!$is_valid) {
                     sa_log($type, 'warning', sprintf(__('Invalid phone format for SmsIR plugin: %s', 'safe-assistant'), $phone_number));
+                    $current_stats['warnings']++;
                     continue;
                 }
             }
@@ -483,6 +508,7 @@ function my_csv_cron_handler()
                     $is_valid = true;
                 } else {
                     sa_log($type, 'warning', sprintf(__('Unrecognized phone format: %s', 'safe-assistant'), $phone_number));
+                    $current_stats['warnings']++;
                     continue;
                 }
             }
@@ -492,8 +518,11 @@ function my_csv_cron_handler()
             $user_id = find_user_by_phone($phone_number);
             $cleaned_number = clean_phone_number($phone_number);
 
+            $user_existed = false;
             if (!is_null($user_id)) {
+                $user_existed = true;
                 sa_log($type, 'info', sprintf(__('User %s already exists (ID: %d).', 'safe-assistant'), $standard_phone, $user_id));
+                $current_stats['users_updated']++;
             } else {
                 $password = wp_generate_password(12, false);
                 $email = $standard_phone . '@' . parse_url(get_site_url(), PHP_URL_HOST);
@@ -501,11 +530,15 @@ function my_csv_cron_handler()
 
                 if (is_wp_error($user_id)) {
                     sa_log($type, 'error', sprintf(__('Failed to create user %s: %s', 'safe-assistant'), $standard_phone, $user_id->get_error_message()));
+                    $current_stats['errors']++;
                     continue;
                 }
                 update_user_meta($user_id, 'billing_email', sanitize_email($email));
                 sa_log($type, 'success', sprintf(__('User %s created (ID: %d).', 'safe-assistant'), $standard_phone, $user_id));
+                $current_stats['users_created']++;
             }
+            
+            $current_stats['total_processed']++;
 
             wp_update_user([
                 'ID'         => $user_id,
@@ -542,14 +575,16 @@ function my_csv_cron_handler()
             update_user_meta($user_id, 'nirwallet_referral_code', $ref_code);
             sa_log($type, 'success', sprintf(__('User %s details updated.', 'safe-assistant'), $standard_phone));
             if ((user_has_ever_been_charged($user_id) && $not_only_wallet_first_time) || !user_has_ever_been_charged($user_id)) {
-                if (!$continue_if_exists) {
+                if (!$continue_if_exists && $user_existed) {
                     sa_log($type, 'info', sprintf(__('Info: User %s wallet not charged due to settings.', 'safe-assistant'), $standard_phone));
-                    continue;
-                }
-                if (add_wallet_balance($user_id, $charge, $wallet_timestamp)) {
-                    sa_log($type, 'success', sprintf(__('Wallet charged for user %s with amount %d.', 'safe-assistant'), $standard_phone, $charge));
                 } else {
-                    sa_log($type, 'error', sprintf(__('Failed to charge wallet for user %s.', 'safe-assistant'), $standard_phone));
+                    if (add_wallet_balance($user_id, $charge, $wallet_timestamp)) {
+                        sa_log($type, 'success', sprintf(__('Wallet charged for user %s with amount %d.', 'safe-assistant'), $standard_phone, $charge));
+                        $current_stats['wallets_charged']++;
+                    } else {
+                        sa_log($type, 'error', sprintf(__('Failed to charge wallet for user %s.', 'safe-assistant'), $standard_phone));
+                        $current_stats['errors']++;
+                    }
                 }
             }
 
@@ -558,9 +593,11 @@ function my_csv_cron_handler()
                     sa_log($type, 'success', sprintf(__('Address updated for user %s.', 'safe-assistant'), $standard_phone));
                 } else {
                     sa_log($type, 'error', sprintf(__('Failed to update address for user %s.', 'safe-assistant'), $standard_phone));
+                    $current_stats['errors']++;
                 }
             } else {
                 sa_log($type, 'warning', sprintf(__('State or city empty for user %s.', 'safe-assistant'), $standard_phone));
+                $current_stats['warnings']++;
             }
 
             if (sa_get_option('user_importer_sms_status')) {
@@ -570,34 +607,116 @@ function my_csv_cron_handler()
                     "expire_date" => $persian_expire_date
                 ], $cleaned_number, sa_get_option('user_importer_sms_pattern'))) {
                     sa_log($type, 'success', sprintf(__('Sms Send to %s Success!', 'safe-assistant'), $cleaned_number));
+                    $current_stats['sms_sent']++;
                 } else {
                     sa_log($type, 'error', sprintf(__('Sms Send to %s failed!', 'safe-assistant'), $cleaned_number));
+                    $current_stats['sms_failed']++;
+                    $current_stats['errors']++;
                 }
             }
         }
 
+        // Update statistics
+        $current_stats['last_updated'] = current_time('mysql');
+        set_transient($stats_key, $current_stats, HOUR_IN_SECONDS);
+        
         $is_eof = is_resource($handle) && feof($handle);
         fclose($handle);
 
         if ($is_eof) {
             sa_log($type, 'success', __('File processing completed.', 'safe-assistant'));
+            
+            // Save final results if enabled
+            if (sa_get_option('user_importer_save_results', true)) {
+                $current_stats['completed_at'] = current_time('mysql');
+                $current_stats['duration'] = strtotime($current_stats['completed_at']) - strtotime($current_stats['started_at']);
+                $current_stats['status'] = 'completed';
+                
+                $results = get_option('user_importer_results', []);
+                $results[] = [
+                    'started_at' => $current_stats['started_at'],
+                    'completed_at' => $current_stats['completed_at'],
+                    'duration' => $current_stats['duration'],
+                    'status' => $current_stats['status'],
+                    'stats' => $current_stats,
+                    'file_name' => basename($file_path)
+                ];
+                
+                // Keep only last 50 results to prevent database bloat
+                if (count($results) > 50) {
+                    $results = array_slice($results, -50);
+                }
+                
+                update_option('user_importer_results', $results);
+                sa_log($type, 'success', sprintf(__('Processing results saved. Total: %d users, Created: %d, Updated: %d, Errors: %d', 'safe-assistant'), 
+                    $current_stats['total_processed'], 
+                    $current_stats['users_created'], 
+                    $current_stats['users_updated'], 
+                    $current_stats['errors']));
+            }
+            
             delete_transient(ADDON_USER_IMPORTER_SLUG . '_task');
             delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
+            delete_transient($stats_key);
             $wp_filesystem->delete($file_path);
         } else {
             $new_offset = $offset + $processed_count;
             $task_data['offset'] = $new_offset;
+            
+            // Add total rows count if not already present
+            if (!isset($task_data['total_rows'])) {
+                // Count total rows in file for progress tracking
+                $temp_handle = fopen($file_path, 'r');
+                $total_rows = 0;
+                while (fgetcsv($temp_handle) !== false) {
+                    $total_rows++;
+                }
+                fclose($temp_handle);
+                $task_data['total_rows'] = $total_rows;
+            }
+            
             set_transient(ADDON_USER_IMPORTER_SLUG . '_task', $task_data, HOUR_IN_SECONDS);
             delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
-            sa_log($type, 'info', sprintf(__('Processed %d rows, new offset: %d.', 'safe-assistant'), $processed_count, $new_offset));
+            sa_log($type, 'info', sprintf(__('Processed %d rows, new offset: %d. Progress: %.1f%%', 'safe-assistant'), 
+                $processed_count, 
+                $new_offset, 
+                ($new_offset / ($task_data['total_rows'] ?? $new_offset)) * 100));
         }
     } catch (Throwable $th) {
         sa_log($type, 'error', sprintf(__('File processing failed: %s', 'safe-assistant'), $th->getMessage()));
+        
+        // Save error results if statistics tracking is enabled
+        if (sa_get_option('user_importer_save_results', true) && isset($current_stats)) {
+            $current_stats['completed_at'] = current_time('mysql');
+            $current_stats['duration'] = strtotime($current_stats['completed_at']) - strtotime($current_stats['started_at']);
+            $current_stats['status'] = 'failed';
+            $current_stats['error_message'] = $th->getMessage();
+            
+            $results = get_option('user_importer_results', []);
+            $results[] = [
+                'started_at' => $current_stats['started_at'],
+                'completed_at' => $current_stats['completed_at'],
+                'duration' => $current_stats['duration'],
+                'status' => $current_stats['status'],
+                'stats' => $current_stats,
+                'file_name' => isset($file_path) ? basename($file_path) : 'unknown',
+                'error_message' => $th->getMessage()
+            ];
+            
+            // Keep only last 50 results to prevent database bloat
+            if (count($results) > 50) {
+                $results = array_slice($results, -50);
+            }
+            
+            update_option('user_importer_results', $results);
+        }
+        
         if (is_resource($handle)) {
             fclose($handle);
         }
         delete_transient(ADDON_USER_IMPORTER_SLUG . '_task');
         delete_transient(ADDON_USER_IMPORTER_SLUG . '_running');
+        delete_transient($stats_key);
     }
 }
 

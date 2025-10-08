@@ -50,6 +50,13 @@ $has_sms_pattern = !empty(trim($sms_pattern));
                 <th scope="row"><label for="expire_date"><?php esc_html_e('Expiration Days', 'safe-assistant'); ?></label></th>
                 <td><input type="number" name="expire_date" id="expire_date" value="<?php echo esc_attr($expire_date_value); ?>" /></td>
             </tr>
+            <tr>
+                <th scope="row"><label for="batch_size"><?php esc_html_e('Batch Size (Rows per Minute)', 'safe-assistant'); ?></label></th>
+                <td>
+                    <input type="number" name="batch_size" id="batch_size" min="1" max="1000" value="<?php echo esc_attr(sa_get_option('user_importer_batch_size', 20)); ?>" />
+                    <p class="description"><?php esc_html_e('Number of CSV rows to process per minute. Higher values process faster but use more server resources.', 'safe-assistant'); ?></p>
+                </td>
+            </tr>
         </table>
         
         <!-- Live Settings Status Display -->
@@ -73,7 +80,7 @@ $has_sms_pattern = !empty(trim($sms_pattern));
 <script>
 jQuery(document).ready(function($) {
     // Add change listeners to form inputs to update preview
-    $('input[name="if_user_exist_continue"], input[name="not_only_wallet_first_time"], input[name="min_charge"], input[name="expire_date"], input[name="csv_file"]').on('change keyup', function() {
+    $('input[name="if_user_exist_continue"], input[name="not_only_wallet_first_time"], input[name="min_charge"], input[name="expire_date"], input[name="batch_size"], input[name="csv_file"]').on('change keyup', function() {
         updateSettingsPreview();
     });
     
@@ -93,6 +100,7 @@ jQuery(document).ready(function($) {
         var chargeExistingUsers = $('#not_only_wallet_first_time').is(':checked');
         var minCharge = parseInt($('#min_charge').val()) || 0;
         var expireDays = parseInt($('#expire_date').val()) || 0;
+        var batchSize = parseInt($('#batch_size').val()) || 20;
         
         if (hasFile) {
             previewHtml.push('<span style="color: green;">✓ <?php esc_html_e('File selected', 'safe-assistant'); ?></span>');
@@ -120,6 +128,8 @@ jQuery(document).ready(function($) {
         if (expireDays > 0) {
             previewHtml.push('<br><span style="color: #333;">⏰ <?php esc_html_e('Expires in:', 'safe-assistant'); ?> ' + expireDays + ' <?php esc_html_e('days', 'safe-assistant'); ?></span>');
         }
+        
+        previewHtml.push('<br><span style="color: #333;">⚡ <?php esc_html_e('Processing:', 'safe-assistant'); ?> ' + batchSize + ' <?php esc_html_e('rows/minute', 'safe-assistant'); ?></span>');
         
         // SMS Status
         <?php if ($sms_enabled && $has_sms_pattern) : ?>
@@ -212,8 +222,9 @@ jQuery(document).ready(function($) {
         // Processing info
         warningMessages.push('⚙️ <?php esc_html_e('PROCESSING INFORMATION:', 'safe-assistant'); ?>');
         warningMessages.push('   🔄 <?php esc_html_e('Process runs automatically in background', 'safe-assistant'); ?>');
-        warningMessages.push('   📊 <?php esc_html_e('Check \"Logs\" tab for real-time progress updates', 'safe-assistant'); ?>');
-        warningMessages.push('   ⏱️ <?php esc_html_e('Processing speed: ~20 rows per minute', 'safe-assistant'); ?>');
+        warningMessages.push('   📊 <?php esc_html_e('Check \"Logs\" and \"Results\" tabs for progress updates', 'safe-assistant'); ?>');
+        warningMessages.push('   ⏱️ <?php esc_html_e('Processing speed:', 'safe-assistant'); ?> ' + batchSize + ' <?php esc_html_e('rows per minute', 'safe-assistant'); ?>');
+        warningMessages.push('   📈 <?php esc_html_e('Real-time statistics will be saved and displayed', 'safe-assistant'); ?>');
         warningMessages.push('   🚫 <?php esc_html_e('Cannot upload new file while processing', 'safe-assistant'); ?>');
         warningMessages.push('');
         warningMessages.push('='.repeat(50));
