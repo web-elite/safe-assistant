@@ -158,6 +158,7 @@ jQuery(document).ready(function($) {
         var chargeExistingUsers = $('#not_only_wallet_first_time').is(':checked');
         var minCharge = parseInt($('#min_charge').val()) || 0;
         var expireDays = parseInt($('#expire_date').val()) || 0;
+        var batchSize = parseInt($('#batch_size').val()) || 20;
         
         warningMessages.push('=== <?php esc_html_e('ACTIONS TO BE PERFORMED', 'safe-assistant'); ?> ===');
         warningMessages.push('');
