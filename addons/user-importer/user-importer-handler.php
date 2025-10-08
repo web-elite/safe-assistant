@@ -439,11 +439,6 @@ function my_csv_cron_handler()
                 continue;
             }
 
-            if (strlen($phone_number) > 14 || strlen($phone_number) < 10) {
-                sa_log($type, 'warning', sprintf(__('Invalid phone number %s in row %d.', 'safe-assistant'), $phone_number, $offset + $processed_count));
-                continue;
-            }
-
             // Detect which plugin is active: Digits or SmsIR by checking plugin files
             if (!function_exists('is_plugin_active')) {
                 require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -458,7 +453,41 @@ function my_csv_cron_handler()
             } else {
                 $standard_phone = $phone_number;
             }
-            sa_log($type, 'info', sprintf(__('Phone Number is %s and digits number is %s', 'safe-assistant'), $phone_number, $standard_phone));
+
+            // Validation according to active plugin template
+            $is_valid = false;
+            // Digits expects +98XXXXXXXXXX
+            if ($digits_active) {
+                $is_valid = (bool) preg_match('/^\+98\d{10}$/', $standard_phone);
+                if (!$is_valid) {
+                    sa_log($type, 'warning', sprintf(__('Invalid phone format for Digits plugin: %s', 'safe-assistant'), $phone_number));
+                    continue;
+                }
+            }
+
+            // SmsIR expects 0XXXXXXXXXX (11 digits)
+            if ($smsir_active) {
+                $is_valid = (bool) preg_match('/^0\d{10}$/', $standard_phone);
+                if (!$is_valid) {
+                    sa_log($type, 'warning', sprintf(__('Invalid phone format for SmsIR plugin: %s', 'safe-assistant'), $phone_number));
+                    continue;
+                }
+            }
+
+            // If no specific plugin active, ensure we have a raw 10-digit mobile (e.g., 9123456789) after cleaning
+            if (!$digits_active && !$smsir_active) {
+                $clean_raw = clean_phone_number($standard_phone);
+                if (is_string($clean_raw) && preg_match('/^\d{10}$/', $clean_raw)) {
+                    // convert to a common standard used elsewhere (e.g. +98...)
+                    $standard_phone = '+98' . $clean_raw;
+                    $is_valid = true;
+                } else {
+                    sa_log($type, 'warning', sprintf(__('Unrecognized phone format: %s', 'safe-assistant'), $phone_number));
+                    continue;
+                }
+            }
+
+            sa_log($type, 'info', sprintf(__('Phone Number is %s and standardized number is %s', 'safe-assistant'), $phone_number, $standard_phone));
 
             $user_id = find_user_by_phone($phone_number);
             $cleaned_number = clean_phone_number($phone_number);
