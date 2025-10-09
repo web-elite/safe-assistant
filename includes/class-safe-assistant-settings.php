@@ -1395,7 +1395,7 @@ class Safe_Assistant_Settings
 		echo '<label for="sa-logs-type">' . esc_html__('Type:', 'safe-assistant') . '</label>';
 		echo '<select id="sa-logs-type">';
 		echo '<option value="">' . esc_html__('All Types', 'safe-assistant') . '</option>';
-		
+
 		// Get available types
 		global $wpdb;
 		$table = $wpdb->prefix . 'sa_logs';
@@ -1403,7 +1403,7 @@ class Safe_Assistant_Settings
 		foreach ($types as $type) {
 			echo '<option value="' . esc_attr($type) . '">' . esc_html($type) . '</option>';
 		}
-		
+
 		echo '</select>';
 		echo '<label for="sa-logs-status">' . esc_html__('Status:', 'safe-assistant') . '</label>';
 		echo '<select id="sa-logs-status">';
@@ -1413,7 +1413,7 @@ class Safe_Assistant_Settings
 		echo '<option value="warning">' . esc_html__('Warning', 'safe-assistant') . '</option>';
 		echo '<option value="error">' . esc_html__('Error', 'safe-assistant') . '</option>';
 		echo '</select>';
-		
+
 		echo '<label for="sa-logs-per-page">' . esc_html__('Per Page:', 'safe-assistant') . '</label>';
 		echo '<select id="sa-logs-per-page">';
 		echo '<option value="10">10</option>';
@@ -1421,19 +1421,14 @@ class Safe_Assistant_Settings
 		echo '<option value="50">50</option>';
 		echo '<option value="100">100</option>';
 		echo '</select>';
-		
+
 		echo '<button type="button" class="button" id="sa-logs-refresh">' . esc_html__('Refresh', 'safe-assistant') . '</button>';
 		echo '</div>';
-		
+
 		echo '<div id="sa-logs-container">';
 		echo sa_render_logs_paginated();
 		echo '</div>';
 		echo '</div>';
-	}
-
-	public function render_sms_logs()
-	{
-		echo sa_render_sms_logs();
 	}
 
 	private function create_last_options()
@@ -1444,38 +1439,13 @@ class Safe_Assistant_Settings
 				'id'     => 'logs',
 				'title'  => esc_html__('Logs', 'safe-assistant'),
 				'icon'   => 'fas fa-file-alt',
-
-			]
-		);
-
-		CSF::createSection(
-			SAFE_ASSISTANT_SETTING_ID,
-			[
-				'parent' => 'logs',
-				'title'  => esc_html__('General Logs', 'safe-assistant'),
-				'icon'   => 'fas fa-sms',
 				'fields' => [
 					[
 						'type'     => 'callback',
 						'function'  => [$this, 'render_logs'],
 					],
 				]
-			]
-		);
 
-		CSF::createSection(
-			SAFE_ASSISTANT_SETTING_ID,
-			[
-				'parent' => 'logs',
-				'id'     => 'sms_logs',
-				'title'  => esc_html__('SMS Logs', 'safe-assistant'),
-				'icon'   => 'fas fa-sms',
-				'fields' => [
-					[
-						'type'     => 'callback',
-						'function'  => [$this, 'render_sms_logs'],
-					],
-				]
 			]
 		);
 

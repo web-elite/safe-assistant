@@ -144,67 +144,6 @@ if (!function_exists('sa_render_logs')) {
     }
 }
 
-if (!function_exists('sa_render_sms_logs')) {
-    /**
-     * Alias for sa_log
-     */
-    function sa_render_sms_logs(int $limit = 50)
-    {
-        global $wpdb;
-        $table = $wpdb->prefix . 'sa_logs';
-        $rows = $wpdb->get_results($wpdb->prepare(
-            "SELECT * FROM $table WHERE type=%s ORDER BY created_at DESC LIMIT %d",
-            'sms',
-            $limit
-        ));
-
-        if (!$rows) return '<p>' . esc_html__('No SMS logs found.', 'safe-assistant') . '</p>';
-
-        $html = '<table class="sa-logs-table">';
-        $html .= '<thead><tr>
-                <th>' . esc_html__('ID', 'safe-assistant') . '</th>
-                <th>' . esc_html__('Status', 'safe-assistant') . '</th>
-                <th>' . esc_html__('Title', 'safe-assistant') . '</th>
-                <th>' . esc_html__('Message', 'safe-assistant') . '</th>
-                <th>' . esc_html__('Request Data', 'safe-assistant') . '</th>
-                <th>' . esc_html__('Response Items', 'safe-assistant') . '</th>
-                <th>' . esc_html__('Created At', 'safe-assistant') . '</th>
-              </tr></thead><tbody>';
-
-        foreach ($rows as $row) {
-            $result = maybe_unserialize($row->result);
-            $request_data = isset($result['data']) ? '<pre>' . esc_html(print_r($result['data'], true)) . '</pre>' : '';
-
-            $response_display = '';
-            if (!empty($result['response'])) {
-                $decoded = json_decode($result['response'], true);
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    $response_display = '<table class="sms-response-table">';
-                    foreach ($decoded as $key => $val) {
-                        $response_display .= '<tr><td>' . esc_html($key) . '</td><td>' . esc_html(is_array($val) ? print_r($val, true) : $val) . '</td></tr>';
-                    }
-                    $response_display .= '</table>';
-                } else {
-                    $response_display = '<pre>' . esc_html($result['response']) . '</pre>';
-                }
-            }
-
-            $html .= '<tr>
-                    <td>' . esc_html($row->id) . '</td>
-                    <td class="status-' . esc_attr($row->status) . '">' . esc_html($row->status) . '</td>
-                    <td>' . esc_html($row->title) . '</td>
-                    <td>' . esc_html($row->message) . '</td>
-                    <td>' . $request_data . '</td>
-                    <td>' . $response_display . '</td>
-                    <td>' . esc_html($row->created_at) . '</td>
-                  </tr>';
-        }
-
-        $html .= '</tbody></table>';
-        return $html;
-    }
-}
-
 if (!function_exists('sa_get_logs_count')) {
     /**
      * Get total count of logs

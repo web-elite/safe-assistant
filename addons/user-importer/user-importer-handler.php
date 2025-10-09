@@ -105,7 +105,7 @@ function add_wallet_balance(int $user_id, float $add_balance, ?int $expire_times
         'user_id'      => $user_id,
         'user_created' => 0,
         'amount'       => $add_balance,
-        'description'  => __('Wallet charge for in-person buyers', 'safe-assistant'),
+        'description'  => __('Wallet credit for in-person buyers', 'safe-assistant'),
         'type_op'      => 'credit',
         'type_v'       => 'register',
         'created'      => current_time('mysql'),
@@ -124,11 +124,10 @@ function add_wallet_balance(int $user_id, float $add_balance, ?int $expire_times
 }
 
 /**
- * Check if user has ever been charged
+ * Check if user has ever received wallet credit
  *
- * @param int $user_id User ID
- * @return bool True if charged, false otherwise
- * @since 1.0.0
+ * @param int $user_id
+ * @return bool True if credited, false otherwise
  */
 function user_has_ever_been_charged(int $user_id): bool
 {
@@ -354,7 +353,7 @@ function my_csv_cron_handler()
                 'total_processed' => 0,
                 'users_created' => 0,
                 'users_updated' => 0,
-                'wallets_charged' => 0,
+                'wallets_credited' => 0,
                 'sms_sent' => 0,
                 'sms_failed' => 0,
                 'errors' => 0,
@@ -560,7 +559,7 @@ function my_csv_cron_handler()
             $digits_active = is_plugin_active('digits/index.php');
             $smsir_active = is_plugin_active('smsir/index.php');
             if ($smsir_active) {
-                update_user_meta($user_id, 'smsir_phone', $cleaned_number);
+                update_user_meta($user_id, 'smsir_phone', $standard_phone);
             }
 
             if ($digits_active) {
@@ -580,7 +579,7 @@ function my_csv_cron_handler()
                 } else {
                     if (add_wallet_balance($user_id, $charge, $wallet_timestamp)) {
                         sa_log($type, 'success', sprintf(__('Wallet charged for user %s with amount %d.', 'safe-assistant'), $standard_phone, $charge));
-                        $current_stats['wallets_charged']++;
+                        $current_stats['wallets_credited']++;
                     } else {
                         sa_log($type, 'error', sprintf(__('Failed to charge wallet for user %s.', 'safe-assistant'), $standard_phone));
                         $current_stats['errors']++;

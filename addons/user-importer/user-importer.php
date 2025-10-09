@@ -152,7 +152,7 @@ class Addon_User_Importer
                     'desc'    => __('Enter the SMS pattern ID to use for sending messages.', 'safe-assistant') . '<br>'
                         . __('Make sure the pattern includes below parameters:', 'safe-assistant') . '<br>'
                         . __('first parameter is buy date', 'safe-assistant') . ' (<code>buy_date</code>)' . '<br>'
-                        . __('second parameter is charge amount', 'safe-assistant') . ' (<code>charge_amount</code>)' . '<br>'
+                        . __('second parameter is credit amount', 'safe-assistant') . ' (<code>credit_amount</code>)' . '<br>'
                         . __('third parameter is expire date.', 'safe-assistant') . ' (<code>expire_date</code>)' . '<br>',
                 ],
                 [
@@ -212,28 +212,32 @@ class Addon_User_Importer
         $is_running = get_transient(ADDON_USER_IMPORTER_SLUG . '_running');
 
         echo '<div class="user-importer-results-wrapper">';
-        
+
         // Current Status
         echo '<div class="postbox">';
+        echo '<div class="postbox-header">';
         echo '<h3 class="hndle">' . esc_html__('Current Processing Status', 'safe-assistant') . '</h3>';
+        echo '</div>';
         echo '<div class="inside">';
-        
+
         if ($current_task) {
             $progress = 0;
             if (isset($current_task['total_rows']) && $current_task['total_rows'] > 0) {
                 $progress = ($current_task['offset'] / $current_task['total_rows']) * 100;
             }
-            
+
             echo '<div class="processing-status processing">';
             echo '<div class="status-indicator">';
             echo '<span class="circle-status pulse ' . ($is_running ? 'green' : 'yellow') . '"></span>';
             echo '<strong>' . ($is_running ? esc_html__('Processing...', 'safe-assistant') : esc_html__('Queued', 'safe-assistant')) . '</strong>';
             echo '</div>';
             echo '<div class="progress-info">';
-            echo '<p>' . sprintf(esc_html__('Progress: %d/%d rows (%.1f%%)', 'safe-assistant'), 
-                $current_task['offset'], 
-                $current_task['total_rows'] ?? 0, 
-                $progress) . '</p>';
+            echo '<p>' . sprintf(
+                esc_html__('Progress: %d/%d rows (%.1f%%)', 'safe-assistant'),
+                $current_task['offset'],
+                $current_task['total_rows'] ?? 0,
+                $progress
+            ) . '</p>';
             if (isset($current_task['file_path'])) {
                 echo '<p><small>' . esc_html__('File:', 'safe-assistant') . ' ' . esc_html(basename($current_task['file_path'])) . '</small></p>';
             }
@@ -248,23 +252,25 @@ class Addon_User_Importer
             echo '<p>' . esc_html__('No processing task running', 'safe-assistant') . '</p>';
             echo '</div>';
         }
-        
+
         echo '</div>';
         echo '</div>';
 
         // Processing History
         if (!empty($results)) {
             echo '<div class="postbox">';
+            echo '<div class="postbox-header">';
             echo '<h3 class="hndle">' . esc_html__('Processing History', 'safe-assistant') . '</h3>';
+            echo '</div>';
             echo '<div class="inside">';
-            
+
             echo '<div class="results-controls">';
             echo '<button type="button" class="button" id="clear-results">' . esc_html__('Clear History', 'safe-assistant') . '</button>';
             echo '<button type="button" class="button" id="export-results">' . esc_html__('Export Results', 'safe-assistant') . '</button>';
             echo '</div>';
 
             // Sort results by date (newest first)
-            usort($results, function($a, $b) {
+            usort($results, function ($a, $b) {
                 return strtotime($b['completed_at']) - strtotime($a['completed_at']);
             });
 
@@ -273,14 +279,14 @@ class Addon_User_Importer
                 $this->render_result_card($result, $index);
             }
             echo '</div>';
-            
+
             if (count($results) > 10) {
                 echo '<p class="show-more-results">';
-                echo '<button type="button" class="button" id="show-all-results">' . 
-                     sprintf(esc_html__('Show all %d results', 'safe-assistant'), count($results)) . '</button>';
+                echo '<button type="button" class="button" id="show-all-results">' .
+                    sprintf(esc_html__('Show all %d results', 'safe-assistant'), count($results)) . '</button>';
                 echo '</p>';
             }
-            
+
             echo '</div>';
             echo '</div>';
         } else {
@@ -294,7 +300,7 @@ class Addon_User_Importer
             echo '</div>';
             echo '</div>';
         }
-        
+
         echo '</div>';
 
         // Add JavaScript for interactive features
@@ -314,53 +320,53 @@ class Addon_User_Importer
         echo '<h4>' . sprintf(esc_html__('Import #%d', 'safe-assistant'), $index + 1) . '</h4>';
         echo '<span class="result-date">' . esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($result['started_at']))) . '</span>';
         echo '</div>';
-        
+
         echo '<div class="result-stats">';
         echo '<div class="stat-item">';
         echo '<span class="stat-label">' . esc_html__('Total Rows:', 'safe-assistant') . '</span>';
         echo '<span class="stat-value">' . esc_html($result['stats']['total_processed'] ?? 0) . '</span>';
         echo '</div>';
-        
+
         echo '<div class="stat-item">';
         echo '<span class="stat-label">' . esc_html__('Users Created:', 'safe-assistant') . '</span>';
         echo '<span class="stat-value success">' . esc_html($result['stats']['users_created'] ?? 0) . '</span>';
         echo '</div>';
-        
+
         echo '<div class="stat-item">';
         echo '<span class="stat-label">' . esc_html__('Users Updated:', 'safe-assistant') . '</span>';
         echo '<span class="stat-value info">' . esc_html($result['stats']['users_updated'] ?? 0) . '</span>';
         echo '</div>';
-        
+
         echo '<div class="stat-item">';
-        echo '<span class="stat-label">' . esc_html__('Wallets Charged:', 'safe-assistant') . '</span>';
-        echo '<span class="stat-value warning">' . esc_html($result['stats']['wallets_charged'] ?? 0) . '</span>';
+        echo '<span class="stat-label">' . esc_html__('Wallets Credited:', 'safe-assistant') . '</span>';
+        echo '<span class="stat-value warning">' . esc_html($result['stats']['wallets_credited'] ?? 0) . '</span>';
         echo '</div>';
-        
+
         echo '<div class="stat-item">';
         echo '<span class="stat-label">' . esc_html__('SMS Sent:', 'safe-assistant') . '</span>';
         echo '<span class="stat-value info">' . esc_html($result['stats']['sms_sent'] ?? 0) . '</span>';
         echo '</div>';
-        
+
         echo '<div class="stat-item">';
         echo '<span class="stat-label">' . esc_html__('Errors:', 'safe-assistant') . '</span>';
         echo '<span class="stat-value error">' . esc_html($result['stats']['errors'] ?? 0) . '</span>';
         echo '</div>';
-        
+
         echo '</div>';
-        
+
         echo '<div class="result-progress">';
         echo '<div class="progress-bar">';
         echo '<div class="progress-fill" style="width: ' . esc_attr($success_rate) . '%"></div>';
         echo '</div>';
         echo '<span class="progress-text">' . sprintf(esc_html__('Success Rate: %.1f%%', 'safe-assistant'), $success_rate) . '</span>';
         echo '</div>';
-        
+
         if (isset($result['duration'])) {
             echo '<div class="result-footer">';
             echo '<small>' . sprintf(esc_html__('Duration: %s', 'safe-assistant'), $this->format_duration($result['duration'])) . '</small>';
             echo '</div>';
         }
-        
+
         echo '</div>';
     }
 
@@ -369,7 +375,7 @@ class Addon_User_Importer
         $hours = floor($seconds / 3600);
         $minutes = floor(($seconds % 3600) / 60);
         $seconds = $seconds % 60;
-        
+
         if ($hours > 0) {
             return sprintf('%dh %dm %ds', $hours, $minutes, $seconds);
         } elseif ($minutes > 0) {
@@ -381,65 +387,67 @@ class Addon_User_Importer
 
     private function add_results_javascript()
     {
-        ?>
+?>
         <script>
-        jQuery(document).ready(function($) {
-            // Clear results
-            $('#clear-results').on('click', function() {
-                if (confirm('<?php echo esc_js(__('Are you sure you want to clear all processing history?', 'safe-assistant')); ?>')) {
-                    $.post(ajaxurl, {
-                        action: 'clear_user_importer_results',
-                        nonce: '<?php echo wp_create_nonce('clear_results_nonce'); ?>'
-                    }, function(response) {
-                        if (response.success) {
-                            location.reload();
-                        } else {
-                            alert('<?php echo esc_js(__('Failed to clear results', 'safe-assistant')); ?>');
-                        }
-                    });
-                }
+            jQuery(document).ready(function($) {
+                // Clear results
+                $('#clear-results').on('click', function() {
+                    if (confirm('<?php echo esc_js(__('Are you sure you want to clear all processing history?', 'safe-assistant')); ?>')) {
+                        $.post(ajaxurl, {
+                            action: 'clear_user_importer_results',
+                            nonce: '<?php echo wp_create_nonce('clear_results_nonce'); ?>'
+                        }, function(response) {
+                            if (response.success) {
+                                location.reload();
+                            } else {
+                                alert('<?php echo esc_js(__('Failed to clear results', 'safe-assistant')); ?>');
+                            }
+                        });
+                    }
+                });
+
+                // Export results
+                $('#export-results').on('click', function() {
+                    window.open('<?php echo admin_url('admin-ajax.php?action=export_user_importer_results&nonce=' . wp_create_nonce('export_results_nonce')); ?>');
+                });
+
+                // Show all results
+                $('#show-all-results').on('click', function() {
+                    $('.result-card:hidden').show();
+                    $(this).hide();
+                });
             });
-            
-            // Export results
-            $('#export-results').on('click', function() {
-                window.open('<?php echo admin_url('admin-ajax.php?action=export_user_importer_results&nonce=' . wp_create_nonce('export_results_nonce')); ?>');
-            });
-            
-            // Show all results
-            $('#show-all-results').on('click', function() {
-                $('.result-card:hidden').show();
-                $(this).hide();
-            });
-        });
         </script>
-        <?php
+<?php
     }
 
     public function display_logs()
     {
-        echo '<div id="sa-logs-wrapper">';
+        echo '<div id="user-importer-logs-wrapper" class="sa-logs-wrapper">';
         echo '<div class="sa-logs-filters">';
-        echo '<label for="sa-logs-status">' . esc_html__('Status:', 'safe-assistant') . '</label>';
-        echo '<select id="sa-logs-status">';
+        // Ensure type is provided for AJAX filtering on addon pages
+        echo '<input type="hidden" id="user-importer-logs-type" class="sa-logs-type" value="' . esc_attr(ADDON_USER_IMPORTER_SLUG) . '">';
+        echo '<label for="user-importer-logs-status">' . esc_html__('Status:', 'safe-assistant') . '</label>';
+        echo '<select id="user-importer-logs-status" class="sa-logs-status">';
         echo '<option value="">' . esc_html__('All Statuses', 'safe-assistant') . '</option>';
         echo '<option value="info">' . esc_html__('Info', 'safe-assistant') . '</option>';
         echo '<option value="success">' . esc_html__('Success', 'safe-assistant') . '</option>';
         echo '<option value="warning">' . esc_html__('Warning', 'safe-assistant') . '</option>';
         echo '<option value="error">' . esc_html__('Error', 'safe-assistant') . '</option>';
         echo '</select>';
-        
-        echo '<label for="sa-logs-per-page">' . esc_html__('Per Page:', 'safe-assistant') . '</label>';
-        echo '<select id="sa-logs-per-page">';
+
+        echo '<label for="user-importer-logs-per-page">' . esc_html__('Per Page:', 'safe-assistant') . '</label>';
+        echo '<select id="user-importer-logs-per-page" class="sa-logs-per-page">';
         echo '<option value="10">10</option>';
         echo '<option value="20" selected>20</option>';
         echo '<option value="50">50</option>';
         echo '<option value="100">100</option>';
         echo '</select>';
-        
-        echo '<button type="button" class="button" id="sa-logs-refresh">' . esc_html__('Refresh', 'safe-assistant') . '</button>';
+
+        echo '<button type="button" class="button sa-logs-refresh" id="user-importer-logs-refresh">' . esc_html__('Refresh', 'safe-assistant') . '</button>';
         echo '</div>';
-        
-        echo '<div id="sa-logs-container">';
+
+        echo '<div id="user-importer-logs-container" class="sa-logs-container">';
         echo sa_render_logs_paginated(ADDON_USER_IMPORTER_SLUG);
         echo '</div>';
         echo '</div>';
@@ -545,7 +553,7 @@ class Addon_User_Importer
      * @since 1.0.0
      * @return bool True on success, false on failure
      */
-    public function revert_wallet_charges(): bool
+    public function revert_wallet_credits(): bool
     {
         global $wpdb;
 
@@ -553,7 +561,7 @@ class Addon_User_Importer
             $wpdb->prepare(
                 "SELECT * FROM {$wpdb->prefix}nirweb_wallet_op 
              WHERE description = %s AND type_op = %s AND type_v = %s",
-                __("Wallet charge for in-person buyers", 'safe-assistant'),
+                __("Wallet credit for in-person buyers", 'safe-assistant'),
                 "credit",
                 "register"
             )
@@ -563,7 +571,7 @@ class Addon_User_Importer
             sa_log(
                 ADDON_USER_IMPORTER_SLUG,
                 'warning',
-                __('Revert Wallet Charges', 'safe-assistant'),
+                __('Revert Wallet Credits', 'safe-assistant'),
                 __('No transactions found for refund process', 'safe-assistant')
             );
             return false;
@@ -582,7 +590,7 @@ class Addon_User_Importer
                 sa_log(
                     ADDON_USER_IMPORTER_SLUG,
                     'error',
-                    __('Revert Wallet Charges', 'safe-assistant'),
+                    __('Revert Wallet Credits', 'safe-assistant'),
                     sprintf(
                         __('Insufficient balance for user %1$s. Current: %2$s, Required: %3$s', 'safe-assistant'),
                         $user_id,
@@ -600,7 +608,7 @@ class Addon_User_Importer
                 "user_id"      => $user_id,
                 "user_created" => 0,
                 "amount"       => -$amount,
-                "description"  => __("Refund of incorrect wallet charge", 'safe-assistant'),
+                "description"  => __("Refund of incorrect wallet credit", 'safe-assistant'),
                 "type_op"      => "debit",
                 "type_v"       => "revert",
                 "created"      => current_time("mysql"),
@@ -618,7 +626,7 @@ class Addon_User_Importer
             sa_log(
                 ADDON_USER_IMPORTER_SLUG,
                 'success',
-                __('Revert Wallet Charges', 'safe-assistant'),
+                __('Revert Wallet Credits', 'safe-assistant'),
                 sprintf(
                     __('Amount %1$s deducted from user %2$s wallet. Reverse transaction recorded.', 'safe-assistant'),
                     $amount,
@@ -631,7 +639,7 @@ class Addon_User_Importer
         sa_log(
             ADDON_USER_IMPORTER_SLUG,
             'success',
-            __('Revert Wallet Charges', 'safe-assistant'),
+            __('Revert Wallet Credits', 'safe-assistant'),
             sprintf(
                 __('Refund process completed successfully. %d transactions processed.', 'safe-assistant'),
                 $reverted_count
@@ -702,7 +710,7 @@ class Addon_User_Importer
             wp_send_json_error(['message' => __('Invalid nonce.', 'safe-assistant')]);
         }
 
-        $result = $this->revert_wallet_charges();
+        $result = $this->revert_wallet_credits();
         if ($result) {
             wp_send_json_success(['message' => __('All operations reverted successfully.', 'safe-assistant')]);
         } else {
@@ -740,7 +748,7 @@ class Addon_User_Importer
 
         delete_option('user_importer_results');
         sa_log(ADDON_USER_IMPORTER_SLUG, 'info', __('Processing results history cleared by user', 'safe-assistant'));
-        
+
         wp_send_json_success(['message' => __('Results history cleared successfully.', 'safe-assistant')]);
     }
 
@@ -755,7 +763,7 @@ class Addon_User_Importer
         }
 
         $results = get_option('user_importer_results', []);
-        
+
         if (empty($results)) {
             wp_die(__('No results to export.', 'safe-assistant'));
         }
@@ -770,7 +778,7 @@ class Addon_User_Importer
         $output = fopen('php://output', 'w');
 
         // Add BOM for UTF-8
-        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+        fprintf($output, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
         // CSV headers
         fputcsv($output, [
@@ -782,7 +790,7 @@ class Addon_User_Importer
             __('Total Processed', 'safe-assistant'),
             __('Users Created', 'safe-assistant'),
             __('Users Updated', 'safe-assistant'),
-            __('Wallets Charged', 'safe-assistant'),
+            __('Wallets Credited', 'safe-assistant'),
             __('SMS Sent', 'safe-assistant'),
             __('Errors', 'safe-assistant'),
             __('Success Rate (%)', 'safe-assistant'),

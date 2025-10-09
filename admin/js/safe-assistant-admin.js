@@ -78,7 +78,12 @@
 			if (isLoading) return;
 			
 			isLoading = true;
-			const container = $('#sa-logs-container');
+			
+			// Find the active logs container (either main plugin or addon)
+			let container = $('#sa-logs-container');
+			if (!container.length || !container.is(':visible')) {
+				container = $('.sa-logs-container:visible').first();
+			}
 			
 			// Show loading indicator
 			container.html('<div class="sa-logs-loading"><p><span class="spinner is-active"></span> ' + sa_ajax.loading_text + '</p></div>');
@@ -110,36 +115,55 @@
 			});
 		}
 		
+		// Helper function to get current filter values from the active logs context
+		function getCurrentFilters() {
+			// Find the active logs wrapper (either main plugin or addon)
+			const mainWrapper = $('#sa-logs-wrapper');
+			const addonWrapper = $('.sa-logs-wrapper').not('#sa-logs-wrapper');
+			
+			let typeVal = '', statusVal = '', perPageVal = 20;
+			
+			if (mainWrapper.length && mainWrapper.is(':visible')) {
+				// Main plugin logs
+				typeVal = $('#sa-logs-type').val() || '';
+				statusVal = $('#sa-logs-status').val() || '';
+				perPageVal = parseInt($('#sa-logs-per-page').val(), 10) || 20;
+			} else if (addonWrapper.length && addonWrapper.is(':visible')) {
+				// Addon logs - use class-based selectors within the visible wrapper
+				const activeWrapper = addonWrapper.filter(':visible').first();
+				typeVal = activeWrapper.find('.sa-logs-type').val() || '';
+				statusVal = activeWrapper.find('.sa-logs-status').val() || '';
+				perPageVal = parseInt(activeWrapper.find('.sa-logs-per-page').val(), 10) || 20;
+			}
+			
+			return { type: typeVal, status: statusVal, per_page: perPageVal };
+		}
+
 		// Handle pagination clicks
 		$(document).on('click', '.sa-page-btn', function(e) {
 			e.preventDefault();
 			const page = $(this).data('page');
-			const type = $('#sa-logs-type').val();
-			const status = $('#sa-logs-status').val();
-			const per_page = $('#sa-logs-per-page').val();
+			const filters = getCurrentFilters();
 			
-			loadLogs(page, type, status, per_page);
+			loadLogs(page, filters.type, filters.status, filters.per_page);
 			
-			// Scroll to top of logs
-			$('#sa-logs-wrapper')[0].scrollIntoView({ behavior: 'smooth' });
+			// Scroll to top of logs (find the active wrapper)
+			const activeWrapper = $('.sa-logs-wrapper:visible, #sa-logs-wrapper:visible').first();
+			if (activeWrapper.length) {
+				activeWrapper[0].scrollIntoView({ behavior: 'smooth' });
+			}
 		});
 		
-		// Handle filter changes
-		$('#sa-logs-type, #sa-logs-status, #sa-logs-per-page').on('change', function() {
-			const type = $('#sa-logs-type').val();
-			const status = $('#sa-logs-status').val();
-			const per_page = $('#sa-logs-per-page').val();
-			
-			loadLogs(1, type, status, per_page);
+		// Handle filter changes (delegated) - support both ID and class selectors
+		$(document).on('change', '#sa-logs-type, #sa-logs-status, #sa-logs-per-page, .sa-logs-type, .sa-logs-status, .sa-logs-per-page', function() {
+			const filters = getCurrentFilters();
+			loadLogs(1, filters.type, filters.status, filters.per_page);
 		});
-		
-		// Handle refresh button
-		$('#sa-logs-refresh').on('click', function() {
-			const type = $('#sa-logs-type').val();
-			const status = $('#sa-logs-status').val();
-			const per_page = $('#sa-logs-per-page').val();
-			
-			loadLogs(1, type, status, per_page);
+
+		// Handle refresh button (delegated) - support both ID and class selectors
+		$(document).on('click', '#sa-logs-refresh, .sa-logs-refresh', function() {
+			const filters = getCurrentFilters();
+			loadLogs(1, filters.type, filters.status, filters.per_page);
 		});
 		
 		// Handle details toggle
@@ -148,15 +172,14 @@
 		});
 		
 		// Auto-refresh logs every 30 seconds if on logs page
-		if ($('#sa-logs-wrapper').length > 0) {
+		if ($('#sa-logs-wrapper, .sa-logs-wrapper').length > 0) {
 			setInterval(function() {
-				if (!isLoading && $('#sa-logs-wrapper:visible').length > 0) {
-					const type = $('#sa-logs-type').val();
-					const status = $('#sa-logs-status').val();
-					const per_page = $('#sa-logs-per-page').val();
+				const activeWrapper = $('.sa-logs-wrapper:visible, #sa-logs-wrapper:visible');
+				if (!isLoading && activeWrapper.length > 0) {
+					const filters = getCurrentFilters();
 					const currentPage = $('.sa-page-btn.button-primary').data('page') || 1;
 					
-					loadLogs(currentPage, type, status, per_page);
+					loadLogs(currentPage, filters.type, filters.status, filters.per_page);
 				}
 			}, 30000); // 30 seconds
 		}
