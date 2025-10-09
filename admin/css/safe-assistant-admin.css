@@ -539,12 +539,18 @@
     margin: 20px 0;
 }
 
+.user-importer-results-wrapper .hndle {
+    margin: 0px;
+    padding: 15px;
+}
+
 .processing-status {
     display: flex;
     align-items: center;
     padding: 15px;
     border-radius: 6px;
     margin-bottom: 15px;
+    gap: 20px;
 }
 
 .processing-status.processing {
@@ -555,6 +561,10 @@
 .processing-status.idle {
     background: #f8f9fa;
     border-left: 4px solid #6c757d;
+}
+
+.processing-status.idle * {
+    margin: 0px;
 }
 
 .status-indicator {
