@@ -51,6 +51,33 @@ Yes, `.pot` file is included inside the `languages` directory.
 - feat: log ajax pagination
 - feat: add smsir meta together with digits (automatic detection)
 - release 1.6.4
+- add validation for phone
+- feat(addon): Batch SIze system for user-importer
+- fix(addon) batch size not found
+- fix: log ajax pagination
+- style(addon): process result
+
+
+= 1.6.4 =
+- fix (addon): log for charge wallet in user importer
+- fix: set charge default to 0
+- update translations
+- fix(addon): update revert user wallet action logs
+- release 1.6.0
+- fix change log on readme updater
+- release 1.6.1
+- fix numbers for charge
+- move order options to order toolkit addon
+- fix(addon): bugs about $charge
+- fix(addon): ajax handler block smsir ajax request
+- release 1.6.2
+- fix(title log) VPN Checker title log
+- release 1.6.3
+- fix(add-on): remove extra charge for fucking nirwallet plugin
+- feat: show to user file proccess how to be perofrmed
+- feat: log ajax pagination
+- feat: add smsir meta together with digits (automatic detection)
+- release 1.6.4
 
 
 = 1.6.3 =
