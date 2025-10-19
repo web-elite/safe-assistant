@@ -169,16 +169,24 @@ if (is_woocommerce_activated()) {
 		$shipping_is_free = ($cart_total >= $min_mashhad &&
 			$cart_total >= $min_others);
 
+		// Get customizable texts
+		$activated_nationwide_text = sa_get_option('free_shipping_activated_nationwide_text', 'Free shipping activated nationwide.');
+		$activated_mashhad_text = sa_get_option('free_shipping_activated_mashhad_text', 'Free shipping activated for Mashhad.');
+		$remaining_mashhad_text = sa_get_option('free_shipping_remaining_mashhad_text', '%s Toman left for free shipping in Mashhad.');
+		$remaining_other_text = sa_get_option('free_shipping_remaining_other_text', '%s Toman left for free shipping nationwide.');
+		$min_mashhad_text = sa_get_option('free_shipping_min_mashhad_text', 'Minimum purchase for free shipping in Mashhad: %s Toman');
+		$min_other_text = sa_get_option('free_shipping_min_other_text', 'Minimum purchase for free shipping nationwide: %s Toman');
+
 ?>
 		<div class="safe-assistant-free-shipping-progress <?php echo $shipping_is_free ? esc_attr('success') : ''; ?>">
 			<?php if ($shipping_is_free) : ?>
-				<p><?php esc_html_e('Free shipping activated nationwide.', 'safe-assistant'); ?></p>
+				<p><?php echo esc_html($activated_nationwide_text); ?></p>
 			<?php else : ?>
 				<div class="progress-label">
 					<?php if ($cart_total >= $min_mashhad) : ?>
-						<?php esc_html_e('Free shipping activated for Mashhad.', 'safe-assistant'); ?>
+						<?php echo esc_html($activated_mashhad_text); ?>
 					<?php else : ?>
-						<?php printf(esc_html__('%s Toman left for free shipping in Mashhad.', 'safe-assistant'), number_format($remain_mashhad)); ?>
+						<?php printf(esc_html($remaining_mashhad_text), number_format($remain_mashhad)); ?>
 					<?php endif; ?>
 				</div>
 				<div class="progress-box">
@@ -186,9 +194,9 @@ if (is_woocommerce_activated()) {
 				</div>
 				<div class="progress-label">
 					<?php if ($cart_total >= $min_others) : ?>
-						<?php esc_html_e('Free shipping activated nationwide.', 'safe-assistant'); ?>
+						<?php echo esc_html($activated_nationwide_text); ?>
 					<?php else : ?>
-						<?php printf(esc_html__('%s Toman left for free shipping nationwide.', 'safe-assistant'), number_format($remain_others)); ?>
+						<?php printf(esc_html($remaining_other_text), number_format($remain_others)); ?>
 					<?php endif; ?>
 				</div>
 				<div class="progress-box">
@@ -197,14 +205,14 @@ if (is_woocommerce_activated()) {
 				<?php if ($cart_total < $min_mashhad) : ?>
 					<div class="progress-labels">
 						<span style="color: #005c16;">
-							<?php printf(esc_html__('Minimum purchase for free shipping in Mashhad: %s Toman', 'safe-assistant'), number_format($min_mashhad)); ?>
+							<?php printf(esc_html($min_mashhad_text), number_format($min_mashhad)); ?>
 						</span>
 					</div>
 				<?php endif; ?>
 				<?php if ($cart_total < $min_others) : ?>
 					<div class="progress-labels">
 						<span style="color: #343434;">
-							<?php printf(esc_html__('Minimum purchase for free shipping nationwide: %s Toman', 'safe-assistant'), number_format($min_others)); ?>
+							<?php printf(esc_html($min_other_text), number_format($min_others)); ?>
 						</span>
 					</div>
 				<?php endif; ?>

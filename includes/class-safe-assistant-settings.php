@@ -273,6 +273,48 @@ class Safe_Assistant_Settings
 						'default' => 1500000,
 						'desc'    => esc_html__('Minimum order amount for free shipping in other cities.', 'safe-assistant'),
 					],
+					[
+						'id'      => 'free_shipping_activated_nationwide_text',
+						'type'    => 'text',
+						'title'   => esc_html__('Activated Nationwide Text', 'safe-assistant'),
+						'default' => esc_html__('Free shipping activated nationwide.', 'safe-assistant'),
+						'desc'    => esc_html__('Text to display when free shipping is activated nationwide.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'free_shipping_activated_mashhad_text',
+						'type'    => 'text',
+						'title'   => esc_html__('Activated Mashhad Text', 'safe-assistant'),
+						'default' => esc_html__('Free shipping activated for Mashhad.', 'safe-assistant'),
+						'desc'    => esc_html__('Text to display when free shipping is activated for Mashhad.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'free_shipping_remaining_mashhad_text',
+						'type'    => 'text',
+						'title'   => esc_html__('Remaining Mashhad Text', 'safe-assistant'),
+						'default' => esc_html__('%s Toman left for free shipping in Mashhad.', 'safe-assistant'),
+						'desc'    => esc_html__('Text to display remaining amount for free shipping in Mashhad. Use %s for the amount.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'free_shipping_remaining_other_text',
+						'type'    => 'text',
+						'title'   => esc_html__('Remaining Other Cities Text', 'safe-assistant'),
+						'default' => esc_html__('%s Toman left for free shipping nationwide.', 'safe-assistant'),
+						'desc'    => esc_html__('Text to display remaining amount for free shipping in other cities. Use %s for the amount.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'free_shipping_min_mashhad_text',
+						'type'    => 'text',
+						'title'   => esc_html__('Minimum Mashhad Text', 'safe-assistant'),
+						'default' => esc_html__('Minimum purchase for free shipping in Mashhad: %s Toman', 'safe-assistant'),
+						'desc'    => esc_html__('Text to display minimum purchase for free shipping in Mashhad. Use %s for the amount.', 'safe-assistant'),
+					],
+					[
+						'id'      => 'free_shipping_min_other_text',
+						'type'    => 'text',
+						'title'   => esc_html__('Minimum Other Cities Text', 'safe-assistant'),
+						'default' => esc_html__('Minimum purchase for free shipping nationwide: %s Toman', 'safe-assistant'),
+						'desc'    => esc_html__('Text to display minimum purchase for free shipping in other cities. Use %s for the amount.', 'safe-assistant'),
+					],
 				]
 			],
 			[
