@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Safe Assistant\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-18 13:26+0000\n"
+"POT-Creation-Date: 2025-10-19 08:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -22,41 +22,41 @@ msgstr ""
 msgid "%s (%d orders)"
 msgstr ""
 
-#: includes/class-safe-assistant-handler.php:181
+#: includes/class-safe-assistant-settings.php:294
 #, php-format
 msgid "%s Toman left for free shipping in Mashhad."
 msgstr ""
 
-#: includes/class-safe-assistant-handler.php:191
+#: includes/class-safe-assistant-settings.php:301
 #, php-format
 msgid "%s Toman left for free shipping nationwide."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1350
+#: includes/class-safe-assistant-settings.php:1392
 msgid "1 Day"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1351
+#: includes/class-safe-assistant-settings.php:1393
 msgid "2 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1352
+#: includes/class-safe-assistant-settings.php:1394
 msgid "3 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1353
+#: includes/class-safe-assistant-settings.php:1395
 msgid "4 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1354
+#: includes/class-safe-assistant-settings.php:1396
 msgid "5 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1355
+#: includes/class-safe-assistant-settings.php:1397
 msgid "6 Days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1356
+#: includes/class-safe-assistant-settings.php:1398
 msgid "7 Days"
 msgstr ""
 
@@ -68,19 +68,19 @@ msgstr ""
 msgid "A process is currently running. Please wait until it completes."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:413
+#: includes/class-safe-assistant-settings.php:455
 msgid "Account Fields Editor"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:449
+#: includes/class-safe-assistant-settings.php:491
 msgid "Account Password"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:482
+#: includes/class-safe-assistant-settings.php:524
 msgid "Account Password Confirmation"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:416
+#: includes/class-safe-assistant-settings.php:458
 msgid "Account Username"
 msgstr ""
 
@@ -91,6 +91,14 @@ msgstr ""
 
 #: addons/user-importer/partials/user-importer-main-section.php:163
 msgid "ACTIONS TO BE PERFORMED"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:286
+msgid "Activated Mashhad Text"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:279
+msgid "Activated Nationwide Text"
 msgstr ""
 
 #: addons/social-order-manager/social-order-manager.php:148
@@ -121,7 +129,7 @@ msgstr ""
 msgid "Add wallet credit ONLY for first-time users"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1309
+#: includes/class-safe-assistant-settings.php:1351
 msgid "Addons"
 msgstr ""
 
@@ -138,12 +146,12 @@ msgstr ""
 msgid "All operations reverted successfully."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1439
+#: includes/class-safe-assistant-settings.php:1481
 #: addons/user-importer/user-importer.php:432
 msgid "All Statuses"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1426
+#: includes/class-safe-assistant-settings.php:1468
 msgid "All Types"
 msgstr ""
 
@@ -169,11 +177,11 @@ msgstr ""
 msgid "Are you sure you want to clear all processing history?"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:327
+#: includes/class-safe-assistant-settings.php:369
 msgid "Automatic Membership Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1543
+#: includes/class-safe-assistant-settings.php:1585
 msgid "Backup & Restore"
 msgstr ""
 
@@ -185,51 +193,51 @@ msgstr ""
 msgid "Batch Size (Rows per Minute)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:653
+#: includes/class-safe-assistant-settings.php:695
 msgid "Billing Address 1"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:688
+#: includes/class-safe-assistant-settings.php:730
 msgid "Billing Address 2"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:723
+#: includes/class-safe-assistant-settings.php:765
 msgid "Billing City"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:593
+#: includes/class-safe-assistant-settings.php:635
 msgid "Billing Company"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:628
+#: includes/class-safe-assistant-settings.php:670
 msgid "Billing Country"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:853
+#: includes/class-safe-assistant-settings.php:895
 msgid "Billing Email"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:519
+#: includes/class-safe-assistant-settings.php:561
 msgid "Billing Fields Editor"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:523
+#: includes/class-safe-assistant-settings.php:565
 msgid "Billing First Name"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:558
+#: includes/class-safe-assistant-settings.php:600
 msgid "Billing Last Name"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:818
+#: includes/class-safe-assistant-settings.php:860
 msgid "Billing Phone"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:783
+#: includes/class-safe-assistant-settings.php:825
 msgid "Billing Postcode"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:758
+#: includes/class-safe-assistant-settings.php:800
 msgid "Billing State"
 msgstr ""
 
@@ -253,25 +261,25 @@ msgstr ""
 msgid "Check \\\"Logs\\\" and \\\"Results\\\" tabs for progress updates"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:303
+#: includes/class-safe-assistant-settings.php:345
 msgid "Check All IPs Not in Iran"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:304
+#: includes/class-safe-assistant-settings.php:346
 msgid "Check Only VPN service"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1363
+#: includes/class-safe-assistant-settings.php:1405
 msgid "Check Wallet Expiration By"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1348
+#: includes/class-safe-assistant-settings.php:1390
 msgid ""
 "Choose how many days before the user's wallet expiration date the SMS will "
 "be sent."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1365
+#: includes/class-safe-assistant-settings.php:1407
 msgid "Choose whether to check wallet expiration by days or hours."
 msgstr ""
 
@@ -394,7 +402,7 @@ msgstr ""
 msgid "Date columns should be in YYYY/MM/DD format, e.g., 1404/05/24."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1366
+#: includes/class-safe-assistant-settings.php:1408
 msgid "Days"
 msgstr ""
 
@@ -407,28 +415,28 @@ msgstr ""
 msgid "Default Service"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:444
-#: includes/class-safe-assistant-settings.php:477
-#: includes/class-safe-assistant-settings.php:510
-#: includes/class-safe-assistant-settings.php:551
-#: includes/class-safe-assistant-settings.php:586
-#: includes/class-safe-assistant-settings.php:621
-#: includes/class-safe-assistant-settings.php:681
-#: includes/class-safe-assistant-settings.php:716
-#: includes/class-safe-assistant-settings.php:751
-#: includes/class-safe-assistant-settings.php:811
-#: includes/class-safe-assistant-settings.php:846
-#: includes/class-safe-assistant-settings.php:881
-#: includes/class-safe-assistant-settings.php:925
-#: includes/class-safe-assistant-settings.php:960
-#: includes/class-safe-assistant-settings.php:995
-#: includes/class-safe-assistant-settings.php:1055
-#: includes/class-safe-assistant-settings.php:1090
-#: includes/class-safe-assistant-settings.php:1125
-#: includes/class-safe-assistant-settings.php:1185
-#: includes/class-safe-assistant-settings.php:1220
-#: includes/class-safe-assistant-settings.php:1255
-#: includes/class-safe-assistant-settings.php:1298
+#: includes/class-safe-assistant-settings.php:486
+#: includes/class-safe-assistant-settings.php:519
+#: includes/class-safe-assistant-settings.php:552
+#: includes/class-safe-assistant-settings.php:593
+#: includes/class-safe-assistant-settings.php:628
+#: includes/class-safe-assistant-settings.php:663
+#: includes/class-safe-assistant-settings.php:723
+#: includes/class-safe-assistant-settings.php:758
+#: includes/class-safe-assistant-settings.php:793
+#: includes/class-safe-assistant-settings.php:853
+#: includes/class-safe-assistant-settings.php:888
+#: includes/class-safe-assistant-settings.php:923
+#: includes/class-safe-assistant-settings.php:967
+#: includes/class-safe-assistant-settings.php:1002
+#: includes/class-safe-assistant-settings.php:1037
+#: includes/class-safe-assistant-settings.php:1097
+#: includes/class-safe-assistant-settings.php:1132
+#: includes/class-safe-assistant-settings.php:1167
+#: includes/class-safe-assistant-settings.php:1227
+#: includes/class-safe-assistant-settings.php:1262
+#: includes/class-safe-assistant-settings.php:1297
+#: includes/class-safe-assistant-settings.php:1340
 msgid "Default Value"
 msgstr ""
 
@@ -462,27 +470,27 @@ msgstr ""
 msgid "Disable the Gutenberg block editor and use Classic Editor."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:364
+#: includes/class-safe-assistant-settings.php:406
 msgid "Disable the Marketing Hub in WooCommerce."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:357
+#: includes/class-safe-assistant-settings.php:399
 msgid "Disable the WooCommerce Admin dashboard."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:355
+#: includes/class-safe-assistant-settings.php:397
 msgid "Disable WooCommerce Admin"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:369
+#: includes/class-safe-assistant-settings.php:411
 msgid "Disable WooCommerce Blocks on Frontend"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:371
+#: includes/class-safe-assistant-settings.php:413
 msgid "Disable WooCommerce Blocks scripts/styles on frontend."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:362
+#: includes/class-safe-assistant-settings.php:404
 msgid "Disable WooCommerce Marketing Hub"
 msgstr ""
 
@@ -529,7 +537,7 @@ msgstr ""
 msgid "Enable automatic conversion of pending orders to failed status."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:333
+#: includes/class-safe-assistant-settings.php:375
 msgid "Enable Automatic Membership"
 msgstr ""
 
@@ -543,32 +551,32 @@ msgstr ""
 msgid "Enable displaying order notes in the admin orders table."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:421
-#: includes/class-safe-assistant-settings.php:454
-#: includes/class-safe-assistant-settings.php:487
-#: includes/class-safe-assistant-settings.php:528
-#: includes/class-safe-assistant-settings.php:563
-#: includes/class-safe-assistant-settings.php:598
-#: includes/class-safe-assistant-settings.php:633
-#: includes/class-safe-assistant-settings.php:658
-#: includes/class-safe-assistant-settings.php:693
-#: includes/class-safe-assistant-settings.php:728
-#: includes/class-safe-assistant-settings.php:763
-#: includes/class-safe-assistant-settings.php:788
-#: includes/class-safe-assistant-settings.php:823
-#: includes/class-safe-assistant-settings.php:858
-#: includes/class-safe-assistant-settings.php:902
-#: includes/class-safe-assistant-settings.php:937
-#: includes/class-safe-assistant-settings.php:972
-#: includes/class-safe-assistant-settings.php:1007
-#: includes/class-safe-assistant-settings.php:1032
-#: includes/class-safe-assistant-settings.php:1067
-#: includes/class-safe-assistant-settings.php:1102
-#: includes/class-safe-assistant-settings.php:1137
-#: includes/class-safe-assistant-settings.php:1162
-#: includes/class-safe-assistant-settings.php:1197
-#: includes/class-safe-assistant-settings.php:1232
+#: includes/class-safe-assistant-settings.php:463
+#: includes/class-safe-assistant-settings.php:496
+#: includes/class-safe-assistant-settings.php:529
+#: includes/class-safe-assistant-settings.php:570
+#: includes/class-safe-assistant-settings.php:605
+#: includes/class-safe-assistant-settings.php:640
+#: includes/class-safe-assistant-settings.php:675
+#: includes/class-safe-assistant-settings.php:700
+#: includes/class-safe-assistant-settings.php:735
+#: includes/class-safe-assistant-settings.php:770
+#: includes/class-safe-assistant-settings.php:805
+#: includes/class-safe-assistant-settings.php:830
+#: includes/class-safe-assistant-settings.php:865
+#: includes/class-safe-assistant-settings.php:900
+#: includes/class-safe-assistant-settings.php:944
+#: includes/class-safe-assistant-settings.php:979
+#: includes/class-safe-assistant-settings.php:1014
+#: includes/class-safe-assistant-settings.php:1049
+#: includes/class-safe-assistant-settings.php:1074
+#: includes/class-safe-assistant-settings.php:1109
+#: includes/class-safe-assistant-settings.php:1144
+#: includes/class-safe-assistant-settings.php:1179
+#: includes/class-safe-assistant-settings.php:1204
+#: includes/class-safe-assistant-settings.php:1239
 #: includes/class-safe-assistant-settings.php:1274
+#: includes/class-safe-assistant-settings.php:1316
 msgid "Enable Field"
 msgstr ""
 
@@ -580,7 +588,7 @@ msgstr ""
 msgid "Enable Notifications"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:335
+#: includes/class-safe-assistant-settings.php:377
 msgid "Enable or disable automatic user membership on checkout."
 msgstr ""
 
@@ -588,15 +596,15 @@ msgstr ""
 msgid "Enable or disable free shipping for your store."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:289
+#: includes/class-safe-assistant-settings.php:331
 msgid "Enable or disable VPN checking for users in checkout page."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:296
+#: includes/class-safe-assistant-settings.php:338
 msgid "Enable or disable VPN checking for users only in the checkout page."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1329
+#: includes/class-safe-assistant-settings.php:1371
 msgid "Enable Order Toolkit Addon"
 msgstr ""
 
@@ -612,19 +620,19 @@ msgstr ""
 msgid "Enable SMS Notifications"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1322
+#: includes/class-safe-assistant-settings.php:1364
 msgid "Enable Social Order Management Addon"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1315
+#: includes/class-safe-assistant-settings.php:1357
 msgid "Enable User Importer Addon"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:287
+#: includes/class-safe-assistant-settings.php:329
 msgid "Enable VPN Checker"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:294
+#: includes/class-safe-assistant-settings.php:336
 msgid "Enable VPN Checker Only in Checkout"
 msgstr ""
 
@@ -632,7 +640,7 @@ msgstr ""
 msgid "End Time for Failed Status Check (Hour)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1399
+#: includes/class-safe-assistant-settings.php:1441
 msgid ""
 "Enter the expiration date check time and the time of day the SMS is sent."
 msgstr ""
@@ -643,15 +651,15 @@ msgid ""
 "example, Mashhad"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1383
+#: includes/class-safe-assistant-settings.php:1425
 msgid "Enter the SMS pattern for wallet expiration notifications by days."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1374
+#: includes/class-safe-assistant-settings.php:1416
 msgid "Enter the SMS pattern for wallet expiration notifications by hour."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1392
+#: includes/class-safe-assistant-settings.php:1434
 msgid ""
 "Enter the SMS pattern for wallet expiration notifications less than 24 hours."
 msgstr ""
@@ -665,7 +673,7 @@ msgstr ""
 msgid "Enter tracking code"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1443
+#: includes/class-safe-assistant-settings.php:1485
 #: addons/user-importer/user-importer.php:436
 msgid "Error"
 msgstr ""
@@ -678,8 +686,8 @@ msgstr ""
 msgid "Error reading CSV row."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1578
-#: includes/class-safe-assistant-settings.php:1591
+#: includes/class-safe-assistant-settings.php:1620
+#: includes/class-safe-assistant-settings.php:1633
 #: addons/user-importer/user-importer.php:464
 #: addons/user-importer/user-importer.php:473
 #: addons/user-importer/user-importer.php:482
@@ -769,32 +777,32 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:433
-#: includes/class-safe-assistant-settings.php:466
-#: includes/class-safe-assistant-settings.php:499
-#: includes/class-safe-assistant-settings.php:540
-#: includes/class-safe-assistant-settings.php:575
-#: includes/class-safe-assistant-settings.php:610
-#: includes/class-safe-assistant-settings.php:645
-#: includes/class-safe-assistant-settings.php:670
-#: includes/class-safe-assistant-settings.php:705
-#: includes/class-safe-assistant-settings.php:740
-#: includes/class-safe-assistant-settings.php:775
-#: includes/class-safe-assistant-settings.php:800
-#: includes/class-safe-assistant-settings.php:835
-#: includes/class-safe-assistant-settings.php:870
-#: includes/class-safe-assistant-settings.php:914
-#: includes/class-safe-assistant-settings.php:949
-#: includes/class-safe-assistant-settings.php:984
-#: includes/class-safe-assistant-settings.php:1019
-#: includes/class-safe-assistant-settings.php:1044
-#: includes/class-safe-assistant-settings.php:1079
-#: includes/class-safe-assistant-settings.php:1114
-#: includes/class-safe-assistant-settings.php:1149
-#: includes/class-safe-assistant-settings.php:1174
-#: includes/class-safe-assistant-settings.php:1209
-#: includes/class-safe-assistant-settings.php:1244
+#: includes/class-safe-assistant-settings.php:475
+#: includes/class-safe-assistant-settings.php:508
+#: includes/class-safe-assistant-settings.php:541
+#: includes/class-safe-assistant-settings.php:582
+#: includes/class-safe-assistant-settings.php:617
+#: includes/class-safe-assistant-settings.php:652
+#: includes/class-safe-assistant-settings.php:687
+#: includes/class-safe-assistant-settings.php:712
+#: includes/class-safe-assistant-settings.php:747
+#: includes/class-safe-assistant-settings.php:782
+#: includes/class-safe-assistant-settings.php:817
+#: includes/class-safe-assistant-settings.php:842
+#: includes/class-safe-assistant-settings.php:877
+#: includes/class-safe-assistant-settings.php:912
+#: includes/class-safe-assistant-settings.php:956
+#: includes/class-safe-assistant-settings.php:991
+#: includes/class-safe-assistant-settings.php:1026
+#: includes/class-safe-assistant-settings.php:1061
+#: includes/class-safe-assistant-settings.php:1086
+#: includes/class-safe-assistant-settings.php:1121
+#: includes/class-safe-assistant-settings.php:1156
+#: includes/class-safe-assistant-settings.php:1191
+#: includes/class-safe-assistant-settings.php:1216
+#: includes/class-safe-assistant-settings.php:1251
 #: includes/class-safe-assistant-settings.php:1286
+#: includes/class-safe-assistant-settings.php:1328
 msgid "Field Label"
 msgstr ""
 
@@ -831,8 +839,8 @@ msgstr ""
 msgid "first parameter is buy date"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1375
-#: includes/class-safe-assistant-settings.php:1384
+#: includes/class-safe-assistant-settings.php:1417
+#: includes/class-safe-assistant-settings.php:1426
 #: addons/order-toolkit/order-toolkit.php:121
 msgid "first parameter is name of user"
 msgstr ""
@@ -853,12 +861,11 @@ msgstr ""
 msgid "Force Stop Working"
 msgstr ""
 
-#: includes/class-safe-assistant-handler.php:179
+#: includes/class-safe-assistant-settings.php:287
 msgid "Free shipping activated for Mashhad."
 msgstr ""
 
-#: includes/class-safe-assistant-handler.php:175
-#: includes/class-safe-assistant-handler.php:189
+#: includes/class-safe-assistant-settings.php:280
 msgid "Free shipping activated nationwide."
 msgstr ""
 
@@ -879,11 +886,11 @@ msgstr ""
 msgid "Guest order auto-failed after timeout."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:340
+#: includes/class-safe-assistant-settings.php:382
 msgid "Hide Membership Option on Checkout"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:342
+#: includes/class-safe-assistant-settings.php:384
 msgid "Hide the membership option on the checkout page."
 msgstr ""
 
@@ -891,7 +898,7 @@ msgstr ""
 msgid "Hide the WordPress admin bar for all users except administrators."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1367
+#: includes/class-safe-assistant-settings.php:1409
 msgid "Hours"
 msgstr ""
 
@@ -924,23 +931,23 @@ msgstr ""
 msgid "Import ID"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:391
+#: includes/class-safe-assistant-settings.php:433
 msgid "Improve Admin Order Search"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:384
+#: includes/class-safe-assistant-settings.php:426
 msgid "Improve Admin Product Search"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:398
+#: includes/class-safe-assistant-settings.php:440
 msgid "Improve Product Frontend Search"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1400
+#: includes/class-safe-assistant-settings.php:1442
 msgid "In 24-hour format. for example: 9 or 17"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1440
+#: includes/class-safe-assistant-settings.php:1482
 #: addons/user-importer/user-importer.php:433
 msgid "Info"
 msgstr ""
@@ -1005,32 +1012,32 @@ msgstr ""
 msgid "Invalid phone format for SmsIR plugin: %s"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:427
-#: includes/class-safe-assistant-settings.php:460
-#: includes/class-safe-assistant-settings.php:493
-#: includes/class-safe-assistant-settings.php:534
-#: includes/class-safe-assistant-settings.php:569
-#: includes/class-safe-assistant-settings.php:604
-#: includes/class-safe-assistant-settings.php:639
-#: includes/class-safe-assistant-settings.php:664
-#: includes/class-safe-assistant-settings.php:699
-#: includes/class-safe-assistant-settings.php:734
-#: includes/class-safe-assistant-settings.php:769
-#: includes/class-safe-assistant-settings.php:794
-#: includes/class-safe-assistant-settings.php:829
-#: includes/class-safe-assistant-settings.php:864
-#: includes/class-safe-assistant-settings.php:908
-#: includes/class-safe-assistant-settings.php:943
-#: includes/class-safe-assistant-settings.php:978
-#: includes/class-safe-assistant-settings.php:1013
-#: includes/class-safe-assistant-settings.php:1038
-#: includes/class-safe-assistant-settings.php:1073
-#: includes/class-safe-assistant-settings.php:1108
-#: includes/class-safe-assistant-settings.php:1143
-#: includes/class-safe-assistant-settings.php:1168
-#: includes/class-safe-assistant-settings.php:1203
-#: includes/class-safe-assistant-settings.php:1238
+#: includes/class-safe-assistant-settings.php:469
+#: includes/class-safe-assistant-settings.php:502
+#: includes/class-safe-assistant-settings.php:535
+#: includes/class-safe-assistant-settings.php:576
+#: includes/class-safe-assistant-settings.php:611
+#: includes/class-safe-assistant-settings.php:646
+#: includes/class-safe-assistant-settings.php:681
+#: includes/class-safe-assistant-settings.php:706
+#: includes/class-safe-assistant-settings.php:741
+#: includes/class-safe-assistant-settings.php:776
+#: includes/class-safe-assistant-settings.php:811
+#: includes/class-safe-assistant-settings.php:836
+#: includes/class-safe-assistant-settings.php:871
+#: includes/class-safe-assistant-settings.php:906
+#: includes/class-safe-assistant-settings.php:950
+#: includes/class-safe-assistant-settings.php:985
+#: includes/class-safe-assistant-settings.php:1020
+#: includes/class-safe-assistant-settings.php:1055
+#: includes/class-safe-assistant-settings.php:1080
+#: includes/class-safe-assistant-settings.php:1115
+#: includes/class-safe-assistant-settings.php:1150
+#: includes/class-safe-assistant-settings.php:1185
+#: includes/class-safe-assistant-settings.php:1210
+#: includes/class-safe-assistant-settings.php:1245
 #: includes/class-safe-assistant-settings.php:1280
+#: includes/class-safe-assistant-settings.php:1322
 msgid "Is Required?"
 msgstr ""
 
@@ -1054,7 +1061,7 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1469
+#: includes/class-safe-assistant-settings.php:1511
 #: addons/user-importer/user-importer.php:127
 #: addons/social-order-manager/social-order-manager.php:217
 msgid "Logs"
@@ -1075,7 +1082,7 @@ msgstr ""
 msgid "Make sure the pattern includes below parameters:"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1324
+#: includes/class-safe-assistant-settings.php:1366
 msgid ""
 "Management Woocommerce orders via Social Media Platforms like WhatsApp or "
 "Telegram."
@@ -1094,11 +1101,11 @@ msgstr ""
 msgid "Mark as Completed"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1510
+#: includes/class-safe-assistant-settings.php:1552
 msgid "MeliPayamak Password"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1504
+#: includes/class-safe-assistant-settings.php:1546
 msgid "MeliPayamak Username"
 msgstr ""
 
@@ -1107,7 +1114,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:320
+#: includes/class-safe-assistant-settings.php:362
 msgid "Message to display when VPN is detected."
 msgstr ""
 
@@ -1115,6 +1122,10 @@ msgstr ""
 #: addons/user-importer/partials/user-importer-main-section.php:125
 #: addons/user-importer/partials/user-importer-main-section.php:191
 msgid "Minimum Credit Amount"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:307
+msgid "Minimum Mashhad Text"
 msgstr ""
 
 #: includes/class-safe-assistant-settings.php:262
@@ -1125,6 +1136,10 @@ msgstr ""
 msgid "Minimum order amount for free shipping in other cities."
 msgstr ""
 
+#: includes/class-safe-assistant-settings.php:314
+msgid "Minimum Other Cities Text"
+msgstr ""
+
 #: includes/class-safe-assistant-settings.php:260
 msgid "Minimum Purchase (Mashhad)"
 msgstr ""
@@ -1133,12 +1148,12 @@ msgstr ""
 msgid "Minimum Purchase (Other Cities)"
 msgstr ""
 
-#: includes/class-safe-assistant-handler.php:200
+#: includes/class-safe-assistant-settings.php:308
 #, php-format
 msgid "Minimum purchase for free shipping in Mashhad: %s Toman"
 msgstr ""
 
-#: includes/class-safe-assistant-handler.php:207
+#: includes/class-safe-assistant-settings.php:315
 #, php-format
 msgid "Minimum purchase for free shipping nationwide: %s Toman"
 msgstr ""
@@ -1155,11 +1170,11 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1338
+#: includes/class-safe-assistant-settings.php:1380
 msgid "Nir Wallet"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1412
+#: includes/class-safe-assistant-settings.php:1454
 msgid "Nir Wallet plugin not active or installed"
 msgstr ""
 
@@ -1197,7 +1212,7 @@ msgstr ""
 msgid "No transactions found for refund process"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:306
+#: includes/class-safe-assistant-settings.php:348
 msgid ""
 "Note: if you select to check all IPs not in Iran, users from other countries "
 "will be affected."
@@ -1222,7 +1237,7 @@ msgstr ""
 msgid "On-Hold Orders"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1393
+#: includes/class-safe-assistant-settings.php:1435
 msgid "only available parameter is name of user"
 msgstr ""
 
@@ -1238,19 +1253,19 @@ msgstr ""
 msgid "Optimization"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:393
+#: includes/class-safe-assistant-settings.php:435
 msgid ""
 "Optimize admin order search to search only in order ID, customer name, "
 "customer email, customer username (faster and more accurate results)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:386
+#: includes/class-safe-assistant-settings.php:428
 msgid ""
 "Optimize admin product search to search only in product title, product ID, "
 "and category names (faster and more accurate results)"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:400
+#: includes/class-safe-assistant-settings.php:442
 msgid ""
 "Optimize product search to search only in product title, product ID, and "
 "category names (faster and more accurate results)"
@@ -1268,7 +1283,7 @@ msgstr ""
 msgid "Order cancelled due to newer similar order."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1269
+#: includes/class-safe-assistant-settings.php:1311
 msgid "Order Comments"
 msgstr ""
 
@@ -1277,7 +1292,7 @@ msgstr ""
 msgid "Order completed with tracking code %s."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1265
+#: includes/class-safe-assistant-settings.php:1307
 msgid "Order Fields Editor"
 msgstr ""
 
@@ -1311,14 +1326,14 @@ msgstr ""
 msgid "Other Cities Orders"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1560
-#: includes/class-safe-assistant-settings.php:1572
-#: includes/class-safe-assistant-settings.php:1585
+#: includes/class-safe-assistant-settings.php:1602
+#: includes/class-safe-assistant-settings.php:1614
+#: includes/class-safe-assistant-settings.php:1627
 msgid "Panel is Connected"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1575
-#: includes/class-safe-assistant-settings.php:1588
+#: includes/class-safe-assistant-settings.php:1617
+#: includes/class-safe-assistant-settings.php:1630
 msgid "Panel is Not Connected"
 msgstr ""
 
@@ -1331,7 +1346,7 @@ msgstr ""
 msgid "Pending Orders"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1446
+#: includes/class-safe-assistant-settings.php:1488
 #: addons/user-importer/user-importer.php:439
 msgid "Per Page:"
 msgstr ""
@@ -1350,32 +1365,32 @@ msgstr ""
 msgid "Phone Number is %s and standardized number is %s"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:439
-#: includes/class-safe-assistant-settings.php:472
-#: includes/class-safe-assistant-settings.php:505
-#: includes/class-safe-assistant-settings.php:546
-#: includes/class-safe-assistant-settings.php:581
-#: includes/class-safe-assistant-settings.php:616
-#: includes/class-safe-assistant-settings.php:676
-#: includes/class-safe-assistant-settings.php:711
-#: includes/class-safe-assistant-settings.php:746
-#: includes/class-safe-assistant-settings.php:806
-#: includes/class-safe-assistant-settings.php:841
-#: includes/class-safe-assistant-settings.php:876
-#: includes/class-safe-assistant-settings.php:920
-#: includes/class-safe-assistant-settings.php:955
-#: includes/class-safe-assistant-settings.php:990
-#: includes/class-safe-assistant-settings.php:1050
-#: includes/class-safe-assistant-settings.php:1085
-#: includes/class-safe-assistant-settings.php:1120
-#: includes/class-safe-assistant-settings.php:1180
-#: includes/class-safe-assistant-settings.php:1215
-#: includes/class-safe-assistant-settings.php:1250
+#: includes/class-safe-assistant-settings.php:481
+#: includes/class-safe-assistant-settings.php:514
+#: includes/class-safe-assistant-settings.php:547
+#: includes/class-safe-assistant-settings.php:588
+#: includes/class-safe-assistant-settings.php:623
+#: includes/class-safe-assistant-settings.php:658
+#: includes/class-safe-assistant-settings.php:718
+#: includes/class-safe-assistant-settings.php:753
+#: includes/class-safe-assistant-settings.php:788
+#: includes/class-safe-assistant-settings.php:848
+#: includes/class-safe-assistant-settings.php:883
+#: includes/class-safe-assistant-settings.php:918
+#: includes/class-safe-assistant-settings.php:962
+#: includes/class-safe-assistant-settings.php:997
+#: includes/class-safe-assistant-settings.php:1032
+#: includes/class-safe-assistant-settings.php:1092
+#: includes/class-safe-assistant-settings.php:1127
+#: includes/class-safe-assistant-settings.php:1162
+#: includes/class-safe-assistant-settings.php:1222
+#: includes/class-safe-assistant-settings.php:1257
 #: includes/class-safe-assistant-settings.php:1292
+#: includes/class-safe-assistant-settings.php:1334
 msgid "Placeholder"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1488
+#: includes/class-safe-assistant-settings.php:1530
 msgid ""
 "Please note when changing SMS gateway settings, you may need to update other "
 "settings such as patterns."
@@ -1455,7 +1470,7 @@ msgstr ""
 msgid "Real-time statistics will be saved and displayed"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1454
+#: includes/class-safe-assistant-settings.php:1496
 #: addons/user-importer/user-importer.php:447
 msgid "Refresh"
 msgstr ""
@@ -1466,6 +1481,14 @@ msgstr ""
 
 #: addons/user-importer/user-importer.php:644
 msgid "Refund process completed successfully. %d transactions processed."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:293
+msgid "Remaining Mashhad Text"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:300
+msgid "Remaining Other Cities Text"
 msgstr ""
 
 #: includes/class-safe-assistant-settings.php:205
@@ -1591,11 +1614,11 @@ msgstr ""
 msgid "second parameter is credit amount"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1385
+#: includes/class-safe-assistant-settings.php:1427
 msgid "second parameter is remaining days"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1376
+#: includes/class-safe-assistant-settings.php:1418
 msgid "second parameter is remaining hours"
 msgstr ""
 
@@ -1611,7 +1634,7 @@ msgstr ""
 msgid "Security check failed."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1347
+#: includes/class-safe-assistant-settings.php:1389
 msgid "Select an option"
 msgstr ""
 
@@ -1654,57 +1677,57 @@ msgid ""
 "as failed."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1482
+#: includes/class-safe-assistant-settings.php:1524
 #: addons/user-importer/user-importer.php:140
 #: addons/social-order-manager/social-order-manager.php:179
 msgid "Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1027
+#: includes/class-safe-assistant-settings.php:1069
 msgid "Shipping Address 1"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1062
+#: includes/class-safe-assistant-settings.php:1104
 msgid "Shipping Address 2"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1097
+#: includes/class-safe-assistant-settings.php:1139
 msgid "Shipping City"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:967
+#: includes/class-safe-assistant-settings.php:1009
 msgid "Shipping Company"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1002
+#: includes/class-safe-assistant-settings.php:1044
 msgid "Shipping Country"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1227
+#: includes/class-safe-assistant-settings.php:1269
 msgid "Shipping Email"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:893
+#: includes/class-safe-assistant-settings.php:935
 msgid "Shipping Fields Editor"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:897
+#: includes/class-safe-assistant-settings.php:939
 msgid "Shipping First Name"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:932
+#: includes/class-safe-assistant-settings.php:974
 msgid "Shipping Last Name"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1192
+#: includes/class-safe-assistant-settings.php:1234
 msgid "Shipping Phone"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1157
+#: includes/class-safe-assistant-settings.php:1199
 msgid "Shipping Postcode"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1132
+#: includes/class-safe-assistant-settings.php:1174
 msgid "Shipping State"
 msgstr ""
 
@@ -1724,7 +1747,7 @@ msgstr ""
 msgid "SMS enabled but NO PATTERN set"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1493
+#: includes/class-safe-assistant-settings.php:1535
 msgid "SMS Gateway"
 msgstr ""
 
@@ -1754,8 +1777,8 @@ msgstr ""
 msgid "SMS notifications: ENABLED"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1373
-#: includes/class-safe-assistant-settings.php:1382
+#: includes/class-safe-assistant-settings.php:1415
+#: includes/class-safe-assistant-settings.php:1424
 msgid "SMS Pattern"
 msgstr ""
 
@@ -1763,7 +1786,7 @@ msgstr ""
 msgid "Sms Pattern"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1391
+#: includes/class-safe-assistant-settings.php:1433
 msgid "SMS Pattern (for last 24h)"
 msgstr ""
 
@@ -1789,8 +1812,8 @@ msgstr ""
 msgid "Sms Send to %s Success!"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1519
-#: includes/class-safe-assistant-settings.php:1532
+#: includes/class-safe-assistant-settings.php:1561
+#: includes/class-safe-assistant-settings.php:1574
 msgid "Sms sender number"
 msgstr ""
 
@@ -1810,7 +1833,7 @@ msgstr ""
 msgid "SMS will be sent to all processed users"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1526
+#: includes/class-safe-assistant-settings.php:1568
 msgid "SMS.ir API Key"
 msgstr ""
 
@@ -1845,12 +1868,12 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1437
+#: includes/class-safe-assistant-settings.php:1479
 #: addons/user-importer/user-importer.php:430
 msgid "Status:"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1441
+#: includes/class-safe-assistant-settings.php:1483
 #: addons/user-importer/user-importer.php:434
 msgid "Success"
 msgstr ""
@@ -1864,7 +1887,7 @@ msgstr ""
 msgid "Success Rate: %.1f%%"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:306
+#: includes/class-safe-assistant-settings.php:348
 msgid ""
 "Switch on to check only VPN service or switch to off to check all IPs not in "
 "Iran"
@@ -1873,6 +1896,42 @@ msgstr ""
 #: addons/social-order-manager/social-order-manager.php:110
 #: addons/social-order-manager/social-order-manager.php:194
 msgid "Telegram"
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:309
+#, php-format
+msgid ""
+"Text to display minimum purchase for free shipping in Mashhad. Use %s for "
+"the amount."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:316
+#, php-format
+msgid ""
+"Text to display minimum purchase for free shipping in other cities. Use %s "
+"for the amount."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:295
+#, php-format
+msgid ""
+"Text to display remaining amount for free shipping in Mashhad. Use %s for "
+"the amount."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:302
+#, php-format
+msgid ""
+"Text to display remaining amount for free shipping in other cities. Use %s "
+"for the amount."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:288
+msgid "Text to display when free shipping is activated for Mashhad."
+msgstr ""
+
+#: includes/class-safe-assistant-settings.php:281
+msgid "Text to display when free shipping is activated nationwide."
 msgstr ""
 
 #: addons/user-importer/user-importer.php:156
@@ -1896,7 +1955,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:313
+#: includes/class-safe-assistant-settings.php:355
 msgid "Title to display when VPN is detected."
 msgstr ""
 
@@ -1908,7 +1967,7 @@ msgstr ""
 msgid "Toman"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1331
+#: includes/class-safe-assistant-settings.php:1373
 msgid ""
 "Toolkit for managing and processing orders. you can print invoices, add "
 "tracking information, update order statuses easily and more."
@@ -1946,12 +2005,12 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1424
+#: includes/class-safe-assistant-settings.php:1466
 msgid "Type:"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1577
-#: includes/class-safe-assistant-settings.php:1590
+#: includes/class-safe-assistant-settings.php:1619
+#: includes/class-safe-assistant-settings.php:1632
 msgid "Unable to fetch credit."
 msgstr ""
 
@@ -2037,23 +2096,23 @@ msgstr ""
 msgid "View Details"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:318
+#: includes/class-safe-assistant-settings.php:360
 msgid "VPN Checker Message"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:281
+#: includes/class-safe-assistant-settings.php:323
 msgid "VPN Checker Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:311
+#: includes/class-safe-assistant-settings.php:353
 msgid "VPN Checker Title"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:301
+#: includes/class-safe-assistant-settings.php:343
 msgid "VPN Checker Type"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:312
+#: includes/class-safe-assistant-settings.php:354
 msgid "VPN Detected"
 msgstr ""
 
@@ -2087,7 +2146,7 @@ msgstr ""
 msgid "Wallet credit will not expire"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1344
+#: includes/class-safe-assistant-settings.php:1386
 msgid "Wallet expiration SMS"
 msgstr ""
 
@@ -2099,7 +2158,7 @@ msgstr ""
 msgid "Wallets Credited:"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1442
+#: includes/class-safe-assistant-settings.php:1484
 #: addons/user-importer/user-importer.php:435
 msgid "Warning"
 msgstr ""
@@ -2133,11 +2192,11 @@ msgstr ""
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:349
+#: includes/class-safe-assistant-settings.php:391
 msgid "WooCommerce Admin Settings"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:407
+#: includes/class-safe-assistant-settings.php:449
 msgid "WooCommerce Checkout Settings"
 msgstr ""
 
@@ -2145,7 +2204,7 @@ msgstr ""
 msgid "WooCommerce Integration:"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:378
+#: includes/class-safe-assistant-settings.php:420
 msgid "WooCommerce Search Optimization"
 msgstr ""
 
@@ -2153,11 +2212,11 @@ msgstr ""
 msgid "WordPress"
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:319
+#: includes/class-safe-assistant-settings.php:361
 msgid "You are using a VPN. Please disable it to payment success."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1317
+#: includes/class-safe-assistant-settings.php:1359
 msgid ""
 "you can import users from excel file and users imported in your site will be "
 "automatically and charge wallet with percentage or fixed amount and more."
@@ -2168,7 +2227,7 @@ msgstr ""
 msgid "You do not have permission."
 msgstr ""
 
-#: includes/class-safe-assistant-settings.php:1564
+#: includes/class-safe-assistant-settings.php:1606
 msgid "Your Panel Credit:"
 msgstr ""
 
