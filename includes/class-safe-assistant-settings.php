@@ -369,6 +369,35 @@ class Safe_Assistant_Settings
 						'title'   => esc_html__('Disable WooCommerce Blocks on Frontend', 'safe-assistant'),
 						'default' => false,
 						'desc'    => esc_html__('Disable WooCommerce Blocks scripts/styles on frontend.', 'safe-assistant'),
+					]
+				],
+			],
+			[
+				'parent' => 'woocommerce',
+				'id'     => 'woocommerce_search_optimization',
+				'title'  => esc_html__('WooCommerce Search Optimization', 'safe-assistant'),
+				'icon'   => 'fas fa-search',
+				'fields' => [
+					[
+						'id'      => 'improvements_in_product_admin_search_status',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Improve Admin Product Search', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Optimize admin product search to search only in product title, product ID, and category names (faster and more accurate results)', 'safe-assistant'),
+					],
+					[
+						'id'      => 'improvements_in_order_admin_search_status',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Improve Admin Order Search', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Optimize admin order search to search only in order ID, customer name, customer email, customer username (faster and more accurate results)', 'safe-assistant'),
+					],
+					[
+						'id'      => 'improvements_in_product_front_search_status',
+						'type'    => 'switcher',
+						'title'   => esc_html__('Improve Product Frontend Search', 'safe-assistant'),
+						'default' => false,
+						'desc'    => esc_html__('Optimize product search to search only in product title, product ID, and category names (faster and more accurate results)', 'safe-assistant'),
 					],
 				],
 			],

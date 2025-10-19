@@ -819,3 +819,290 @@ function user_have_vpn(): bool
 
 	return false;
 }
+
+/**
+ * Search Optimization Features
+ */
+
+// Frontend Product Search Improvements
+if (sa_get_option('improvements_in_product_front_search_status', false)) {
+	add_filter('posts_search', 'sa_improve_frontend_product_search', 10, 2);
+}
+
+// Admin Product Search Improvements  
+if (sa_get_option('improvements_in_product_admin_search_status', false)) {
+	add_action('init', 'sa_admin_product_search_init');
+}
+
+// Admin Order Search Improvements
+if (sa_get_option('improvements_in_order_admin_search_status', false)) {
+	add_action('init', 'sa_improve_admin_order_search_init');
+}
+
+/**
+ * Improve frontend product search to search only in title, ID, and category
+ */
+function sa_improve_frontend_product_search($search, $query)
+{
+	global $wpdb;
+
+	// Only apply to frontend product searches
+	if (is_admin() || !$query->is_main_query() || !is_search()) {
+		return $search;
+	}
+
+	// Only apply to product searches
+	$post_type = $query->get('post_type');
+	if (!in_array('product', (array) $post_type) && empty($post_type)) {
+		return $search;
+	}
+
+	$search_term = $query->get('s');
+	if (empty($search_term)) {
+		return $search;
+	}
+
+	$search_term = $wpdb->esc_like($search_term);
+
+	// Search in post title, post ID, and category names
+	$search = " AND (
+		({$wpdb->posts}.post_title LIKE '%{$search_term}%') 
+		OR ({$wpdb->posts}.ID LIKE '%{$search_term}%')
+		OR ({$wpdb->posts}.ID IN (
+			SELECT DISTINCT tr.object_id 
+			FROM {$wpdb->term_relationships} tr
+			INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+			WHERE tt.taxonomy = 'product_cat' 
+			AND t.name LIKE '%{$search_term}%'
+		))
+	)";
+
+	return $search;
+}
+
+/**
+ * Initialize admin product search improvements
+ */
+function sa_admin_product_search_init()
+{
+	if (is_admin()) {
+		add_filter('request', 'sa_admin_product_search_request');
+	}
+}
+
+/**
+ * Override admin product search completely using request filter
+ */
+function sa_admin_product_search_request($request)
+{
+	global $pagenow, $wpdb;
+
+	// Only apply on products page with search
+	if (
+		$pagenow != 'edit.php' ||
+		!isset($request['post_type']) ||
+		$request['post_type'] != 'product' ||
+		!isset($request['s']) ||
+		empty($request['s'])
+	) {
+		return $request;
+	}
+
+	$search_term = sanitize_text_field($request['s']);
+
+	// Get products by our custom criteria
+	$product_ids = sa_get_products_by_custom_search($search_term);
+
+	if (empty($product_ids)) {
+		// No results found - return empty result
+		$request['post__in'] = array(0);
+	} else {
+		// Set specific product IDs to search in
+		$request['post__in'] = $product_ids;
+	}
+
+	// Remove the search term so WordPress doesn't do its own search
+	unset($request['s']);
+
+	return $request;
+}
+
+/**
+ * Get products by custom search criteria (title, ID, category)
+ */
+function sa_get_products_by_custom_search($search_term)
+{
+	global $wpdb;
+
+	$search_term_escaped = $wpdb->esc_like($search_term);
+	$product_ids = array();
+
+	// Search in post title
+	$title_results = $wpdb->get_col($wpdb->prepare(
+		"SELECT ID FROM {$wpdb->posts} 
+		 WHERE post_type = 'product' 
+		 AND post_status IN ('publish', 'private', 'draft', 'pending') 
+		 AND post_title LIKE %s",
+		'%' . $search_term_escaped . '%'
+	));
+
+	if ($title_results) {
+		$product_ids = array_merge($product_ids, $title_results);
+	}
+
+	// Search by exact ID if it's numeric
+	if (is_numeric($search_term)) {
+		$id_result = $wpdb->get_var($wpdb->prepare(
+			"SELECT ID FROM {$wpdb->posts} 
+			 WHERE post_type = 'product' 
+			 AND post_status IN ('publish', 'private', 'draft', 'pending') 
+			 AND ID = %d",
+			$search_term
+		));
+
+		if ($id_result) {
+			$product_ids[] = $id_result;
+		}
+	}
+
+	// Search in product categories
+	$category_results = $wpdb->get_col($wpdb->prepare(
+		"SELECT DISTINCT tr.object_id 
+		 FROM {$wpdb->term_relationships} tr
+		 INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+		 INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+		 INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID
+		 WHERE tt.taxonomy = 'product_cat' 
+		 AND t.name LIKE %s
+		 AND p.post_type = 'product'
+		 AND p.post_status IN ('publish', 'private', 'draft', 'pending')",
+		'%' . $search_term_escaped . '%'
+	));
+
+	if ($category_results) {
+		$product_ids = array_merge($product_ids, $category_results);
+	}
+
+	// Remove duplicates and return
+	return array_unique($product_ids);
+}
+
+/**
+ * Initialize admin order search improvements
+ */
+function sa_improve_admin_order_search_init()
+{
+	if (is_admin()) {
+		// For new WooCommerce orders page
+		add_filter('woocommerce_order_list_table_prepare_items_query_args', 'sa_modify_wc_orders_query', 10, 1);
+	}
+}
+
+/**
+ * Modify WooCommerce orders query for new orders page
+ */
+function sa_modify_wc_orders_query($query_args)
+{
+	// Only apply when search filter is set to customers
+	if (empty($_GET['search-filter']) || $_GET['search-filter'] !== 'customers') {
+		return $query_args;
+	}
+
+	// Check if we have a search term
+	if (empty($_GET['s'])) {
+		return $query_args;
+	}
+
+	$search_term = sanitize_text_field($_GET['s']);
+
+	// Get orders by our custom criteria
+	$order_ids = sa_get_orders_by_custom_search($search_term);
+
+	if (empty($order_ids)) {
+		// No results found
+		$query_args['post__in'] = array(0);
+	} else {
+		// Set specific order IDs
+		$query_args['post__in'] = $order_ids;
+	}
+
+	// Remove the search term to prevent default search
+	unset($query_args['s']);
+
+	return $query_args;
+}
+
+/**
+ * Get orders by custom search criteria (order ID, customer name, email only)
+ */
+function sa_get_orders_by_custom_search($search_term)
+{
+	global $wpdb;
+
+	$search_term_escaped = $wpdb->esc_like($search_term);
+	$order_ids = array();
+
+	// Search by exact ID if it's numeric
+	if (is_numeric($search_term)) {
+		$id_result = $wpdb->get_var($wpdb->prepare(
+			"SELECT ID FROM {$wpdb->posts} 
+			 WHERE post_type = 'shop_order' 
+			 AND post_status IN ('wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed', 'wc-checkout-draft') 
+			 AND ID = %d",
+			$search_term
+		));
+
+		if ($id_result) {
+			$order_ids[] = $id_result;
+		}
+	}
+
+	// Search ONLY in customer names and email (NOT in address fields)
+	$customer_results = $wpdb->get_col($wpdb->prepare(
+		"SELECT DISTINCT pm.post_id 
+		 FROM {$wpdb->postmeta} pm
+		 INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+		 WHERE pm.meta_key IN ('_billing_first_name', '_billing_last_name', '_billing_email')
+		 AND pm.meta_value LIKE %s
+		 AND p.post_type = 'shop_order'
+		 AND p.post_status IN ('wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed', 'wc-checkout-draft')",
+		'%' . $search_term_escaped . '%'
+	));
+
+	if ($customer_results) {
+		$order_ids = array_merge($order_ids, $customer_results);
+	}
+
+	// Search in customer user info (username, email, display name, first_name, last_name)
+	$user_results = $wpdb->get_col($wpdb->prepare(
+		"SELECT DISTINCT p.ID 
+		 FROM {$wpdb->posts} p
+		 INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+		 INNER JOIN {$wpdb->users} u ON pm.meta_value = u.ID
+		 LEFT JOIN {$wpdb->usermeta} um1 ON u.ID = um1.user_id AND um1.meta_key = 'first_name'
+		 LEFT JOIN {$wpdb->usermeta} um2 ON u.ID = um2.user_id AND um2.meta_key = 'last_name'
+		 WHERE pm.meta_key = '_customer_user'
+		 AND (
+			u.user_login LIKE %s OR 
+			u.user_email LIKE %s OR 
+			u.display_name LIKE %s OR
+			um1.meta_value LIKE %s OR
+			um2.meta_value LIKE %s
+		 )
+		 AND p.post_type = 'shop_order'
+		 AND p.post_status IN ('wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed', 'wc-checkout-draft')",
+		'%' . $search_term_escaped . '%',
+		'%' . $search_term_escaped . '%',
+		'%' . $search_term_escaped . '%',
+		'%' . $search_term_escaped . '%',
+		'%' . $search_term_escaped . '%'
+	));
+
+	if ($user_results) {
+		$order_ids = array_merge($order_ids, $user_results);
+	}
+
+	// Remove duplicates and return
+	return array_unique($order_ids);
+}
