@@ -258,108 +258,106 @@ if (is_woocommerce_activated()) {
 /**
  * Wallet Settings
  */
-if (defined('nirweb_wallet')) {
-	/**
-	 * nirweb_wallet_expiration_check
-	 *
-	 * @return void
-	 */
-	function nirweb_wallet_expiration_check()
-	{
-		sa_log('general', 'info', "Wallet Cron Log", "=== Wallet expiration check started ===");
+/**
+ * nirweb_wallet_expiration_check
+ *
+ * @return void
+ */
+function nirweb_wallet_expiration_check()
+{
+	sa_log('general', 'info', "Wallet Cron Log", "=== Wallet expiration check started ===");
 
-		$check_by_day  = sa_get_option('nir_wallet_expire_check_by', false);
-		$expire_hours  = (array) sa_get_option('nir_wallet_expire_day_sms', []);
-		$pattern_hour  = sa_get_option('nir_wallet_expire_pattern_sms_hour', '');
-		$pattern_day   = sa_get_option('nir_wallet_expire_pattern_sms', '');
-		$pattern_last  = sa_get_option('nir_wallet_expire_last_pattern_sms', '');
+	$check_by_day  = sa_get_option('nir_wallet_expire_check_by', false);
+	$expire_hours  = (array) sa_get_option('nir_wallet_expire_day_sms', []);
+	$pattern_hour  = sa_get_option('nir_wallet_expire_pattern_sms_hour', '');
+	$pattern_day   = sa_get_option('nir_wallet_expire_pattern_sms', '');
+	$pattern_last  = sa_get_option('nir_wallet_expire_last_pattern_sms', '');
 
-		sa_log('general', 'info', "Wallet Cron Log", "check_by_day: " . ($check_by_day ? 'true' : 'false'));
-		sa_log('general', 'info', "Wallet Cron Log", "expire_hours: " . implode(',', $expire_hours));
-		sa_log('general', 'info', "Wallet Cron Log", "pattern_hour: $pattern_hour");
-		sa_log('general', 'info', "Wallet Cron Log", "pattern_day: $pattern_day");
-		sa_log('general', 'info', "Wallet Cron Log", "pattern_last: $pattern_last");
+	sa_log('general', 'info', "Wallet Cron Log", "check_by_day: " . ($check_by_day ? 'true' : 'false'));
+	sa_log('general', 'info', "Wallet Cron Log", "expire_hours: " . implode(',', $expire_hours));
+	sa_log('general', 'info', "Wallet Cron Log", "pattern_hour: $pattern_hour");
+	sa_log('general', 'info', "Wallet Cron Log", "pattern_day: $pattern_day");
+	sa_log('general', 'info', "Wallet Cron Log", "pattern_last: $pattern_last");
 
-		if (!$expire_hours || (!$pattern_hour &&
-			!$pattern_day &&
-			!$pattern_last)) {
-			sa_log('general', 'info', "Wallet Cron Log", "No patterns or expire_hours set. Exiting.");
-			return;
-		}
+	if (!$expire_hours || (!$pattern_hour &&
+		!$pattern_day &&
+		!$pattern_last)) {
+		sa_log('general', 'info', "Wallet Cron Log", "No patterns or expire_hours set. Exiting.");
+		return;
+	}
 
-		global $wpdb;
-		$current_time = current_time('timestamp');
-		sa_log('general', 'info', "Wallet Cron Log", "current_time: $current_time (" . date('Y-m-d H:i:s', $current_time) . ")");
+	global $wpdb;
+	$current_time = current_time('timestamp');
+	sa_log('general', 'info', "Wallet Cron Log", "current_time: $current_time (" . date('Y-m-d H:i:s', $current_time) . ")");
 
-		$users = $wpdb->get_results(
-			"SELECT user_id, amount, expire_time 
+	$users = $wpdb->get_results(
+		"SELECT user_id, amount, expire_time 
          FROM {$wpdb->prefix}nirweb_wallet_cashback
          WHERE expire_time > {$current_time}"
-		);
+	);
 
-		if (!$users) {
-			sa_log('general', 'info', "Wallet Cron Log", "No users found with remaining expire_time.");
-			return;
-		}
-
-		foreach ($users as $user) {
-			$diff_hours = floor(($user->expire_time - $current_time) / HOUR_IN_SECONDS);
-
-			$include_user = false;
-			sort($expire_hours);
-			foreach ($expire_hours as $hour) {
-				$min = max(1, $hour - 23);
-				$max = $hour;
-				if (
-					$diff_hours >= $min &&
-					$diff_hours <= $max
-				) {
-					$include_user = true;
-					break;
-				}
-			}
-			if (!$include_user) continue;
-
-			$phone = get_user_meta($user->user_id, 'billing_phone', true);
-			if (!$phone) {
-				continue;
-			}
-
-			$user_info = get_userdata($user->user_id);
-			$name      = $user_info &&
-				$user_info->first_name ? $user_info->first_name : $user_info->display_name;
-			sa_log('general', 'info', "Wallet Cron Log", "Sending SMS to $name, phone: $phone, diff_hours: $diff_hours");
-
-			if ($check_by_day) {
-				if (
-					$diff_hours <= 24 &&
-					$pattern_last
-				) {
-					$pattern_vars_day = ['name' => $name];
-					sa_log('general', 'info', "Wallet Cron Log", "Using last day pattern: $pattern_last, vars: $pattern_vars_day");
-					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_last);
-				} elseif (
-					$diff_hours > 24 &&
-					$pattern_day
-				) {
-					$days_remaining   = ceil($diff_hours / 24);
-					$pattern_vars_day = ['name' => $name, 'days' => $days_remaining];
-					sa_log('general', 'info', "Wallet Cron Log", "Using day pattern: $pattern_day, vars: $pattern_vars_day");
-					sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_day);
-				}
-			} else {
-				if ($pattern_hour) {
-					$pattern_vars_hour = ['name' => $name, 'hours' => $diff_hours];
-					sa_log('general', 'info', "Wallet Cron Log", "Using hour pattern: $pattern_hour, vars: $pattern_vars_hour");
-					sa_send_sms_pattern($pattern_vars_hour, ($phone), $pattern_hour);
-				}
-			}
-		}
-
-		sa_log('general', 'info', "Wallet Cron Log", "=== Wallet expiration check finished ===");
+	if (!$users) {
+		sa_log('general', 'info', "Wallet Cron Log", "No users found with remaining expire_time.");
+		return;
 	}
-	add_action('sa_nir_wallet_expiration_check', 'nirweb_wallet_expiration_check');
+
+	foreach ($users as $user) {
+		$diff_hours = floor(($user->expire_time - $current_time) / HOUR_IN_SECONDS);
+
+		$include_user = false;
+		sort($expire_hours);
+		foreach ($expire_hours as $hour) {
+			$min = max(1, $hour - 23);
+			$max = $hour;
+			if (
+				$diff_hours >= $min &&
+				$diff_hours <= $max
+			) {
+				$include_user = true;
+				break;
+			}
+		}
+		if (!$include_user) continue;
+
+		$phone = get_user_meta($user->user_id, 'billing_phone', true);
+		if (!$phone) {
+			continue;
+		}
+
+		$user_info = get_userdata($user->user_id);
+		$name      = $user_info &&
+			$user_info->first_name ? $user_info->first_name : $user_info->display_name;
+		sa_log('general', 'info', "Wallet Cron Log", "Sending SMS to $name, phone: $phone, diff_hours: $diff_hours");
+
+		if ($check_by_day) {
+			if (
+				$diff_hours <= 24 &&
+				$pattern_last
+			) {
+				$pattern_vars_day = ['name' => $name];
+				sa_log('general', 'info', "Wallet Cron Log", "Using last day pattern: $pattern_last, vars: $pattern_vars_day");
+				sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_last);
+			} elseif (
+				$diff_hours > 24 &&
+				$pattern_day
+			) {
+				$days_remaining   = ceil($diff_hours / 24);
+				$pattern_vars_day = ['name' => $name, 'days' => $days_remaining];
+				sa_log('general', 'info', "Wallet Cron Log", "Using day pattern: $pattern_day, vars: $pattern_vars_day");
+				sa_send_sms_pattern($pattern_vars_day, ($phone), $pattern_day);
+			}
+		} else {
+			if ($pattern_hour) {
+				$pattern_vars_hour = ['name' => $name, 'hours' => $diff_hours];
+				sa_log('general', 'info', "Wallet Cron Log", "Using hour pattern: $pattern_hour, vars: $pattern_vars_hour");
+				sa_send_sms_pattern($pattern_vars_hour, ($phone), $pattern_hour);
+			}
+		}
+	}
+
+	sa_log('general', 'info', "Wallet Cron Log", "=== Wallet expiration check finished ===");
 }
+add_action('sa_nir_wallet_expiration_check', 'nirweb_wallet_expiration_check');
 
 /**
  * Fix ob_end_flush error
