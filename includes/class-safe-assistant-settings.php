@@ -147,6 +147,11 @@ class Safe_Assistant_Settings
 				'icon'   => 'fas fa-wallet',
 			],
 			[
+				'id'     => 'custom_code',
+				'title'  => esc_html__('Custom Code', 'safe-assistant'),
+				'icon'   => 'fas fa-code',
+			],
+			[
 				'parent' => 'wordpress',
 				'id'     => 'feature',
 				'title'  => esc_html__('Features', 'safe-assistant'),
@@ -1454,6 +1459,58 @@ class Safe_Assistant_Settings
 						'content' => esc_html__('Nir Wallet plugin not active or installed', 'safe-assistant'),
 					],
 				],
+			],
+			[
+				'parent' => 'custom_code',
+				'id'     => 'wordpress_admin',
+				'title'  => esc_html__('Wordpress Admin', 'safe-assistant'),
+				'icon'   => 'fab fa-wordpress',
+				'fields' => [
+					[
+						'id'       => 'javascript_admin',
+						'type'     => 'code_editor',
+						'title'    => esc_html__('Custom javascript for wordpress admin dashboard', 'safe-assistant'),
+						'settings' => [
+							'theme'  => 'monokai',
+							'mode'   => 'javascript',
+						],
+					],
+					[
+						'id'       => 'css_admin',
+						'type'     => 'code_editor',
+						'title'    => esc_html__('Custom css for wordpress admin dashboard', 'safe-assistant'),
+						'settings' => [
+							'theme'  => 'mbo',
+							'mode'   => 'css',
+						],
+					],
+				]
+			],
+			[
+				'parent' => 'custom_code',
+				'id'     => 'wordpress_admin',
+				'title'  => esc_html__('Frontend', 'safe-assistant'),
+				'icon'   => 'fas fa-file-code',
+				'fields' => [
+					[
+						'id'       => 'javascript_front',
+						'type'     => 'code_editor',
+						'title'    => esc_html__('Custom javascript for frontend', 'safe-assistant'),
+						'settings' => [
+							'theme'  => 'monokai',
+							'mode'   => 'javascript',
+						],
+					],
+					[
+						'id'       => 'css_front',
+						'type'     => 'code_editor',
+						'title'    => esc_html__('Custom css for frontend', 'safe-assistant'),
+						'settings' => [
+							'theme'  => 'mbo',
+							'mode'   => 'css',
+						],
+					],
+				]
 			],
 		];
 		return $sections;

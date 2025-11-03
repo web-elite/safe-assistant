@@ -1112,3 +1112,29 @@ function sa_get_orders_by_custom_search($search_term)
 	// Remove duplicates and return
 	return array_unique($order_ids);
 }
+
+/**
+ * Custom Code
+ */
+
+// === Admin Area Custom Code ===
+add_action('admin_head', function () {
+	if (! empty(sa_get_option('css_admin'))) {
+		echo '<style id="safe-assistant-admin-css">' . wp_kses_post(sa_get_option('css_admin')) . '</style>';
+	}
+
+	if (! empty(sa_get_option('javascript_admin'))) {
+		echo '<script id="safe-assistant-admin-js">' . html_entity_decode(sa_get_option('javascript_admin')) . '</script>';
+	}
+});
+
+// === Frontend Custom Code ===
+add_action('wp_head', function () {
+	if (! empty(sa_get_option('css_front'))) {
+		echo '<style id="safe-assistant-front-css">' . wp_kses_post(sa_get_option('css_front')) . '</style>';
+	}
+
+	if (! empty(sa_get_option('javascript_front'))) {
+		echo '<script id="safe-assistant-front-js">' . html_entity_decode(sa_get_option('javascript_front')) . '</script>';
+	}
+});
